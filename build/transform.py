@@ -56,6 +56,40 @@ _L = load()
 D, U, IC, NM = _L["D"], _L.get("U", []), _L["IC"], _L["NM"]
 # MAR Relics removed from the wiki at the user's request
 D = [d for d in D if not d["id"].startswith("marrelics:")]
+
+# More Relics: the old wiki multiplied every Relics-style stat by 100 (Made in Heaven "revive cooldown 86000 s",
+# Twin Fangs "4000%"). Rebuild those lines from the StatData values in the mod's own classes
+# (morerelics-1.7.7, read with javap) and the titles/units from its lang file.
+_MR = pathlib.Path("/tmp/claude-0/-home-user-Linggango-Relic-Wiki/4288cb83-ead3-5324-91d4-51e578dc641c/scratchpad/extract/morerelics")
+if (_MR / "stats.json").exists():
+    _mst = json.loads((_MR / "stats.json").read_text())["stats"]
+    _ml = json.loads((_MR / "en_us.json").read_text())
+    def _mfmt(v, unit):
+        if "%%" in unit and abs(v) <= 1:
+            v *= 100
+        v = round(v, 2)
+        n = str(int(v)) if v == int(v) else str(v)
+        return unit.replace("%1$s", n).replace("%%", "%").rstrip(".")
+    for d in D:
+        ns, iid = d["id"].split(":")
+        # class names split words differently from item ids (ShieldWeaveCape / shieldweave_cape)
+        key = next((k for k in _mst if k.replace("_", "") == iid.replace("_", "")), None)
+        if ns != "morerelics" or not key:
+            continue
+        by = {}
+        for ab, stn, lo, hi in _mst[key]:
+            base = f"tooltip.relics.{iid}.ability.{ab}"
+            title = _ml.get(f"{base}.stat.{stn}.title", stn.replace("_", " ").title())
+            unit = _ml.get(f"{base}.stat.{stn}.value", "%1$s")
+            by.setdefault(_ml.get(base, ab.replace("_", " ").title()), []).append(f"{title} {_mfmt(lo, unit)} ~ {_mfmt(hi, unit)}")
+        new = []
+        for line in d["st"]:
+            head = line.split(":")[0].split(" (unlocks")[0].split(" [active]")[0].strip()
+            if head in by:
+                new.append(line.split(":")[0] + ": " + "; ".join(by.pop(head)) + " (at relic level 0; grows as the relic levels up)")
+            elif not re.match(r"^(Spell\b|.*\b[Ii]cons?: (yes|no)$)", line):
+                new.append(line)
+        d["st"] = new
 NM = {k: re.sub(r"§.", "", v) for k, v in NM.items()}  # strip Minecraft colour codes
 BYID = {d["id"]: d for d in D}
 BYNAME, NAME2IDS = {}, {}
@@ -132,6 +166,19 @@ def ingredients(d):
             hit = name_id(nm, d["id"].split(":")[0])
             if hit:
                 ids.add(hit)
+    # "Upgraded from the X", "evolves from X", "X fed a Nether Star": the earlier stage is an ingredient
+    for src in (d["src"] if isinstance(d["src"], list) else [d["src"]]):
+        for m in re.finditer(r"(?:[Uu]pgraded|[Ee]volves) from (?:the )?([A-Z][\w' ]+?)(?:[.;,]|$)", src):
+            hit = name_id(m.group(1).strip(), d["id"].split(":")[0])
+            if hit:
+                ids.add(hit)
+        m = re.match(r"^([A-Z][\w' ]+?) (?:fed|hit|struck)\b", src)
+        if m:
+            hit = name_id(m.group(1).strip(), d["id"].split(":")[0])
+            if hit:
+                ids.add(hit)
+        if re.search(r"\bNether Star\b", src):
+            ids.add("minecraft:nether_star")
     ids.discard(d["id"])
     return ids
 
@@ -186,6 +233,60 @@ for d in D:
             if src:
                 WHY_ADD[i].append(f"Crafted from {', '.join(sorted(src))}, which now sits on the same path")
 
+# Random loot (structure chests, Suspicious Bags, archaeology, ordinary mob drops) can turn up from the very
+# start, so it sits on Path 0 however low the chance; only drops tied to a boss are placed by that boss's strength.
+RNG_WHY = re.compile(r"^(drop chance only|random drop only|low drop chance|chest-only, down to luck)", re.I)
+RNG = set()
+for d in D:
+    i = d["id"]
+    _src = re.split(r" · per mod page", d["src"] if isinstance(d["src"], str) else " ".join(d["src"]))[0]
+    _chest = re.match(r"(chest:|Suspicious Bag|archaeology:)", _src) and not re.search(r"\bbag: |drop \(", _src)
+    if d["g"] == "Loot" and NT[i] > 0 and NT[i] == d["t"] and not GATE[i] and (_chest or (d["why"] and all(RNG_WHY.match(w) for w in d["why"]))) \
+            and not re.search(r"\b(bag|drop \(100%\))|Nether|Bastion|Piglin|End City", re.split(r" · per mod page", d["src"] if isinstance(d["src"], str) else " ".join(d["src"]))[0]):
+        NT[i] = NA[i] = 0
+        RNG.add(i)
+        d["why"] = []
+        WHY_ADD[i].append("Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low")
+
+# A recipe held back only by a random-loot ingredient follows that ingredient down to Path 0.
+_EA = re.compile(r"^Earliest Act [IVX]+: .+? needs (.+?)(?: → (.*))?$")
+for _ in range(3):
+    for d in D:
+        i = d["id"]
+        if d["g"] != "Craft" or NT[i] <= 0 or NT[i] != d["t"] or GATE[i] or not d["why"] or i in RNG:
+            continue
+        ok, via = True, []
+        for w in d["why"]:
+            m = _EA.match(w)
+            if m:
+                dep = BYNAME.get(m.group(1).strip())
+                if not dep or NT.get(dep, 9) != 0 or re.search(r"nether|end|chthonic", m.group(2) or "", re.I):
+                    ok = False
+                    break
+                via.append(m.group(1).strip())
+            elif not re.match(r"^(random drop only|low drop chance|chest-only)", w, re.I):
+                ok = False
+                break
+        if ok and via:
+            NT[i] = NA[i] = 0
+            RNG.add(i)
+            d["why"] = []
+            WHY_ADD[i].append(f"Crafted from {', '.join(via)}, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too")
+
+# Drops of the same side boss share one path: the boss's own (the highest any of its drops was given).
+BOSS_OF = {}
+for d in D:
+    m = re.match(r"^([A-Z][\w' ,]+?) drop \(\d", d["src"] if isinstance(d["src"], str) else "")
+    if d["g"] == "Loot" and m and d["id"] not in RNG:
+        BOSS_OF.setdefault(m.group(1), []).append(d["id"])
+for boss, ids in BOSS_OF.items():
+    if len(ids) > 1 and any(any("from boss" in w for w in BYID[i]["why"]) for i in ids):
+        top = max(NT[i] for i in ids)
+        for i in ids:
+            if NT[i] < top:
+                NT[i] = NA[i] = top
+                WHY_ADD[i].append(f"Dropped by {boss}, a side boss placed by its strength on the same path as its other drops")
+
 # Terramity scarce-material rule: Daemonium / Iridium are rare structure loot.
 SCARCE_MATS = {k for k, v in NM.items() if v in ("Daemonium Chunk", "Daemonium", "Iridium Chunk", "Iridium Ingot")}
 SCARCE_WHY = re.compile(r"Daemonium Ore|Better Gold Pickaxe|needs Daemonium Sewing Kit")
@@ -227,6 +328,8 @@ for d in D:
     d["sc"] = round(d["sc"] + 0.21 * (PV[NT[i]] - PV[d["t"]]), 3)
     d["ac"] = round(d["ac"] + (PV[NT[i]] - PV[d["t"]]), 2)
     r = d["r"] if NT[i] == d["t"] else bucket(d["sc"])
+    if i in RNG:
+        r = R0[i]
     if i in SCARCE:
         # rare structure loot: one step above what the path alone would give, never below the old rating
         r = min(5, max(R0[i], bucket(d["sc"]) + 1))
@@ -819,7 +922,12 @@ from PIL import Image as _Im
 def _pad(b64):
     im = _Im.open(io.BytesIO(base64.b64decode(b64))).convert("RGBA")
     w, h = im.size
-    if (w, h) in ((16, 16), (32, 32), (64, 64), (128, 128)) or max(w, h) > 32:
+    # a 32 px texture whose drawing fits in 16 px (common in Wizard Terra Curios) would show at half the
+    # size of its neighbours; cut it to a 16 px canvas so it is drawn at the same 2x as everything else
+    bb = im.getbbox()
+    if bb and (w, h) == (32, 32) and bb[2] - bb[0] <= 16 and bb[3] - bb[1] <= 16:
+        im = im.crop(bb); w, h = im.size
+    elif (w, h) in ((16, 16), (32, 32), (64, 64), (128, 128)) or max(w, h) > 32:
         return b64
     n = 16 if max(w, h) <= 16 else 32
     c = _Im.new("RGBA", (n, n)); c.paste(im, ((n - w) // 2, (n - h) // 2))
@@ -828,6 +936,13 @@ for _k in list(IC):
     if not _k.startswith("v_"):
         try: IC[_k] = _pad(IC[_k])
         except Exception: pass
+# fully transparent textures (the Ring of Invisibility is invisible in game too) get a marker in the UI
+for d in D:
+    try:
+        if d["id"] in IC and not _Im.open(io.BytesIO(base64.b64decode(IC[d["id"]]))).convert("RGBA").getbbox():
+            d["inv"] = 1
+    except Exception:
+        pass
 CURIO_IDS = {d["id"] for d in D}
 DROPPED = [(d["n"], d["m"], junk(d)) for d in D if junk(d)]
 gone = {d["id"] for d in D if junk(d)}
@@ -835,6 +950,9 @@ D = [d for d in D if d["id"] not in gone]
 for d in D:
     d["uid"] = [u for u in d.get("uid", []) if u not in gone]
 print("dropped", len(DROPPED), DROPPED)
+# config switches that leaked into stat lists ("Icon: yes", "Heaven icon: yes", raw spell tables) mean nothing to a player
+for d in D:
+    d["st"] = [x for x in d["st"] if not re.match(r"^\s*(\w+ )?icons?: (yes|no)\.?$|^Spell\b|^Mood change duration\b", x, re.I)]
 IC = {k: v for k, v in IC.items() if not k.startswith("marrelics:")}
 NM = {k: v for k, v in NM.items() if not k.startswith("marrelics:")} if isinstance(NM, dict) else NM
 U = [u for u in U if not str(u.get("id", "")).startswith("marrelics:")] if isinstance(U, list) else U

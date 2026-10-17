@@ -165,3 +165,27 @@ body:not(.hub) #main{background:var(--bg)}
 .sc:hover .ics img:nth-child(1),.sc:hover .ics img:nth-child(3){transform:translateY(-3px)!important}
 .t:hover{transform:translateY(-2px)!important}
 .tier .t:hover>img,.t:hover>img{animation:bob .9s step-end infinite!important}
+
+/* ===== v5.2 smooth motion =====
+   Stepped motion read as jerky. Icons now glide (translate only, on the compositor, so no rotate/scale
+   resampling); each tile gets its own phase. */
+.tier.seen .t>img{animation:fA 3.6s cubic-bezier(.45,0,.55,1) infinite;animation-delay:calc(var(--i,0)*-211ms);will-change:transform}
+.tier.seen .t:nth-child(3n+1)>img{animation-name:fB;animation-duration:4.4s}
+.tier.seen .t:nth-child(3n+2)>img{animation:fA 3.9s cubic-bezier(.45,0,.55,1) infinite,mvC 3.9s ease-in-out infinite;animation-delay:calc(var(--i,0)*-211ms)}
+.tier.seen .t.r4>img,.tier.seen .t.r5>img,.tier.seen .t.r6>img{animation:fA 3.6s cubic-bezier(.45,0,.55,1) infinite,glowP 2.6s ease-in-out infinite;animation-delay:calc(var(--i,0)*-211ms)}
+@keyframes fA{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-3px,0)}}
+@keyframes fB{0%,100%{transform:translate3d(0,0,0)}25%{transform:translate3d(-1.5px,-1.5px,0)}50%{transform:translate3d(0,-3px,0)}75%{transform:translate3d(1.5px,-1.5px,0)}}
+.tier .t:hover>img,.t:hover>img{animation:fA .9s cubic-bezier(.45,0,.55,1) infinite!important}
+/* background relics: a slow loop instead of a there-and-back, eased at every turn */
+#bgfx .fl,.hero .hf{animation:drift var(--dur) linear var(--dl) infinite;will-change:transform}
+@keyframes drift{
+ 0%{transform:translate3d(0,0,0) rotate(-4deg);animation-timing-function:cubic-bezier(.45,0,.55,1)}
+ 25%{transform:translate3d(calc(var(--dx,16px)*.5),-16px,0) rotate(3deg);animation-timing-function:cubic-bezier(.45,0,.55,1)}
+ 50%{transform:translate3d(var(--dx,16px),-30px,0) rotate(-2deg);animation-timing-function:cubic-bezier(.45,0,.55,1)}
+ 75%{transform:translate3d(calc(var(--dx,16px)*.5),-14px,0) rotate(4deg);animation-timing-function:cubic-bezier(.45,0,.55,1)}
+ 100%{transform:translate3d(0,0,0) rotate(-4deg)}}
+#bgfx .z0,#bgfx .z1{filter:saturate(.7)}
+@media (prefers-reduced-motion:reduce){.tier.seen .t>img,#bgfx .fl,.hero .hf{animation:none!important}}
+/* an item whose texture is fully transparent (invisible in game): show where it would be */
+.t.inv::after{content:"invisible"!important;position:absolute;inset:8px;border:2px dashed rgba(255,255,255,.35);border-radius:50%;
+ display:grid;place-items:center;font:8px var(--body);color:rgba(255,255,255,.55);background:none!important;opacity:1!important;animation:none!important;-webkit-mask:none!important;mask:none!important;padding:0!important}

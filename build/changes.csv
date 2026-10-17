@@ -21,6 +21,7 @@ l2hostility:charm_of_looting_2,Magical Looting Charm,L2 Hostility,Path V,Path V,
 l2hostility:curse_of_envy,Curse Of Envy,L2 Hostility,Path V,Wither,Path V,Wither,Rare,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
 l2hostility:divinity_light,Divinity Light,L2 Hostility,Path VI,Path VI,Path V,Path V,Rare,Epic,Epic,
 moreartifacts:lucky_emerald_ring,Lucky Emerald Ring,More Artifacts,Path V,Wither,Path V,Wither,Epic,Legendary,Legendary,Needs the Wither to be defeated first (vanilla boss path)
+morerelics:whispering_amulett,Whispering Amulet,More Relics,Path V,Wither,Path V,Wither,Uncommon,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
 fallen_traits:universal_point_of_discontinuity,Universal Point of Discontinuity,Fallen Traits & Relics,Path V,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
 armageddon_mod:abyssal_charm,Abyssal Charm,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Rare,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
 armageddon_mod:dragonborn_empyreans,Dragonborn Empyreans,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Mythic,Mythic,Needs the Ender Dragon to be defeated first (vanilla boss path)
@@ -31,17 +32,27 @@ brutality:broken_clock,Broken Clock,Brutality,Path 0–I,Path 0–I,Path 0–I,P
 brutality:emerald_anklet,Emerald Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
 brutality:gamblers_chain,Gambler's Chain,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
 brutality:shattered_clock,Shattered Clock,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+confluence:architect_gizmo_pack,Architect Gizmo Pack,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Portable Cement Mixer, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:fish_finder,Fish Finder,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Common,Common,Common,"Crafted from Fisherman's Pocket Guide, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 confluence:goblin_tech,Goblin Tech,Terra Curio,Path 0–I,Warden,Path 0–I,Warden,Common,Rare,Rare,"Crafted from Metal Detector, which now sits on the same path"
+confluence:gps,GPS,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Common,Common,Common,"Crafted from Depth Meter, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:hand_of_creation,Hand Of Creation,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Rare,Rare,Rare,"Crafted from Architect Gizmo Pack, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 confluence:pda,PDA,Terra Curio,Path II,Warden,Path II,Warden,Uncommon,Epic,Epic,"Crafted from Goblin Tech, which now sits on the same path"
+confluence:rek_3000,R.E.K.3000,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Common,Common,Common,"Crafted from Radar, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 lethality:warden_spine,Warden Spine,Lethality,Path VI,Warden,Path 0–I,Warden,Rare,Rare,Rare,Needs the Warden to be defeated first (vanilla boss path)
-oddaccessories:enlightening_tablet,Enlightening Tablet,Odd Accessories,Path II,Path II,Path II,Path II,Common,Uncommon,Uncommon,
-oddaccessories:villager_mask,Villager Mask,Odd Accessories,Path II,Path II,Path II,Path II,Uncommon,Rare,Rare,
+oddaccessories:enlightening_tablet,Enlightening Tablet,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Common,Uncommon,Uncommon,"Crafted from Shattered Tablet, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+oddaccessories:regret_of_a_salaryman,Regret Of A Salaryman,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Broken Telephone, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+oddaccessories:universal_attractor,Universal Attractor,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Common,Common,Common,"Crafted from Collectible Meal Toy, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+oddaccessories:villager_mask,Villager Mask,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Rare,Rare,"Crafted from Malice, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+brutality:wrath,Sin of Wrath,Brutality,Path VI,Path VI,Path VI,Path VI,Rare,Legendary,Legendary,
+confluence:celestial_stone,Celestial Stone,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Epic,Epic,Epic,"Crafted from Sun Stone, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 goety:nether_robe_warped,Nether Robe,Goety,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
 goety:unholy_hat_halo,Unholy Hat,Goety,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
 goety_revelation:apollyon_robe,Apollyon Robe,Goety Revelation,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
 l2hostility:flaming_thorn,Flaming Thorn,L2 Hostility,Path VI,Warden,Path V,Warden,Rare,Rare,Rare,Needs the Warden to be defeated first (vanilla boss path)
 l2hostility:platinum_star,Platinum Star,L2 Hostility,Path VI,Wither,Path V,Wither,Rare,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
 moreartifacts:decay_stone,Decay Stone,More Artifacts,Path V,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
+morerelics:made_in_heaven,Made in Heaven,More Relics,Path V,Wither,Path V,Wither,Rare,Epic,Epic,"Crafted from Whispering Amulet, which now sits on the same path"
 summonity:arc_reactor_core,Arc Reactor Core,Summonity,Path VI,Wither,Path VI,Wither,Rare,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
 summonity:withered_visage,Withered Visage,Summonity,Path V,Wither,Path V,Wither,Rare,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
 celestial_artifacts:hidden_bracelet,Hidden Bracelet,Celestial Artifacts,Path V,Wither,Path V,Wither,Rare,Epic,Epic,"Crafted from Truth Etching, which now sits on the same path"
@@ -50,7 +61,54 @@ celestial_artifacts:lock_of_abyss,Lock Of Abyss,Celestial Artifacts,Path V,Withe
 celestial_artifacts:scarlet_bracelet,Scarlet Bracelet,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Legendary,Legendary,"Crafted from Truth Etching, which now sits on the same path"
 celestial_artifacts:war_dead_badge,War Dead Badge,Celestial Artifacts,Path V,Warden,Path V,Warden,Legendary,Legendary,Legendary,"Crafted from Nihility Etching, which now sits on the same path"
 fallen_traits:law_of_scale,Law of Scale,Fallen Traits & Relics,Path VI,Warden,Path V,Warden,Epic,Mythic,Mythic,"Crafted from Titan's Heart, which now sits on the same path"
+brutality:zombie_heart,Zombie Heart,Brutality,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+caster_curios_bonus:calamity_resonator,Calamity Resonator,Caster Curios Bonus,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+caster_curios_bonus:eureka,Eureka,Caster Curios Bonus,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+caster_curios_bonus:giant_killer,Giant Killer,Caster Curios Bonus,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+caster_curios_bonus:mana_overflow,Mana Overflow,Caster Curios Bonus,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+caster_curios_bonus:reckless_utterance,Reckless Utterance,Caster Curios Bonus,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+caster_curios_bonus:venomous_assault,Venomous Assault,Caster Curios Bonus,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:hive_pack,Hive Pack,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:magic_quiver,Magic Quiver,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:moon_stone,Moon Stone,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:ranger_emblem,Ranger Emblem,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:rifle_scope,Rifle Scope,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:titan_glove,Titan Glove,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+gtbcs_geomancy_plus:bluff_instruction_manual,Bluff Instruction Manual,GTBC's Geomancy Plus,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+irons_spellbooks:cast_time_ring,Ring of Expediency,Iron's Spells,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+irons_spellbooks:concentration_amulet,Amulet of Concentration,Iron's Spells,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+irons_spellbooks:conjurers_talisman,Conjurer's Talisman,Iron's Spells,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+irons_spellbooks:cooldown_ring,Ring of Recovery,Iron's Spells,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+irons_spellbooks:evoker_spell_book,Grimoire of Evokation,Iron's Spells,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+irons_spellbooks:silver_ring,Silver Ring,Iron's Spells,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:crown_of_the_legend,Crown of the Legend,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:gravitum_glove,Gravitum Glove,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Epic,Epic,Epic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:mass_gauntlet,Mass Gauntlet,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:sentient_rust,Sentient Rust,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:swiftedge,Swiftedge,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:thermoseismic_heart,Thermoseismic Heart,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:flaying_tool,Flaying Tool,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:kinetic_hand,Kinetic Hand,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:loaded_dice,Loaded Dice,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:malice,Malice,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:pungent_flower,Pungent Flower,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:redheaded_doll,Redheaded Doll,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:rotgut,Rotgut,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:arrow_quiver,Quiver,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:ice_breaker,Ice Breaker,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:jellyfish_necklace,Jellyfish Necklace,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:midnight_robe,Midnight Robe,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:rage_glove,Rage Glove,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:spore_sack,Spore Sack,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:wool_mitten,Wool Mitten,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 terramity:acidic_ampoule,Acidic Ampoule,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+terramity:ammo_box,Ammo Box,Terramity,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+terramity:chthonic_cursemark,Chthonic Cursemark,Terramity,Path II,Path VII,Path 0–I,Path VII,Rare,Legendary,Legendary,"Dropped by Trial Guardian, a side boss placed by its strength on the same path as its other drops"
+terramity:gauntlet_of_decay,Gauntlet of Decay,Terramity,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+terramity:tearstone_ring,Tearstone Ring,Terramity,Path II,Path 0–I,Path II,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+celestial_artifacts:demon_curse,Demon Curse,Celestial Artifacts,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+ramcompat:tendon_lump,Tendon Lump,Relics: Alex's Mobs Compat,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+terramity:forbidden_fruit,Forbidden Fruit,Terramity,Path VI,Path 0–I,Path V,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 celestial_artifacts:desire_etching,Desire Etching,Celestial Artifacts,Path V,Wither,Path V,Wither,Rare,Must-Have ★,Rare,Needs the Wither to be defeated first (vanilla boss path)
 goety_revelation:halo_of_the_end,Halo of The-End,Goety Revelation,Path IX,Path IX,Path IX,Path IX,Legendary,Mythic,Mythic,
 l2hostility:abrahadabra,Abrahadabra,L2 Hostility,Path IX,Path IX,Path IX,Path IX,Epic,Mythic,Mythic,
@@ -61,11 +119,16 @@ brutality:frozen_heart,Frozen Heart,Brutality,Path VII,Path VII,Path 0–I,Path 
 brutality:ruby_anklet,Ruby Anklet,Brutality,Path II,Path II,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
 brutality:sapphire_anklet,Sapphire Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
 brutality:ultra_dodge_anklet,Ultra Dodge Anklet,Brutality,Path IX,Path IX,Path IX,Path IX,Legendary,Mythic,Mythic,
+confluence:bee_cloak,Bee Cloak,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Honey Comb, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 lethality:pale_branch,Pale Branch,Lethality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
 morerelics:wonder_of_u,Wonder of U,More Relics,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Legendary,Legendary,Needs the Warden to be defeated first (vanilla boss path)
-oddaccessories:enlightening_ring,Enlightening Ring,Odd Accessories,Path II,Path II,Path II,Path II,Common,Uncommon,Uncommon,
+oddaccessories:crown_of_nails,Crown Of Nails,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Rare,Rare,Rare,"Crafted from Rusted Nail, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+oddaccessories:enlightening_ring,Enlightening Ring,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Common,Uncommon,Uncommon,"Crafted from Old Ring, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+oddaccessories:guts,Guts,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Rare,Rare,Rare,"Crafted from Cruel Fate, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+oddaccessories:homunculus,Homunculus,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Rusted Nail, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 oddaccessories:homunculus_2,Omunculus,Odd Accessories,Path II,Path II,Path II,Path II,Common,Uncommon,Uncommon,
 oddaccessories:pelmen_3,Pelmen III,Odd Accessories,Path II,Path II,Path II,Path II,Uncommon,Rare,Rare,
+oddaccessories:unconditional_love,Unconditional Love,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Sifting Jar, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 terramity:prismatic_gauntlet,Prismatic Gauntlet,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
 celestial_artifacts:soul_box,Soul Box,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Epic,Epic,Needs the Warden to be defeated first (vanilla boss path)
 armageddon_mod:blindfold,Blindfold,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
@@ -92,13 +155,27 @@ brutality:basketball_anklet,Basketball Anklet,Brutality,Path 0–I,Path 0–I,Pa
 brutality:big_steppa,Big Steppa,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
 brutality:topaz_anklet,Topaz Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
 brutality:windswept_anklet,Windswept Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
-confluence:bundle_of_horseshoe_balloons,Bundle Of Horseshoe Balloons,Terra Curio,Path II,Path II,Path II,Path II,Common,Rare,Rare,
-confluence:tiger_climbing_gear,Tiger Climbing Gear,Terra Curio,Path II,Path II,Path II,Path II,Common,Uncommon,Uncommon,
+confluence:amber_horseshoe_balloon,Amber Horseshoe Balloon,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Lucky Horseshoe, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:blizzard_in_a_balloon,Blizzard In A Balloon,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Common,Common,Common,"Crafted from Blizzard In A Bottle, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:blizzard_in_a_bottle,Blizzard In A Bottle,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Common,Common,Common,"Crafted from Cloud In A Bottle, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:blue_horseshoe_balloon,Blue Horseshoe Balloon,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Lucky Horseshoe, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:bundle_of_balloons,Bundle Of Balloons,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Rare,Rare,Rare,"Crafted from Cloud In A Balloon, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:bundle_of_horseshoe_balloons,Bundle Of Horseshoe Balloons,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Common,Rare,Rare,"Crafted from Lucky Horseshoe, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:cloud_in_a_balloon,Cloud In A Balloon,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Common,Common,Common,"Crafted from Cloud In A Bottle, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:frog_gear,Frog Gear,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Tiger Climbing Gear, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:frog_webbing,Frog Webbing,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Tiger Climbing Gear, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:honey_balloon,Honey Balloon,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Honey Comb, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:obsidian_horseshoe,Obsidian Horseshoe,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Lucky Horseshoe, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:pink_horseshoe_balloon,Pink Horseshoe Balloon,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Lucky Horseshoe, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:tiger_climbing_gear,Tiger Climbing Gear,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Common,Uncommon,Uncommon,"Crafted from Climbing Claws, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:white_horseshoe_balloon,White Horseshoe Balloon,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Common,Common,Common,"Crafted from Lucky Horseshoe, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:yellow_horseshoe_balloon,Yellow Horseshoe Balloon,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Common,Common,Common,"Crafted from Lucky Horseshoe, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 oddaccessories:pelmen_2,Pelmen II,Odd Accessories,Path II,Path II,Path II,Path II,Uncommon,Rare,Rare,
 terramity:agility_ring,Agility Ring,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
 terramity:carton_of_glowberry_milk,Carton of Glow Berry Milk,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
 terramity:express_ring,Express Ring,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
 terramity:hurricane_belt,Hurricane Belt,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+terramity:seafarer_scarf,Seafarer Scarf,Terramity,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Dolphin Flippers, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 celestial_artifacts:yellow_duck,Yellow Duck,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Common,Epic,Epic,"Crafted from Life Etching, which now sits on the same path"
 armageddon_mod:cloak_of_the_abyss,Cloak Of The Abyss,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Rare,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
 armageddon_mod:moon_charm,Moon Charm,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
@@ -108,15 +185,89 @@ brutality:golden_headband,Golden Headband,Brutality,Path IX,Path IX,Path IX,Path
 l2hostility:charm_of_looting_3,Chaotic Looting Charm,L2 Hostility,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Must-Have ★,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
 armageddon_mod:the_heart,The Heart,Armageddon,Path VII,Path VII,Path VII,Path VII,Rare,Epic,Epic,
 armageddon_mod:sculk_eye_gem,Schulk Eye Gem,Armageddon,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Epic,Epic,Needs the Warden to be defeated first (vanilla boss path)
+caster_curios_bonus:crimson_pledge,Crimson Pledge,Caster Curios Bonus,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+caster_curios_bonus:mind_to_matter,Mind to Matter,Caster Curios Bonus,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:band_of_regeneration,Band Of Regeneration,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:bezoar,Bezoar,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:brain_of_confusion,Brain Of Confusion,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:honey_comb,Honey Comb,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:royal_gel,Royal Gel,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:shackle,Shackle,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+goety:warlock_sash,Warlock Sash,Goety,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+irons_spellbooks:fireward_ring,Fireward Ring,Iron's Spells,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+irons_spellbooks:heavy_chain_necklace,Heavy Chain,Iron's Spells,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+irons_spellbooks:poisonward_ring,Poisonward Ring,Iron's Spells,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 moreartifacts:tainted_mirror,Tainted Mirror,More Artifacts,Path 0–I,Warden,Path 0–I,Warden,Rare,Legendary,Legendary,Needs the Warden to be defeated first (vanilla boss path)
+morerelics:axolotl_cream,Axolotl Cream,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:biojoint,Biojoint,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:opal_necklace,Opal Necklace,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:runic_plate,Runic Plate,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:shieldweave_cape,Shieldweave Cape,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:vertebrax,VertebraX,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:whims_of_fate,Whims of Fate,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:anomalous_mirror,Anomalous Mirror,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:armored_knight_doll,Armored Knight Doll,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:cruel_fate,Cruel Fate,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:fiberglass_cloak,Fiberglass Cloak,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:flight,Flight,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:harmony,Harmony,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:heartfelt_confession,Heartfelt Confession,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:hourglass,Hourglass,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:innocence,Innocence,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:old_cross,Improvised Cross,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:pelmen,Pelmen,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:portable_tv,Portable TV,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:rusted_nail,Rusted Nail,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:scar_tissue,Scar Tissue,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:secondhand_gas_mask,Secondhand Gas Mask,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:shattered_tablet,Shattered Tablet,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:holy_locket,Holy Locket,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:reflection_necklace,Reflecting Necklace,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+terramity:ancient_stone_mask,Ancient Stone Mask,Terramity,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+terramity:flameguard_pendant,Flameguard Pendant,Terramity,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+terramity:focus_scarf,Focus Scarf,Terramity,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 celestial_artifacts:end_etching,End Etching,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Common,Must-Have ★,Rare,Needs the Warden to be defeated first (vanilla boss path)
 celestial_artifacts:life_etching,Life Etching,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Must-Have ★,Epic,Needs the Warden to be defeated first (vanilla boss path)
 celestial_artifacts:nihility_etching,Nihility Etching,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Must-Have ★,Epic,Needs the Warden to be defeated first (vanilla boss path)
+ramcompat:frost_robe,Frost Robe,Relics: Alex's Mobs Compat,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+caster_curios_bonus:all_by_movement,All by Movement,Caster Curios Bonus,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+caster_curios_bonus:night_hunter,Night Hunter,Caster Curios Bonus,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+caster_curios_bonus:zephyr_boon,Zephyr Boon,Caster Curios Bonus,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:climbing_claws,Climbing Claws,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:cloud_in_a_bottle,Cloud In A Bottle,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:lucky_horseshoe,Lucky Horseshoe,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:magiluminescence,Magiluminescence,Terra Curio,Path VI,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:shoe_spikes,Shoe Spikes,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+irons_spellbooks:teleportation_amulet,Amulet of Teleportation,Iron's Spells,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:eject_button,Eject Button,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:gravitum_strider,Gravitum Strider,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:baby,Baby,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:emergency_parachute,Emergency Parachute,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:tick,Tick,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:amphibian_boot,Amphibian Boot,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:aqua_walker,Aqua Walker,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:chorus_inhibitor,Chorus Inhibitor,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:elytra_booster,Elytra Booster,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:enders_hand,Ender Hand,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:ice_skates,Ice Skates,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:magma_walker,Magma Walker,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:roller_skates,Roller Skates,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+terramity:flippers,Dolphin Flippers,Terramity,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+terramity:inverse_sarashi,Inverse Sarashi,Terramity,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+terramity:slam_belt,Slam Belt,Terramity,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 goety:focus_pack,Focus Pack,Goety,Path II,Path II,Path II,Path II,Common,Uncommon,Uncommon,
 armageddon_mod:necrotoxic_shell,Necrotoxic Shell,Armageddon,Path VI,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
 armageddon_mod:withered_bone_effigy,Withered Bone Effigy,Armageddon,Path V,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
 brutality:second_heart,Second Heart,Brutality,Path VII,Path VII,Path VII,Path VII,Rare,Epic,Epic,
 brutality:self_repair_nexus,Self-Repair Nexus,Brutality,Path V,Wither,Path V,Wither,Epic,Legendary,Legendary,Needs the Wither to be defeated first (vanilla boss path)
+confluence:ankh_charm,Ankh Charm,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Rare,Rare,Rare,"Crafted from Detoxification Capsule, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:ankh_shield,Ankh Shield,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Epic,Epic,Epic,"Crafted from Ankh Charm, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:detoxification_capsule,Detoxification Capsule,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Rare,Rare,Rare,"Crafted from Holy Water, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:lava_waders,Lava Waders,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Epic,Epic,Epic,"Crafted from Lava Charm, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:magma_skull,Magma Skull,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Epic,Epic,Epic,"Crafted from Lava Charm, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:master_ninja_gear,Master Ninja Gear,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Legendary,Legendary,Legendary,"Crafted from Black Belt, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:molten_charm,Molten Charm,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Rare,Rare,Rare,"Crafted from Lava Charm, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:molten_skull_rose,Molten Skull Rose,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Epic,Epic,Epic,"Crafted from Magma Skull, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 goety:star_amulet,Soul Shield Amulet,Goety,Path V,Wither,Path V,Wither,Uncommon,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
 goety:warlock_robe_dark,Warlock Robe,Goety,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
 l2complements:eternal_totem_of_dream,Eternal Totem Of Dream,L2 Complements,Path V,Wither,Path V,Wither,Uncommon,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
@@ -146,7 +297,16 @@ brutality:redstone_anklet,Redstone Anklet,Brutality,Path II,Path II,Path 0–I,P
 brutality:scope_goggles,Scope Goggles,Brutality,Path V,Path 0–I,Path 0–I,Path 0–I,Epic,Epic,Epic,"Daemonium and Iridium can be looted from Terramity structures, so this is craftable on Path 0 with luck; rated one rarity higher for it"
 brutality:sharpness_anklet,Sharpness Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
 brutality:soldiers_syringe,Soldier's Syringe,Brutality,Path V,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Daemonium and Iridium can be looted from Terramity structures, so this is craftable on Path 0 with luck; rated one rarity higher for it"
-oddaccessories:malicious_ring,Malicious Ring,Odd Accessories,Path II,Path II,Path II,Path II,Common,Rare,Rare,
+confluence:avenger_emblem,Avenger Emblem,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Ranger Emblem, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:destroyer_emblem,Destroyer Emblem,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Avenger Emblem, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:mechanical_glove,Mechanical Glove,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Avenger Emblem, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:power_glove,Power Glove,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Titan Glove, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:sniper_scope,Sniper Scope,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Rifle Scope, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:stinger_necklace,Stinger Necklace,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Honey Comb, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+oddaccessories:clean_tablet,Clean Tablet,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Shattered Tablet, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+oddaccessories:malicious_ring,Malicious Ring,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Common,Rare,Rare,"Crafted from Old Ring, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+oddaccessories:malicious_tablet,Malicious Tablet,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Rare,Rare,Rare,"Crafted from Enlightening Tablet, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+oddaccessories:mimic_ring,Mimic Ring,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Rare,Rare,Rare,"Crafted from Cruel Fate, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 summonity:deepward_mask,Deepward Mask,Summonity,Path 0–I,Warden,Path 0–I,Warden,Common,Rare,Rare,Needs the Warden to be defeated first (vanilla boss path)
 summonity:fuel_rod,Fuel Rod,Summonity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
 summonity:gilded_scarab,Gilded Scarab,Summonity,Path VI,Path VI,Path VI,Path VI,Rare,Epic,Epic,
@@ -158,32 +318,99 @@ terramity:famine_gauntlet,Famine Gauntlet,Terramity,Path 0–I,Path 0–I,Path 0
 terramity:proximity_badge,Proximity Badge,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
 celestial_artifacts:abyss_will_badge,Abyss Will Badge,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Legendary,Legendary,"Crafted from End Etching, Nihility Etching, which now sits on the same path"
 celestial_artifacts:deer_inscribed_amulet,Deer Inscribed Amulet,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Legendary,Legendary,"Crafted from Life Etching, which now sits on the same path"
+armageddon_mod:vulcans_forged_striders,Vulcan's Forged Striders,Armageddon,Path V,Path 0–I,Path V,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:fart_in_a_jar,Fart In A Jar,Terra Curio,Path VI,Path 0–I,Path V,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:tabi,Tabi,Terra Curio,Path VI,Path 0–I,Path V,Path 0–I,Epic,Epic,Epic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 terramity:sacrificial_sash,Sacrificial Sash,Terramity,Path VI,Ender Dragon,Path V,Path V,Rare,Rare,Rare,"Crafted from Blink Belt, which now sits on the same path"
 brutality:dragonheart,Dragonheart,Brutality,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
 moreartifacts:ender_dragon_claw,Ender Dragon Claw,More Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+morerelics:bionic_eye,Bionic Eye,More Relics,Path VII,Path 0–I,Path VI,Path 0–I,Legendary,Legendary,Legendary,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 uniqueaccessories:hero_emblem,Hero Emblem,Unique Accessories,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
 celestial_artifacts:origin_etching,Origin Etching,Celestial Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Must-Have ★,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
 enigmaticlegacy:escape_scroll,Scroll of Postmortal Recall,Enigmatic Legacy,Path VII,Path VII,Path VII,Path VII,Rare,Legendary,Legendary,
 l2hostility:charm_of_looting_1,Unpolished Looting Charm,L2 Hostility,Path III,Path III,Path III,Path III,Uncommon,Must-Have ★,Uncommon,
+ars_nouveau:shapers_focus,Focus of Block Shaping,Ars Nouveau,Path III,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+ars_nouveau:summon_focus,Focus of Summoning,Ars Nouveau,Path V,Path 0–I,Path IV,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+artifacts:novelty_drinking_hat,Novelty Drinking Hat,Artifacts,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+brutality:trial_guardian_eyebrows,Trial Guardian's Eyebrows,Brutality,Path 0–I,Path VII,Path 0–I,Path VII,Uncommon,Legendary,Legendary,"Dropped by Trial Guardian, a side boss placed by its strength on the same path as its other drops"
+brutality:trial_guardian_hands,Trial Guardian's Hands,Brutality,Path 0–I,Path VII,Path 0–I,Path VII,Uncommon,Epic,Epic,"Dropped by Trial Guardian, a side boss placed by its strength on the same path as its other drops"
+caster_curios_bonus:voidsnare,Voidsnare,Caster Curios Bonus,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:ancient_chisel,Ancient Chisel,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:angler_earring,Angler Earring,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:brick_layer,Brick Layer,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:compass,Compass,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:depth_meter,Depth Meter,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:fishermans_pocket_guide,Fisherman's Pocket Guide,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:flower_boots,Flower Boots,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 confluence:metal_detector,Metal Detector,Terra Curio,Path 0–I,Warden,Path 0–I,Warden,Common,Rare,Rare,Needs the Warden to be defeated first (vanilla boss path)
-confluence:terraspark_boots,Terraspark Boots,Terra Curio,Path VI,Path VI,Path VI,Path VI,Rare,Epic,Epic,
+confluence:portable_cement_mixer,Portable Cement Mixer,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:radar,Radar,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:sextant,Sextant,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:tally_counter,Tally Counter,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:toolbelt,Toolbelt,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:toolbox,Toolbox,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:treasure_magnet,Treasure Magnet,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:weather_radio,Weather Radio,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+goety:plushie,Plushie,Goety,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+irons_spellbooks:emerald_stoneplate_ring,Emerald Stoneplate Ring,Iron's Spells,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+irons_spellbooks:invisibility_ring,Ring of Invisibility,Iron's Spells,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:depleted_spool,Depleted Spool,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+morerelics:moodworm,Moodworm,More Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:broken_telephone,Broken Telephone,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:clay_vessel,Clay Vessel,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:collectible_meal_toy,Collectible Meal Toy,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:discipline_rod,Discipline Rod,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:emerald_nose,Emerald Nose,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:old_ring,Old Ring,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:old_sock,Old Sock,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:oversized_magnet,Oversized Magnet,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:oxygen_rock,Oxygen Rock,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:poop,Poop,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:pork_effigy,Pork Effigy,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:sifting_jar,Sifting Jar,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:tattered_belt,Tattered Belt,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Epic,Epic,Epic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+oddaccessories:wrinkled_dollar,Wrinkled Dollar,Odd Accessories,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:drowned_belt,Drowned Belt,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Epic,Epic,Epic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:hunter_belt,Hunter Belt,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Epic,Epic,Epic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+relics:leather_belt,Quality Leather Belt,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+ramcompat:stink_gland,Stink Gland,Relics: Alex's Mobs Compat,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:fart_in_a_balloon,Fart In A Balloon,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Rare,Rare,Rare,"Crafted from Fart In A Jar, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:green_horseshoe_balloon,Green Horseshoe Balloon,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Rare,Rare,Rare,"Crafted from Fart In A Balloon, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:terraspark_boots,Terraspark Boots,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Rare,Epic,Epic,"Crafted from Lava Waders, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:black_belt,Black Belt,Terra Curio,Path VI,Path 0–I,Path V,Path 0–I,Legendary,Legendary,Legendary,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:holy_water,Holy Water,Terra Curio,Path VI,Path 0–I,Path V,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:lava_charm,Lava Charm,Terra Curio,Path VI,Path 0–I,Path V,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 moreartifacts:wither_shard,Wither Shard,More Artifacts,Path V,Wither,Path V,Wither,Rare,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
+mythsandlegends:fire_heart,Fire Heart,Myths and Legends,Path VI,Path 0–I,Path V,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+terramity:chthonic_curse_bracelets,Chthonic Curse Bracelets,Terramity,Path VI,Path 0–I,Path V,Path 0–I,Epic,Epic,Epic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+terramity:chthonic_nectar,Chthonic Nectar,Terramity,Path VI,Path 0–I,Path V,Path 0–I,Epic,Epic,Epic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+terramity:die_of_revival,Die of Revival,Terramity,Path VI,Path 0–I,Path V,Path 0–I,Epic,Epic,Epic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 celestial_artifacts:chaotic_etching,Chaotic Etching,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Must-Have ★,Legendary,Needs the Wither to be defeated first (vanilla boss path)
 celestial_artifacts:truth_etching,Truth Etching,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Must-Have ★,Epic,Needs the Wither to be defeated first (vanilla boss path)
 celestial_artifacts:twisted_brain,Twisted Brain,Celestial Artifacts,Path VI,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
 confluence:gravity_globe,Gravity Globe,Terra Curio,Path VII,Path VII,Path VI,Ender Dragon,Epic,Epic,Epic,
+confluence:magma_stone,Magma Stone,Terra Curio,Path VI,Path 0–I,Path V,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:sun_stone,Sun Stone,Terra Curio,Path VI,Path 0–I,Path V,Path 0–I,Epic,Epic,Epic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 celestial_artifacts:twisted_heart,Twisted Heart,Celestial Artifacts,Path VI,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
 confluence:paladins_shield,Paladin's Shield,Terra Curio,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
 moreartifacts:dragon_eye,Ender Dragon Eye,More Artifacts,Path VII,Path VII,Path VI,Ender Dragon,Legendary,Legendary,Legendary,
 moreartifacts:shulker_heart,Shulker Heart,More Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
-goety_revelation:broken_halo,Broken Halo,Goety Revelation,Path X,Path X,Path IX,Path IX,Legendary,Mythic,Mythic,
+enigmaticlegacy:angel_blessing,Angel's Blessing,Enigmatic Legacy,Path IV,Path 0–I,Path IV,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+enigmaticlegacy:golem_heart,Heart of the Golem,Enigmatic Legacy,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+enigmaticlegacy:insignia,Charming Insignia,Enigmatic Legacy,Path III,Path 0–I,Path III,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+enigmaticlegacy:magnet_ring,Magnetic Ring,Enigmatic Legacy,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+enigmaticlegacy:ocean_stone,Will of the Ocean,Enigmatic Legacy,Path III,Path 0–I,Path III,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+goety_revelation:broken_halo,Broken Halo,Goety Revelation,Path X,Path 0–I,Path IX,Path 0–I,Legendary,Mythic,Mythic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+irons_spellbooks:rotten_spell_book,Rotten Spell Book,Iron's Spells,Path IV,Path 0–I,Path III,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 l2hostility:charm_of_looting_4,Miraculous Looting Charm,L2 Hostility,Path XI,Path XI,Path XI,Path XI,Mythic,Must-Have ★,Mythic,
+traveloptics:pocket_black_hole,Pocket Black Hole,T.O Magic 'n Extras,Path VI,Path 0–I,Path VI,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 wizard_terra_cuiros:mana_polarizer,Magic Resonator,Wizard Terra Curios,Path VI,Wither,Path VI,Wither,Legendary,Legendary,Legendary,Needs the Wither to be defeated first (vanilla boss path)
 wizard_terra_cuiros:chaos_stone,Chaos Stone,Wizard Terra Curios,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
 wizard_terra_cuiros:dimensional_soul_artifact,Dimensional Soul Artifact,Wizard Terra Curios,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
 wizard_terra_cuiros:hide_of_astrum_deus,Hide of Astrum Deus,Wizard Terra Curios,Path V,Warden,Path V,Warden,Legendary,Legendary,Legendary,Needs the Warden to be defeated first (vanilla boss path)
 wizard_terra_cuiros:magic_sword_upgrade_orb,Magic Sword Upgrade Orb,Wizard Terra Curios,Path V,Warden,Path V,Warden,Epic,Legendary,Legendary,Needs the Warden to be defeated first (vanilla boss path)
 wizard_terra_cuiros:void_of_calamity,Void Of Calamity,Wizard Terra Curios,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+wizard_terra_cuiros:arc_flash_ring,Arc Flash Ring,Wizard Terra Curios,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 wizard_terra_cuiros:affliction,Affliction,Wizard Terra Curios,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Mythic,Mythic,Needs the Ender Dragon to be defeated first (vanilla boss path)
 wizard_terra_cuiros:echo_wings,Echo Wings,Wizard Terra Curios,Path V,Warden,Path V,Warden,Mythic,Mythic,Mythic,Needs the Warden to be defeated first (vanilla boss path)
 wizard_terra_cuiros:ender_wings,Ender Wings,Wizard Terra Curios,Path VI,Ender Dragon,Path VI,Ender Dragon,Mythic,Mythic,Mythic,Needs the Ender Dragon to be defeated first (vanilla boss path)
