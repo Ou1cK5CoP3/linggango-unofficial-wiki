@@ -7,7 +7,8 @@
 :root{--bevel:inset 2px 2px 0 rgba(255,255,255,.05),inset -2px -2px 0 rgba(0,0,0,.35)}
 html,body{background:var(--bg)!important}
 body{font-size:15.5px;line-height:1.6}
-#bgfx,.ip-orb,.ip-orbit{display:none!important}
+.ip-orb,.ip-orbit{display:none!important}
+#bgfx{z-index:0}main,.main,#main,#side,.side{position:relative;z-index:1}
 
 /* top bar */
 .top{background:var(--head)!important;box-shadow:0 2px 0 var(--line2)!important;backdrop-filter:none!important;border-bottom:2px solid var(--line)}
@@ -69,6 +70,8 @@ a{color:var(--accent)}
 p.note{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;color:var(--mute)}
 .ip-hero{align-items:start!important;padding-top:18px!important}
 .ip-title{letter-spacing:.01em!important;text-transform:none!important}
-.hfl{display:none!important}
+.hero .hfl .hf{opacity:.55}
+.hero .hfl .hf img{filter:saturate(.8) drop-shadow(0 3px 4px rgba(0,0,0,.5))}
 .shell{border:0!important;box-shadow:none!important;background:transparent!important}
 .ip-hero{grid-template-columns:minmax(0,1fr) 220px!important}.ip-stage{max-height:220px}
+body:not(.hub) #main{background:var(--bg)}

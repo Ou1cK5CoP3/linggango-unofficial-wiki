@@ -67,13 +67,13 @@ const srcText=d=>Array.isArray(d.src)?d.src.join(" "):d.src;
 /* floating relics behind the page, re-seeded per view */
 const bgfx=document.createElement("div");bgfx.id="bgfx";bgfx.setAttribute("aria-hidden","true");document.body.prepend(bgfx);
 let bgKey="";
-function seedBg(key,pool){return;bgKey=key;pool=pool.filter(d=>IC[d.id]);if(!pool.length)pool=D.filter(d=>d.r>=4&&IC[d.id]);
+function seedBg(key,pool){if(key===bgKey)return;bgKey=key;pool=pool.filter(d=>IC[d.id]);if(!pool.length)pool=D.filter(d=>d.r>=4&&IC[d.id]);
  const W=["i_netherite_sword","i_diamond_sword","i_trident","i_bow","i_totem_of_undying","i_nether_star","i_echo_shard","i_heart_of_the_sea"];
- const N=innerWidth<760?7:15;let h="";
+ const N=innerWidth<760?0:14,gx=i=>i%2?1+(i*7)%9:90+(i*5)%9;let h="";
  for(let i=0;i<N;i++){const z=i%3,x=(i*61+17)%96,y=(i*37+9)%92,dur=16+(i*13)%15,dl=-((i*2.7)%16).toFixed(1),dx=((i%2?1:-1)*(10+i*3%22));
   const src=i%5===4?`data:image/png;base64,${VA[W[i%W.length]]}`:icu(pool[(i*7+3)%pool.length].id);
-  h+=`<span class="fl z${z}" style="left:${x}%;top:${y}%;--dur:${dur}s;--dl:${dl}s;--dx:${dx}px"><img alt="" src="${src}"></span>`}
- for(let i=0;i<(innerWidth<760?6:14);i++)h+=`<span class="sp" style="left:${(i*53+11)%98}%;top:${(i*29+5)%95}%;--sp:var(--v-${SPR[i%SPR.length]});--dur:${5+i%6}s;--dl:-${(i*1.3%6).toFixed(1)}s"></span>`;
+  h+=`<span class="fl z${z}" style="left:${gx(i)}%;top:${y}%;--dur:${dur}s;--dl:${dl}s;--dx:${dx}px"><img alt="" src="${src}"></span>`}
+ for(let i=0;i<(innerWidth<760?0:12);i++)h+=`<span class="sp" style="left:${gx(i+1)}%;top:${(i*29+5)%95}%;--sp:var(--v-${SPR[i%SPR.length]});--dur:${5+i%6}s;--dl:-${(i*1.3%6).toFixed(1)}s"></span>`;
  bgfx.innerHTML=h}
 
 /* ---------- data prep ---------- */
@@ -169,7 +169,7 @@ function hubHome(){
 }
 
 function heroFloat(){const xs=byRank(D.filter(d=>d.r>=4&&IC[d.id])).filter((d,i)=>i%5===0).slice(0,12);
- return xs.map((d,i)=>`<span class="hf d${i%3}" style="left:${(i*83+7)%94}%;top:${(i*41+12)%78}%;--dur:${9+i%5*2}s;--dl:-${i*1.7}s"><img alt="" src="${icu(d.id)}"></span>`).join("")}
+ return xs.map((d,i)=>`<span class="hf d${i%3}" style="left:${i%2?2+(i*5)%14:88+(i*3)%7}%;top:${i%2?8+(i*13)%80:72+(i*11)%20}%;--dur:${9+i%5*2}s;--dl:-${i*1.7}s"><img alt="" src="${icu(d.id)}"></span>`).join("")}
 
 function hubList(kind,key){
  let xs,title,lede="",bar="",cr,hero="";
