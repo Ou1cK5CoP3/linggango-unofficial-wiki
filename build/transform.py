@@ -796,6 +796,24 @@ if "lg/config/fancymenu/assets/default_background.png" in uim:
     UI["bg"] = base64.b64encode(buf.getvalue()).decode()
 TT = json.loads((EX / "tooltip/assets.json").read_text()) if (EX / "tooltip/assets.json").exists() else {}
 
+# Drop what is not a relic: storage (backpacks, pouches, swap bags), items with no effect at all
+# (vanity, plushies, "does nothing") unless something is crafted from them, and creative-only items.
+STORAGE = re.compile(r"backpack|satchel|pouch|\bswap$|^(focus|brew|spellcaster) bag$|^deep learner$", re.I)
+NOFX = re.compile(r"^(vanity item|decorative|joke item[^;]*no stats|does absolutely nothing|no effect)", re.I)
+def junk(d):
+    if STORAGE.search(d["n"]) or (d["m"] in ("L2 Backpack", "Thermal") and re.search(r"quiver", d["n"], re.I)):
+        return "storage"
+    if re.search(r"creative only", " ".join(d.get("st") or []), re.I):
+        return "creative-only"
+    if NOFX.search(d.get("fx") or "") and not d.get("uid"):
+        return "no effect"
+    return None
+DROPPED = [(d["n"], d["m"], junk(d)) for d in D if junk(d)]
+gone = {d["id"] for d in D if junk(d)}
+D = [d for d in D if d["id"] not in gone]
+for d in D:
+    d["uid"] = [u for u in d.get("uid", []) if u not in gone]
+print("dropped", len(DROPPED), DROPPED)
 IC = {k: v for k, v in IC.items() if not k.startswith("marrelics:")}
 NM = {k: v for k, v in NM.items() if not k.startswith("marrelics:")} if isinstance(NM, dict) else NM
 U = [u for u in U if not str(u.get("id", "")).startswith("marrelics:")] if isinstance(U, list) else U

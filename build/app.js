@@ -69,11 +69,11 @@ const bgfx=document.createElement("div");bgfx.id="bgfx";bgfx.setAttribute("aria-
 let bgKey="";
 function seedBg(key,pool){if(key===bgKey)return;bgKey=key;pool=pool.filter(d=>IC[d.id]);if(!pool.length)pool=D.filter(d=>d.r>=4&&IC[d.id]);
  const W=["i_netherite_sword","i_diamond_sword","i_trident","i_bow","i_totem_of_undying","i_nether_star","i_echo_shard","i_heart_of_the_sea"];
- const N=innerWidth<760?0:14,gx=i=>i%2?1+(i*7)%9:90+(i*5)%9;let h="";
- for(let i=0;i<N;i++){const z=i%3,x=(i*61+17)%96,y=(i*37+9)%92,dur=16+(i*13)%15,dl=-((i*2.7)%16).toFixed(1),dx=((i%2?1:-1)*(10+i*3%22));
+ const N=innerWidth<760?0:14,R=Math.ceil(N/2)||1,gx=i=>i%2?1.5+(i*3)%5:92+(i*2)%5,gy=(i,o=0)=>((Math.floor(i/2)+.5+o)/R*94+3+((i*17)%5-2)).toFixed(1);let h="";
+ for(let i=0;i<N;i++){const z=i%3,y=gy(i),dur=16+(i*13)%15,dl=-((i*2.7)%16).toFixed(1),dx=((i%2?1:-1)*(10+i*3%22));
   const src=i%5===4?`data:image/png;base64,${VA[W[i%W.length]]}`:icu(pool[(i*7+3)%pool.length].id);
   h+=`<span class="fl z${z}" style="left:${gx(i)}%;top:${y}%;--dur:${dur}s;--dl:${dl}s;--dx:${dx}px"><img alt="" src="${src}"></span>`}
- for(let i=0;i<(innerWidth<760?0:12);i++)h+=`<span class="sp" style="left:${gx(i+1)}%;top:${(i*29+5)%95}%;--sp:var(--v-${SPR[i%SPR.length]});--dur:${5+i%6}s;--dl:-${(i*1.3%6).toFixed(1)}s"></span>`;
+ for(let i=0;i<(innerWidth<760?0:12);i++)h+=`<span class="sp" style="left:${gx(i+1)}%;top:${gy(i,.5)}%;--sp:var(--v-${SPR[i%SPR.length]});--dur:${5+i%6}s;--dl:-${(i*1.3%6).toFixed(1)}s"></span>`;
  bgfx.innerHTML=h}
 
 /* ---------- data prep ---------- */
@@ -168,8 +168,8 @@ function hubHome(){
  el("hs").onsubmit=e=>{e.preventDefault();const v=el("hq").value.trim();if(!v)return;el("q").value=v;st.q=v.toLowerCase();location.hash="#home"};
 }
 
-function heroFloat(){const xs=byRank(D.filter(d=>d.r>=4&&IC[d.id])).filter((d,i)=>i%5===0).slice(0,12);
- return xs.map((d,i)=>`<span class="hf d${i%3}" style="left:${i%2?2+(i*5)%14:88+(i*3)%7}%;top:${i%2?8+(i*13)%80:72+(i*11)%20}%;--dur:${9+i%5*2}s;--dl:-${i*1.7}s"><img alt="" src="${icu(d.id)}"></span>`).join("")}
+function heroFloat(){const xs=byRank(D.filter(d=>d.r>=4&&IC[d.id])).filter((d,i)=>i%5===0).slice(0,8);
+ return xs.map((d,i)=>`<span class="hf d${i%3}" style="left:${i<5?(i%2?3:11):[83,88.5,94][i-5]}%;top:${i<5?8+i*18:i===6?74:84}%;--dur:${9+i%5*2}s;--dl:-${i*1.7}s"><img alt="" src="${icu(d.id)}"></span>`).join("")}
 
 function hubList(kind,key){
  let xs,title,lede="",bar="",cr,hero="";
@@ -210,8 +210,7 @@ function modPage(m){
 function home(xs,asTable){
  let h=`${crumb("The Path")}<h1 class="qb">The Path</h1>
  <p class="lede">Every curio in Linggango V6.6.5b4 plus the 6 added curio mods, tiered by how hard it really is to get: the Keeper that unlocks it, the vanilla boss it needs (Warden, Wither, Ender Dragon), drop chances, pickaxe tier and trait farming. Inside each path, ★ Must-Have items come first, then the rarest.</p>
- <div class="stats"><span class="stat"><b>${TOTAL}</b> obtainable</span>${RN.map((n,i)=>`<span class="stat r${i}"><i class="rdot"></i>${n} <b>${D.filter(d=>d.r===i).length}</b></span>`).join("")}</div>
- <div class="legend"><span>${CT.replace('class="ct"','width="12" height="12"')} crafting ingredient</span>${Object.entries(ROLE).map(([k,v])=>`<span><i class="dot" style="background:${ROLE_C[k]}"></i>${v}</span>`).join("")}<span>Gold bottom edge: Loot</span><span>Top-left number: merged variants</span><span><b class="lgs">★</b> Must-Have: get it first</span></div>
+  <div class="legend"><span>${CT.replace('class="ct"','width="12" height="12"')} crafting ingredient</span><span>Bottom stripe: rarity colour</span><span>Top-left number: merged variants</span><span><b class="lgs">★</b> Must-Have: get it first</span></div>
  ${activeBar()}`;
  seedBg("path"+st.a,xs.filter(d=>d.r>=4));
  if(!asTable){
@@ -247,7 +246,7 @@ function page(d){
  const rel=d.tg.map((t,j)=>[t,d.st[j],d.sr&&d.sr[j]]),relic=rel.filter(r=>r[0]==="relic"),other=rel.filter(r=>r[0]!=="relic");
  let sh="";
  if(relic.length)sh+=`<div class="tw"><table><thead><tr><th>Stat</th><th>On pickup (random)</th><th>Max upgrade</th></tr></thead><tbody>${relic.map(r=>relicRows(r[1])).join("")}</tbody></table></div>`;
- if(other.length)sh+=`<div class="tw" style="margin-top:8px"><table class="stt"><thead><tr><th>Effect</th><th>Source</th></tr></thead><tbody>${other.map(([t,s,raw])=>`<tr><td>${fmt(s)}</td><td><span class="tg${t==="pack"?" pack":""}" title="${esc(TAGT[t]||"")}${raw?" · raw: "+esc(raw):""}">${TAGN[t]||t}</span></td></tr>`).join("")}</tbody></table></div>`;
+ if(other.length)sh+=`<div class="tw" style="margin-top:8px">${(()=>{const one=new Set(other.map(o=>o[0])).size===1,HD=/^(passive effect|active ability|when worn|when equipped|set bonus|abilities?)\s*:?$/i;const tg=(t,raw)=>`<span class="tg${t==="pack"?" pack":""}" title="${esc(TAGT[t]||"")}${raw?" · raw: "+esc(raw):""}">${TAGN[t]||t}</span>`;return `<table class="stt"><thead><tr><th>Effect</th>${one?"":"<th>Source</th>"}</tr></thead><tbody>${other.map(([t,s,raw])=>HD.test(String(s).trim())?`<tr class="sth"><td colspan="2">${fmt(s)}</td></tr>`:`<tr><td>${fmt(s)}</td>${one?"":`<td>${tg(t,raw)}</td>`}</tr>`).join("")}</tbody></table>${one?`<p class="stsrc">Source: ${tg(other[0][0],"")}</p>`:""}`})()}</div>`;
  if(sh)secs.push(["stats","Stats",sh]);
  if(d.gr){const g=d.gr;const cells=g.c.map(c=>c?`<div class="cell"${BYID[c[0]]?` data-t="${BYID[c[0]].ix}"`:""} title="${esc((NM[c[0]]||c[0])+(c[1]?" (tag "+c[1].slice(1)+")":""))}">${c[0]?img(c[0]):'<span class="ph">'+esc(c[1].split(":")[1]||c[1])+'</span>'}${c[1]?'<span class="tagm">#</span>':""}</div>`:'<div class="cell"></div>').join("");
   secs.push(["recipe","Recipe",`<div class="craft"><div class="grid" style="grid-template-columns:repeat(${g.w},42px)">${cells}</div><span class="arrow">→</span><div class="cell res">${img(d.id)}${g.n>1?`<span class="cnt">${g.n}</span>`:""}</div><div class="st">Station: <b>${esc(g.st)}</b>. Cells marked # accept any item with that tag; the icon is one example.</div></div>`])}
