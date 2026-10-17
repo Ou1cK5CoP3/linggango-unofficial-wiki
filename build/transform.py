@@ -240,6 +240,8 @@ RNG = set()
 for d in D:
     i = d["id"]
     _src = re.split(r" · per mod page", d["src"] if isinstance(d["src"], str) else " ".join(d["src"]))[0]
+    if re.search(r"\b(Apostle|Gundalf|Sniffer|Trial Guardian|Virtue|Gob|Bringer of Doom|Shadow Wizard)\b", _src):
+        continue
     _chest = re.match(r"(chest:|Suspicious Bag|archaeology:)", _src) and not re.search(r"\bbag: |drop \(", _src)
     if d["g"] == "Loot" and NT[i] > 0 and NT[i] == d["t"] and not GATE[i] and (_chest or (d["why"] and all(RNG_WHY.match(w) for w in d["why"]))) \
             and not re.search(r"\b(bag|drop \(100%\))|Nether|Bastion|Piglin|End City", re.split(r" · per mod page", d["src"] if isinstance(d["src"], str) else " ".join(d["src"]))[0]):
@@ -272,6 +274,37 @@ for _ in range(3):
             RNG.add(i)
             d["why"] = []
             WHY_ADD[i].append(f"Crafted from {', '.join(via)}, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too")
+
+# Nether-only sources: the pack keeps the Nether locked until Eldorath falls (Path V), so random loot that only
+# exists there, and recipes that need a Nether-only material, cannot sit before Path V.
+NETHER = 5
+_NMOB = re.compile(r"^(Blaze|Wither Skeleton|Ghast|Magma Cube|Piglin|Piglin Brute|Hoglin|Strider|Zombified Piglin) drop \([\d.]+%\)$")
+_NCHEST = re.compile(r"^chest: (Bastion Remnant|Crimson Tower|Fortress|Nether Bridge|Soul Fortress|Piglin Ruin|Nether)\b")
+_NING = re.compile(r"\b(Wither Skeleton Skull|Obsidian Rose|Netherite (Scrap|Ingot)|Shroomlight|Ghast Tear|Nether Wart|Warped Focus|Ancient Debris)\b")
+_KEYN = re.compile(r"key item: .*\((Blaze|Wither Skeleton|Ghast|Magma Cube) drop\)|key item: .*\(chest: (Bastion Remnant|Crimson Tower|Fortress|Nether Bridge)")
+for d in D:
+    i = d["id"]
+    src = d["src"] if isinstance(d["src"], str) else " ".join(d["src"])
+    head = split_top(src, " · ")[0]
+    why = None
+    if d["g"] == "Loot" and (_NMOB.match(head) or _NCHEST.match(head)):
+        why = "Only drops in the Nether, which stays locked until Eldorath falls"
+    elif d["g"] == "Craft" and (_NING.search(head) or _KEYN.search(src)):
+        why = "Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+    if why and NT[i] < NETHER:
+        NT[i] = max(NT[i], NETHER); NA[i] = max(NA[i], NETHER)
+        RNG.discard(i)
+        WHY_ADD[i] = [w for w in WHY_ADD[i] if "from the start" not in w] + [why]
+# a recipe can never come earlier than any curio it is made from
+for _ in range(6):
+    for d in D:
+        i = d["id"]
+        hi = [r for r in ING[i] if NT[r] > NT[i]]
+        if d["g"] == "Craft" and hi:
+            top = max(NT[r] for r in hi)
+            NT[i] = top; NA[i] = max(NA[i], top)
+            RNG.discard(i)
+            WHY_ADD[i] = [w for w in WHY_ADD[i] if "from the start" not in w] + [f"Crafted from {', '.join(sorted(BYID[r]['n'] for r in hi if NT[r] == top))}, which sits on a later path"]
 
 # Drops of the same side boss share one path: the boss's own (the highest any of its drops was given).
 BOSS_OF = {}

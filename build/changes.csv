@@ -45,7 +45,7 @@ oddaccessories:regret_of_a_salaryman,Regret Of A Salaryman,Odd Accessories,Path 
 oddaccessories:universal_attractor,Universal Attractor,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Common,Common,Common,"Crafted from Collectible Meal Toy, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 oddaccessories:villager_mask,Villager Mask,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Rare,Rare,"Crafted from Malice, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 brutality:wrath,Sin of Wrath,Brutality,Path VI,Path VI,Path VI,Path VI,Rare,Legendary,Legendary,
-confluence:celestial_stone,Celestial Stone,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Epic,Epic,Epic,"Crafted from Sun Stone, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:celestial_stone,Celestial Stone,Terra Curio,Path VI,Path V,Path VI,Path V,Epic,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
 goety:nether_robe_warped,Nether Robe,Goety,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
 goety:unholy_hat_halo,Unholy Hat,Goety,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
 goety_revelation:apollyon_robe,Apollyon Robe,Goety Revelation,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
@@ -120,7 +120,12 @@ brutality:ruby_anklet,Ruby Anklet,Brutality,Path II,Path II,Path 0–I,Path 0–
 brutality:sapphire_anklet,Sapphire Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
 brutality:ultra_dodge_anklet,Ultra Dodge Anklet,Brutality,Path IX,Path IX,Path IX,Path IX,Legendary,Mythic,Mythic,
 confluence:bee_cloak,Bee Cloak,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Honey Comb, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
-lethality:pale_branch,Pale Branch,Lethality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+confluence:nutrient_solution,Nutrient Solution,Terra Curio,Path II,Path V,Path II,Path V,Uncommon,Rare,Rare,"Crafted from Energy Bar, which sits on a later path"
+confluence:obsidian_shield,Obsidian Shield,Terra Curio,Path 0–I,Path V,Path 0–I,Path V,Common,Rare,Rare,"Crafted from Obsidian Skull, which sits on a later path"
+confluence:obsidian_skull,Obsidian Skull,Terra Curio,Path 0–I,Path V,Path 0–I,Path V,Common,Uncommon,Uncommon,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+lethality:pale_branch,Pale Branch,Lethality,Path 0–I,Path V,Path 0–I,Path V,Common,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+moreartifacts:decay_amulet,Decay Amulet,More Artifacts,Path 0–I,Path V,Path 0–I,Path V,Common,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+moreartifacts:necroplasm_amulet,Necroplasm Amulet,More Artifacts,Path 0–I,Path V,Path 0–I,Path V,Uncommon,Epic,Epic,"Crafted from Decay Amulet, which sits on a later path"
 morerelics:wonder_of_u,Wonder of U,More Relics,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Legendary,Legendary,Needs the Warden to be defeated first (vanilla boss path)
 oddaccessories:crown_of_nails,Crown Of Nails,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Rare,Rare,Rare,"Crafted from Rusted Nail, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 oddaccessories:enlightening_ring,Enlightening Ring,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Common,Uncommon,Uncommon,"Crafted from Old Ring, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
@@ -165,7 +170,8 @@ confluence:cloud_in_a_balloon,Cloud In A Balloon,Terra Curio,Path II,Path 0–I,
 confluence:frog_gear,Frog Gear,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Tiger Climbing Gear, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 confluence:frog_webbing,Frog Webbing,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Tiger Climbing Gear, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 confluence:honey_balloon,Honey Balloon,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Honey Comb, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
-confluence:obsidian_horseshoe,Obsidian Horseshoe,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Lucky Horseshoe, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:obsidian_horseshoe,Obsidian Horseshoe,Terra Curio,Path II,Path V,Path II,Path V,Uncommon,Rare,Rare,"Crafted from Obsidian Skull, which sits on a later path"
+confluence:obsidian_water_walking_boots,Obsidian Water Walking Boots,Terra Curio,Path 0–I,Path V,Path 0–I,Path V,Common,Rare,Rare,"Crafted from Obsidian Skull, which sits on a later path"
 confluence:pink_horseshoe_balloon,Pink Horseshoe Balloon,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Lucky Horseshoe, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 confluence:tiger_climbing_gear,Tiger Climbing Gear,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Common,Uncommon,Uncommon,"Crafted from Climbing Claws, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 confluence:white_horseshoe_balloon,White Horseshoe Balloon,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Common,Common,Common,"Crafted from Lucky Horseshoe, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
@@ -190,6 +196,7 @@ caster_curios_bonus:mind_to_matter,Mind to Matter,Caster Curios Bonus,Path II,Pa
 confluence:band_of_regeneration,Band Of Regeneration,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 confluence:bezoar,Bezoar,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 confluence:brain_of_confusion,Brain Of Confusion,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:energy_bar,Energy Bar,Terra Curio,Path II,Path V,Path 0–I,Path V,Uncommon,Rare,Rare,"Only drops in the Nether, which stays locked until Eldorath falls"
 confluence:honey_comb,Honey Comb,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 confluence:royal_gel,Royal Gel,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 confluence:shackle,Shackle,Terra Curio,Path II,Path 0–I,Path 0–I,Path 0–I,Common,Common,Common,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
@@ -260,14 +267,14 @@ armageddon_mod:necrotoxic_shell,Necrotoxic Shell,Armageddon,Path VI,Wither,Path 
 armageddon_mod:withered_bone_effigy,Withered Bone Effigy,Armageddon,Path V,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
 brutality:second_heart,Second Heart,Brutality,Path VII,Path VII,Path VII,Path VII,Rare,Epic,Epic,
 brutality:self_repair_nexus,Self-Repair Nexus,Brutality,Path V,Wither,Path V,Wither,Epic,Legendary,Legendary,Needs the Wither to be defeated first (vanilla boss path)
-confluence:ankh_charm,Ankh Charm,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Rare,Rare,Rare,"Crafted from Detoxification Capsule, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
-confluence:ankh_shield,Ankh Shield,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Epic,Epic,Epic,"Crafted from Ankh Charm, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
-confluence:detoxification_capsule,Detoxification Capsule,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Rare,Rare,Rare,"Crafted from Holy Water, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
-confluence:lava_waders,Lava Waders,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Epic,Epic,Epic,"Crafted from Lava Charm, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
-confluence:magma_skull,Magma Skull,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Epic,Epic,Epic,"Crafted from Lava Charm, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
-confluence:master_ninja_gear,Master Ninja Gear,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Legendary,Legendary,Legendary,"Crafted from Black Belt, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
-confluence:molten_charm,Molten Charm,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Rare,Rare,Rare,"Crafted from Lava Charm, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
-confluence:molten_skull_rose,Molten Skull Rose,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Epic,Epic,Epic,"Crafted from Magma Skull, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+confluence:ankh_charm,Ankh Charm,Terra Curio,Path VI,Path V,Path VI,Path V,Rare,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+confluence:ankh_shield,Ankh Shield,Terra Curio,Path VI,Path V,Path VI,Path V,Epic,Epic,Epic,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+confluence:detoxification_capsule,Detoxification Capsule,Terra Curio,Path VI,Path V,Path VI,Path V,Rare,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+confluence:lava_waders,Lava Waders,Terra Curio,Path VI,Path V,Path VI,Path V,Epic,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+confluence:magma_skull,Magma Skull,Terra Curio,Path VI,Path V,Path VI,Path V,Epic,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+confluence:master_ninja_gear,Master Ninja Gear,Terra Curio,Path VI,Path V,Path VI,Path V,Legendary,Legendary,Legendary,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+confluence:molten_charm,Molten Charm,Terra Curio,Path VI,Path V,Path VI,Path V,Rare,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+confluence:molten_skull_rose,Molten Skull Rose,Terra Curio,Path VI,Path V,Path VI,Path V,Epic,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
 goety:star_amulet,Soul Shield Amulet,Goety,Path V,Wither,Path V,Wither,Uncommon,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
 goety:warlock_robe_dark,Warlock Robe,Goety,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
 l2complements:eternal_totem_of_dream,Eternal Totem Of Dream,L2 Complements,Path V,Wither,Path V,Wither,Uncommon,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
@@ -318,9 +325,8 @@ terramity:famine_gauntlet,Famine Gauntlet,Terramity,Path 0–I,Path 0–I,Path 0
 terramity:proximity_badge,Proximity Badge,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
 celestial_artifacts:abyss_will_badge,Abyss Will Badge,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Legendary,Legendary,"Crafted from End Etching, Nihility Etching, which now sits on the same path"
 celestial_artifacts:deer_inscribed_amulet,Deer Inscribed Amulet,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Legendary,Legendary,"Crafted from Life Etching, which now sits on the same path"
-armageddon_mod:vulcans_forged_striders,Vulcan's Forged Striders,Armageddon,Path V,Path 0–I,Path V,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
-confluence:fart_in_a_jar,Fart In A Jar,Terra Curio,Path VI,Path 0–I,Path V,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
-confluence:tabi,Tabi,Terra Curio,Path VI,Path 0–I,Path V,Path 0–I,Epic,Epic,Epic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:fart_in_a_jar,Fart In A Jar,Terra Curio,Path VI,Path V,Path V,Path V,Rare,Rare,Rare,"Only drops in the Nether, which stays locked until Eldorath falls"
+confluence:tabi,Tabi,Terra Curio,Path VI,Path V,Path V,Path V,Epic,Epic,Epic,"Only drops in the Nether, which stays locked until Eldorath falls"
 terramity:sacrificial_sash,Sacrificial Sash,Terramity,Path VI,Ender Dragon,Path V,Path V,Rare,Rare,Rare,"Crafted from Blink Belt, which now sits on the same path"
 brutality:dragonheart,Dragonheart,Brutality,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
 moreartifacts:ender_dragon_claw,Ender Dragon Claw,More Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
@@ -374,12 +380,12 @@ relics:drowned_belt,Drowned Belt,Relics,Path II,Path 0–I,Path 0–I,Path 0–I
 relics:hunter_belt,Hunter Belt,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Epic,Epic,Epic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 relics:leather_belt,Quality Leather Belt,Relics,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 ramcompat:stink_gland,Stink Gland,Relics: Alex's Mobs Compat,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
-confluence:fart_in_a_balloon,Fart In A Balloon,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Rare,Rare,Rare,"Crafted from Fart In A Jar, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
-confluence:green_horseshoe_balloon,Green Horseshoe Balloon,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Rare,Rare,Rare,"Crafted from Fart In A Balloon, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
-confluence:terraspark_boots,Terraspark Boots,Terra Curio,Path VI,Path 0–I,Path VI,Path 0–I,Rare,Epic,Epic,"Crafted from Lava Waders, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
-confluence:black_belt,Black Belt,Terra Curio,Path VI,Path 0–I,Path V,Path 0–I,Legendary,Legendary,Legendary,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
-confluence:holy_water,Holy Water,Terra Curio,Path VI,Path 0–I,Path V,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
-confluence:lava_charm,Lava Charm,Terra Curio,Path VI,Path 0–I,Path V,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:fart_in_a_balloon,Fart In A Balloon,Terra Curio,Path VI,Path V,Path VI,Path V,Rare,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+confluence:green_horseshoe_balloon,Green Horseshoe Balloon,Terra Curio,Path VI,Path V,Path VI,Path V,Rare,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+confluence:terraspark_boots,Terraspark Boots,Terra Curio,Path VI,Path V,Path VI,Path V,Rare,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+confluence:black_belt,Black Belt,Terra Curio,Path VI,Path V,Path V,Path V,Legendary,Legendary,Legendary,"Only drops in the Nether, which stays locked until Eldorath falls"
+confluence:holy_water,Holy Water,Terra Curio,Path VI,Path V,Path V,Path V,Rare,Rare,Rare,"Only drops in the Nether, which stays locked until Eldorath falls"
+confluence:lava_charm,Lava Charm,Terra Curio,Path VI,Path V,Path V,Path V,Rare,Rare,Rare,"Only drops in the Nether, which stays locked until Eldorath falls"
 moreartifacts:wither_shard,Wither Shard,More Artifacts,Path V,Wither,Path V,Wither,Rare,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
 mythsandlegends:fire_heart,Fire Heart,Myths and Legends,Path VI,Path 0–I,Path V,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 terramity:chthonic_curse_bracelets,Chthonic Curse Bracelets,Terramity,Path VI,Path 0–I,Path V,Path 0–I,Epic,Epic,Epic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
@@ -389,8 +395,8 @@ celestial_artifacts:chaotic_etching,Chaotic Etching,Celestial Artifacts,Path V,W
 celestial_artifacts:truth_etching,Truth Etching,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Must-Have ★,Epic,Needs the Wither to be defeated first (vanilla boss path)
 celestial_artifacts:twisted_brain,Twisted Brain,Celestial Artifacts,Path VI,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
 confluence:gravity_globe,Gravity Globe,Terra Curio,Path VII,Path VII,Path VI,Ender Dragon,Epic,Epic,Epic,
-confluence:magma_stone,Magma Stone,Terra Curio,Path VI,Path 0–I,Path V,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
-confluence:sun_stone,Sun Stone,Terra Curio,Path VI,Path 0–I,Path V,Path 0–I,Epic,Epic,Epic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+confluence:magma_stone,Magma Stone,Terra Curio,Path VI,Path V,Path V,Path V,Rare,Uncommon,Uncommon,"Only drops in the Nether, which stays locked until Eldorath falls"
+confluence:sun_stone,Sun Stone,Terra Curio,Path VI,Path V,Path V,Path V,Epic,Rare,Rare,"Only drops in the Nether, which stays locked until Eldorath falls"
 celestial_artifacts:twisted_heart,Twisted Heart,Celestial Artifacts,Path VI,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
 confluence:paladins_shield,Paladin's Shield,Terra Curio,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
 moreartifacts:dragon_eye,Ender Dragon Eye,More Artifacts,Path VII,Path VII,Path VI,Ender Dragon,Legendary,Legendary,Legendary,
@@ -400,14 +406,22 @@ enigmaticlegacy:golem_heart,Heart of the Golem,Enigmatic Legacy,Path II,Path 0�
 enigmaticlegacy:insignia,Charming Insignia,Enigmatic Legacy,Path III,Path 0–I,Path III,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 enigmaticlegacy:magnet_ring,Magnetic Ring,Enigmatic Legacy,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 enigmaticlegacy:ocean_stone,Will of the Ocean,Enigmatic Legacy,Path III,Path 0–I,Path III,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
-goety_revelation:broken_halo,Broken Halo,Goety Revelation,Path X,Path 0–I,Path IX,Path 0–I,Legendary,Mythic,Mythic,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
+goety_revelation:broken_halo,Broken Halo,Goety Revelation,Path X,Path X,Path IX,Path IX,Legendary,Mythic,Mythic,
 irons_spellbooks:rotten_spell_book,Rotten Spell Book,Iron's Spells,Path IV,Path 0–I,Path III,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 l2hostility:charm_of_looting_4,Miraculous Looting Charm,L2 Hostility,Path XI,Path XI,Path XI,Path XI,Mythic,Must-Have ★,Mythic,
 traveloptics:pocket_black_hole,Pocket Black Hole,T.O Magic 'n Extras,Path VI,Path 0–I,Path VI,Path 0–I,Rare,Rare,Rare,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 wizard_terra_cuiros:mana_polarizer,Magic Resonator,Wizard Terra Curios,Path VI,Wither,Path VI,Wither,Legendary,Legendary,Legendary,Needs the Wither to be defeated first (vanilla boss path)
 wizard_terra_cuiros:chaos_stone,Chaos Stone,Wizard Terra Curios,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+wizard_terra_cuiros:elemental_quiver,Elemental Quiver,Wizard Terra Curios,Path II,Path V,Path II,Path V,Rare,Epic,Epic,"Crafted from Deadshot Brooch, which sits on a later path"
+wizard_terra_cuiros:goety_focus,Evil and Desolate Crystalline,Wizard Terra Curios,Path 0–I,Path V,Path 0–I,Path V,Rare,Legendary,Legendary,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
 wizard_terra_cuiros:dimensional_soul_artifact,Dimensional Soul Artifact,Wizard Terra Curios,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+wizard_terra_cuiros:wulfrum_battery,Wulfrum Battery,Wizard Terra Curios,Path 0–I,Path V,Path 0–I,Path V,Common,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
 wizard_terra_cuiros:hide_of_astrum_deus,Hide of Astrum Deus,Wizard Terra Curios,Path V,Warden,Path V,Warden,Legendary,Legendary,Legendary,Needs the Warden to be defeated first (vanilla boss path)
+wizard_terra_cuiros:statis_blessing,Statis' Blessing,Wizard Terra Curios,Path V,Path VI,Path V,Path VI,Legendary,Legendary,Legendary,"Crafted from Papyrus Scarab, which sits on a later path"
+wizard_terra_cuiros:statis_curse,Statis' Curse,Wizard Terra Curios,Path V,Path VI,Path V,Path VI,Legendary,Mythic,Mythic,"Crafted from Statis' Blessing, which sits on a later path"
+wizard_terra_cuiros:jelly_charged_battery,Jelly Charged Battery,Wizard Terra Curios,Path 0–I,Path V,Path 0–I,Path V,Uncommon,Epic,Epic,"Crafted from Wulfrum Battery, which sits on a later path"
+wizard_terra_cuiros:star_tainted_generator,Star Tainted Generator,Wizard Terra Curios,Path 0–I,Path V,Path 0–I,Path V,Rare,Legendary,Legendary,"Crafted from Jelly Charged Battery, which sits on a later path"
+wizard_terra_cuiros:nucleogenesis,Nucleogenesis,Wizard Terra Curios,Path 0–I,Path V,Path 0–I,Path V,Rare,Legendary,Legendary,"Crafted from Star Tainted Generator, which sits on a later path"
 wizard_terra_cuiros:magic_sword_upgrade_orb,Magic Sword Upgrade Orb,Wizard Terra Curios,Path V,Warden,Path V,Warden,Epic,Legendary,Legendary,Needs the Warden to be defeated first (vanilla boss path)
 wizard_terra_cuiros:void_of_calamity,Void Of Calamity,Wizard Terra Curios,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
 wizard_terra_cuiros:arc_flash_ring,Arc Flash Ring,Wizard Terra Curios,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
