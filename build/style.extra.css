@@ -268,3 +268,21 @@ details.raw ul{margin:4px 0;padding-left:18px}
 /* tiles play their pop-in only when their tier scrolls into view (same effect, ~60 animations instead of 1,715) */
 .tier:not(.seen) .t{animation:none}
 .tier{contain-intrinsic-size:auto 420px}
+/* ==== v3.1: relic tiles on The Path ==== */
+.tiles{gap:7px;padding:12px;background:radial-gradient(120% 140% at 0% 0%,color-mix(in srgb,var(--tc) 14%,transparent),transparent 55%),repeating-linear-gradient(45deg,rgba(255,255,255,.018) 0 2px,transparent 2px 7px),linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.32))}
+.t{width:52px;height:52px;border-radius:7px;border:1px solid color-mix(in srgb,var(--rc) 75%,#000);
+ background:radial-gradient(circle at 50% 42%,color-mix(in srgb,var(--rc) 42%,transparent) 0,transparent 62%),
+ linear-gradient(160deg,color-mix(in srgb,var(--rc) 22%,#1d1f2a),#0e0f16 85%);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 -2px 0 rgba(0,0,0,.45),inset 0 0 10px color-mix(in srgb,var(--rc) 30%,transparent),0 2px 4px rgba(0,0,0,.35)}
+.t img,.t .aimg{width:32px;height:32px;image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 2px 0 rgba(0,0,0,.55))}
+.t .aimg img{width:32px;height:32px}
+.t.r3{box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 0 12px color-mix(in srgb,var(--rc) 45%,transparent),0 0 6px color-mix(in srgb,var(--rc) 35%,transparent)}
+.t.r4,.t.r5{box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 0 14px color-mix(in srgb,var(--rc) 55%,transparent),0 0 10px color-mix(in srgb,var(--rc) 50%,transparent)}
+.t.r4 img,.t.r5 img,.t.r6 img{filter:drop-shadow(0 0 3px color-mix(in srgb,var(--rc2) 80%,transparent)) drop-shadow(0 2px 0 rgba(0,0,0,.5))}
+/* light sweep: diagonal sheen that crosses the tile */
+.t .sh{display:block!important;position:absolute;inset:0;overflow:hidden;border-radius:inherit;pointer-events:none;z-index:3}
+.t .sh::before{content:"";position:absolute;top:-30%;bottom:-30%;left:0;width:42%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.08) 30%,color-mix(in srgb,var(--rc2) 70%,#fff) 50%,rgba(255,255,255,.08) 70%,transparent);transform:translateX(-170%) skewX(-20deg);opacity:.9;mix-blend-mode:screen}
+.t.sweep .sh::before,.t:hover .sh::before{animation:sweep .85s cubic-bezier(.4,0,.2,1) 1 forwards}
+@keyframes sweep{to{transform:translateX(320%) skewX(-20deg)}}
+@media (min-width:1600px){.t{width:60px;height:60px}.t img,.t .aimg,.t .aimg img{width:48px;height:48px}}
+@media (prefers-reduced-motion:reduce){.t .sh::before{animation:none!important}}

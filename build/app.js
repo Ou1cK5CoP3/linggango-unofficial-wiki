@@ -130,7 +130,7 @@ function refreshSide(){
  return xs}
 
 /* ---------- shared bits ---------- */
-const tile=(d,i=99)=>`<a style="--i:${Math.min(i,40)}" class="t c${d.c} r${d.r}${d.g==="Loot"?" L":""}" data-mf="${mf(d.m)[0]}" href="#i${d.ix}" data-t="${d.ix}" aria-label="${esc(d.n)}">${img(d.id)}${d.k>1?`<span class="kv">${d.k}</span>`:""}${d.uid.length?CT:""}${d.nw?'<span class="nwb">new</span>':""}${isMust(d)?'<span class="star" aria-label="Must-Have">★</span>':""}<span class="sh" style="--dl:${(d.ix*.37%5).toFixed(2)}s"></span></a>`;
+const tile=(d,i=99)=>`<a style="--i:${Math.min(i,40)}" class="t c${d.c} r${d.r}${d.g==="Loot"?" L":""}" data-mf="${mf(d.m)[0]}" href="#i${d.ix}" data-t="${d.ix}" aria-label="${esc(d.n)}">${AN[d.id]?`<span class="aimg" data-an="${esc(d.id)}">${img(d.id)}</span>`:img(d.id)}${d.k>1?`<span class="kv">${d.k}</span>`:""}${d.uid.length?CT:""}${d.nw?'<span class="nwb">new</span>':""}${isMust(d)?'<span class="star" aria-label="Must-Have">★</span>':""}<span class="sh" style="--dl:${(d.ix*.37%5).toFixed(2)}s"></span></a>`;
 const gcard=(d,i)=>`<a class="gc r${d.r}" style="--i:${Math.min(i,40)}" href="#i${d.ix}" data-t="${d.ix}"><span class="ak">${ACT[d.t][0]}</span><span class="rk">${isMust(d)?"★ Must-Have":RN[d.r]}</span><span class="pic">${img(d.id)}</span><b>${esc(d.n)}</b><small>${esc(d.sl.join(", "))} · ${esc(d.m)}</small></a>`;
 const rbar=xs=>`<span class="bar5">${RNS.map(i=>{const n=xs.filter(d=>d.r===i).length;return n?`<i style="flex:${n};background:${RC[i]}"></i>`:""}).join("")}</span>`;
 const cards=xs=>`<div class="cards">${xs.map(x=>`<a class="card" href="#i${x.ix}" data-t="${x.ix}">${img(x.id)}<span>${esc(x.n)}</span></a>`).join("")}</div>`;
@@ -419,3 +419,8 @@ document.addEventListener("keydown",e=>{if(location.hash.startsWith("#i")&&!/INP
  addEventListener("scroll",()=>b.classList.toggle("on",scrollY>600),{passive:true})}
 {const s=document.createElement("style");s.textContent=Object.entries(ROLE_C).map(([k,v])=>`.t.c${k}{--cat:${v}}`).join("");document.head.appendChild(s)}
 render();decorate();
+/* random light sweep across visible strong relics (Legendary, Mythic, Must-Have) */
+{const vis=new Set();const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?vis.add(e.target):vis.delete(e.target)));
+ const watch=()=>document.querySelectorAll(".t.r4:not([data-sw]),.t.r5:not([data-sw]),.t.r6:not([data-sw])").forEach(t=>{t.dataset.sw=1;io.observe(t)});
+ new MutationObserver(watch).observe(el("main"),{childList:true});watch();
+ if(!RM)setInterval(()=>{if(document.hidden||!vis.size)return;const a=[...vis];for(let k=0;k<Math.min(3,a.length);k++){const t=a[Math.random()*a.length|0];if(!t.isConnected||t.classList.contains("sweep"))continue;t.classList.add("sweep");setTimeout(()=>t.classList.remove("sweep"),900)}},700)}
