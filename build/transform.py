@@ -787,6 +787,9 @@ for f in sorted((EX / "bosses").glob("*.json")):
         B3[rec["key"]] = rec
 BST = json.loads((EX / "stats/bosses.json").read_text()) if (EX / "stats/bosses.json").exists() else {}
 UI = {}
+# Curios slot icons (the empty-slot silhouettes each mod registers), keyed by slot id
+if (EX / "slots/slot_icons.json").exists():
+    UI["cslot"] = json.loads((EX / "slots/slot_icons.json").read_text())
 uim = json.loads((EX / "ui/assets.json").read_text()) if (EX / "ui/assets.json").exists() else {}
 for key, name in (("logo", "lg/config/fancymenu/assets/linggango_menu/logo_menu.png"), ("bars", "gui/bars"), ("slots", "gui/container/inventory")):
     if name in uim:
@@ -800,7 +803,7 @@ TT = json.loads((EX / "tooltip/assets.json").read_text()) if (EX / "tooltip/asse
 
 # Drop what is not a relic: storage (backpacks, pouches, swap bags), items with no effect at all
 # (vanity, plushies, "does nothing") unless something is crafted from them, and creative-only items.
-STORAGE = re.compile(r"backpack|satchel|pouch|\bswap$|^(focus|brew|spellcaster) bag$|^deep learner$", re.I)
+STORAGE = re.compile(r"backpack|satchel|pouch|\bswap$|^(focus|brew|spellcaster) bag$|^deep learner$|terminal|warp index$|^ring of ender$", re.I)
 NOFX = re.compile(r"^(vanity item|decorative|joke item[^;]*no stats|does absolutely nothing|no effect)", re.I)
 def junk(d):
     if STORAGE.search(d["n"]) or (d["m"] in ("L2 Backpack", "Thermal") and re.search(r"quiver", d["n"], re.I)):

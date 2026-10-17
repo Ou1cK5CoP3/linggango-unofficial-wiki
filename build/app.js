@@ -130,7 +130,13 @@ function refreshSide(){
  return xs}
 
 /* ---------- shared bits ---------- */
-const tile=(d,i=99)=>`<a style="--i:${i}" class="t c${d.c} r${d.r}${d.g==="Loot"?" L":""}" data-mf="${mf(d.m)[0]}" href="#i${d.ix}" data-t="${d.ix}" aria-label="${esc(d.n)}">${AN[d.id]?`<span class="aimg" data-an="${esc(d.id)}">${img(d.id)}</span>`:img(d.id)}${d.k>1?`<span class="kv">${d.k}</span>`:""}${d.uid.length?CT:""}${isMust(d)?'<span class="star" aria-label="Must-Have">★</span>':""}<span class="sh" style="--dl:${(d.ix*.37%5).toFixed(2)}s"></span></a>`;
+/* Curios slot icons: the empty-slot silhouette each mod registers for that slot */
+const SLA={"living armour":"living_armour_socket","binding key":"bindingkey","wings":"terra_wings","focus":"an_focus","spellstone":"scroll","bundle":"curio"};
+const SLU={};
+const slotKey=n=>{const k=n.toLowerCase();return SLA[k]||k.replace(/ /g,"_")};
+const slotIcon=n=>{const k=slotKey(n),b=(UI.cslot||{})[k];if(!b)return "";if(!SLU[k])SLU[k]=URL.createObjectURL(new Blob([Uint8Array.from(atob(b),c=>c.charCodeAt(0))],{type:"image/png"}));return SLU[k]};
+const slk=d=>{const u=slotIcon(d.sl[0]||"");return u?`<i class="slk" style="--si:url(${u})" title="${esc(d.sl.join(" / "))} slot"></i>`:`<i class="slk tx" title="${esc(d.sl.join(" / "))} slot">${esc((d.sl[0]||"?").slice(0,2))}</i>`};
+const tile=(d,i=99)=>`<a style="--i:${i}" class="t c${d.c} r${d.r}${d.g==="Loot"?" L":""}" data-mf="${mf(d.m)[0]}" href="#i${d.ix}" data-t="${d.ix}" aria-label="${esc(d.n)}">${AN[d.id]?`<span class="aimg" data-an="${esc(d.id)}">${img(d.id)}</span>`:img(d.id)}${d.k>1?`<span class="kv">${d.k}</span>`:""}${d.uid.length?CT:""}${isMust(d)?'<span class="star" aria-label="Must-Have">★</span>':""}${slk(d)}<span class="sh" style="--dl:${(d.ix*.37%5).toFixed(2)}s"></span></a>`;
 const gcard=(d,i)=>`<a class="gc r${d.r}" style="--i:${Math.min(i,40)}" href="#i${d.ix}" data-t="${d.ix}"><span class="ak">${ACT[d.t][0]}</span><span class="rk">${isMust(d)?"★ Must-Have":RN[d.r]}</span><span class="pic">${img(d.id)}</span><b>${esc(d.n)}</b><small>${esc(d.sl.join(", "))} · ${esc(d.m)}</small></a>`;
 const rbar=xs=>`<span class="bar5">${RNS.map(i=>{const n=xs.filter(d=>d.r===i).length;return n?`<i style="flex:${n};background:${RC[i]}"></i>`:""}).join("")}</span>`;
 const cards=xs=>`<div class="cards">${xs.map(x=>`<a class="card" href="#i${x.ix}" data-t="${x.ix}">${img(x.id)}<span>${esc(x.n)}</span></a>`).join("")}</div>`;
@@ -210,7 +216,7 @@ function modPage(m){
 function home(xs,asTable){
  let h=`${crumb("The Path")}<h1 class="qb">The Path</h1>
  <p class="lede">Every curio in Linggango V6.6.5b4 plus the 6 added curio mods, tiered by how hard it really is to get: the Keeper that unlocks it, the vanilla boss it needs (Warden, Wither, Ender Dragon), drop chances, pickaxe tier and trait farming. Inside each path, ★ Must-Have items come first, then the rarest.</p>
-  <div class="legend"><span>${CT.replace('class="ct"','width="12" height="12"')} crafting ingredient</span><span>Bottom stripe: rarity colour</span><span>Top-left number: merged variants</span><span><b class="lgs">★</b> Must-Have: get it first</span></div>
+  <div class="legend"><span>${CT.replace('class="ct"','width="12" height="12"')} crafting ingredient</span><span>Frame and glow: rarity (brighter = rarer)</span><span><i class="slk lg" style="--si:url(${slotIcon("Ring")})"></i> Corner badge: curio slot (hover for name)</span><span>Top-left number: merged variants</span><span><b class="lgs">★</b> Must-Have: get it first</span></div>
  ${activeBar()}`;
  seedBg("path"+st.a,xs.filter(d=>d.r>=4));
  if(!asTable){
@@ -248,8 +254,18 @@ function page(d){
  if(relic.length)sh+=`<div class="tw"><table><thead><tr><th>Stat</th><th>On pickup (random)</th><th>Max upgrade</th></tr></thead><tbody>${relic.map(r=>relicRows(r[1])).join("")}</tbody></table></div>`;
  if(other.length)sh+=`<div class="tw" style="margin-top:8px">${(()=>{const one=new Set(other.map(o=>o[0])).size===1,HD=/^(passive effect|active ability|when worn|when equipped|set bonus|abilities?)\s*:?$/i;const tg=(t,raw)=>`<span class="tg${t==="pack"?" pack":""}" title="${esc(TAGT[t]||"")}${raw?" · raw: "+esc(raw):""}">${TAGN[t]||t}</span>`;return `<table class="stt"><thead><tr><th>Effect</th>${one?"":"<th>Source</th>"}</tr></thead><tbody>${other.map(([t,s,raw])=>HD.test(String(s).trim())?`<tr class="sth"><td colspan="2">${fmt(s)}</td></tr>`:`<tr><td>${fmt(s)}</td>${one?"":`<td>${tg(t,raw)}</td>`}</tr>`).join("")}</tbody></table>${one?`<p class="stsrc">Source: ${tg(other[0][0],"")}</p>`:""}`})()}</div>`;
  if(sh)secs.push(["stats","Stats",sh]);
- if(d.gr){const g=d.gr;const cells=g.c.map(c=>c?`<div class="cell"${BYID[c[0]]?` data-t="${BYID[c[0]].ix}"`:""} title="${esc((NM[c[0]]||c[0])+(c[1]?" (tag "+c[1].slice(1)+")":""))}">${c[0]?img(c[0]):'<span class="ph">'+esc(c[1].split(":")[1]||c[1])+'</span>'}${c[1]?'<span class="tagm">#</span>':""}</div>`:'<div class="cell"></div>').join("");
-  secs.push(["recipe","Recipe",`<div class="craft"><div class="grid" style="grid-template-columns:repeat(${g.w},42px)">${cells}</div><span class="arrow">→</span><div class="cell res">${img(d.id)}${g.n>1?`<span class="cnt">${g.n}</span>`:""}</div><div class="st">Station: <b>${esc(g.st)}</b>. Cells marked # accept any item with that tag; the icon is one example.</div></div>`])}
+ if(d.gr){const g=d.gr,grid=g.l===0&&!/shapeless/i.test(g.st),stn=g.st.replace(/\s*\(shapeless\)/i,"");
+  // one entry per distinct ingredient, in first-seen order, with how many cells it fills
+  const ing=[],seen={};g.c.forEach(c=>{if(!c)return;const k=c[0]+"|"+c[1];if(!seen[k]){seen[k]={c,n:0};ing.push(seen[k])}seen[k].n++});
+  const nm=c=>c[0]?(BYID[c[0]]?BYID[c[0]].n:NM[c[0]]||c[0]):"Any "+(c[1].split(":")[1]||c[1]).replace(/_/g," ");
+  const slot=(c,big)=>{if(!c)return `<div class="mcs${big?" big":""}"></div>`;const k=esc(c[0]+"|"+c[1]),t=BYID[c[0]];
+   return `<div class="mcs${big?" big":""}" data-k="${k}"${t?` data-t="${t.ix}"`:""} title="${esc(nm(c))}${c[1]?" (any item tagged "+esc(c[1].replace(/^#/,""))+")":""}">${c[0]?img(c[0]):'<span class="ph">'+esc(nm(c))+'</span>'}${c[1]?'<span class="tagm" aria-label="tag">#</span>':""}</div>`};
+  const inputs=grid?`<div class="mcg" style="grid-template-columns:repeat(${g.w},var(--sz))">${g.c.map(c=>slot(c)).join("")}</div>`
+   :`<div class="mcg free">${ing.flatMap(e=>Array(e.n).fill(e.c)).map(c=>slot(c)).join("")}</div>`;
+  const list=`<ol class="mcl">${ing.map(e=>{const t=BYID[e.c[0]];return `<li data-k="${esc(e.c[0]+"|"+e.c[1])}"><span class="mcs sm">${e.c[0]?img(e.c[0]):""}</span><b>${e.n}×</b> ${t?`<a href="#i${t.ix}" data-t="${t.ix}">${esc(nm(e.c))}</a>`:esc(nm(e.c))}${e.c[1]?` <span class="tg">tag ${esc(e.c[1].replace(/^#/,""))}</span>`:""}</li>`}).join("")}</ol>`;
+  secs.push(["recipe","Recipe",`<div class="mcwin"><div class="mct">${esc(stn)}<span>${grid?"shaped: the layout matters":"shapeless: any arrangement"}</span></div>
+  <div class="mcrow">${inputs}<i class="mca" aria-hidden="true"></i>${slot([d.id,""],true).replace('</div>',`${g.n>1?`<span class="cnt">${g.n}</span>`:""}</div>`)}</div>
+  <div class="mcli"><div class="mch">Ingredients</div>${list}${ing.some(e=>e.c[1])?'<p class="mcn"># = any item with that tag works; the icon shows one of them.</p>':""}</div></div>`])}
  if(d.uid.length)secs.push(["uses","Used to craft",`<div class="cards">${d.uid.map(o=>{const t=BYID[o];return `<a class="card"${t?` href="#i${t.ix}" data-t="${t.ix}"`:""}>${img(o)}<span>${esc(NM[o]||o)}${t?"":' <span class="meta">(not a curio)</span>'}</span></a>`}).join("")}</div>`]);
  const bar=(v,l)=>`<div class="sg" style="grid-template-columns:150px 1fr;margin:4px 0"><span>${l}</span><div class="bar"><i style="width:${Math.round(Math.min(5,Math.max(0,v))*20)}%;background:var(--rc);opacity:.55"></i><span>${(+v).toFixed(1)} / 5</span></div></div>`;
   const same=D.filter(x=>x!==d&&x.m===d.m&&x.t===d.t).slice(0,8);
@@ -423,3 +439,6 @@ render();decorate();
  const watch=()=>document.querySelectorAll(".t.r4:not([data-sw]),.t.r5:not([data-sw]),.t.r6:not([data-sw])").forEach(t=>{t.dataset.sw=1;io.observe(t)});
  new MutationObserver(watch).observe(el("main"),{childList:true});watch();
  if(!RM)setInterval(()=>{if(document.hidden||!vis.size)return;const a=[...vis];for(let k=0;k<Math.min(3,a.length);k++){const t=a[Math.random()*a.length|0];if(!t.isConnected||t.classList.contains("sweep"))continue;t.classList.add("sweep");setTimeout(()=>t.classList.remove("sweep"),900)}},700)}
+/* recipe: hovering a slot or an ingredient line lights up every cell of that ingredient */
+document.addEventListener("mouseover",e=>{const k=e.target.closest(".mcwin [data-k]");document.querySelectorAll(".mcwin .on").forEach(x=>x.classList.remove("on"));if(!k)return;
+ k.closest(".mcwin").querySelectorAll(`[data-k="${CSS.escape(k.dataset.k)}"]`).forEach(x=>x.classList.add("on"))},{passive:true});

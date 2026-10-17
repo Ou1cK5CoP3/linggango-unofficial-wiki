@@ -84,3 +84,59 @@ body:not(.hub) #main{background:var(--bg)}
 .stsrc{margin:6px 0 0;font-size:12.5px;color:var(--mute)}
 /* phones: the hero is too narrow for side bands, so drifting relics and the splash would sit on the text */
 @media (max-width:760px){.hero .hfl,.hero .splash{display:none!important}}
+
+/* ===== v5 tiles: tooltip-mod style rarity backgrounds (Legendary/Obscure Tooltips look) ===== */
+.tier .t,.tiles .t,a.t{border:1px solid #05030a!important;border-radius:3px!important;
+ background:radial-gradient(120% 85% at 50% 0%,color-mix(in srgb,var(--rc) 30%,transparent),transparent 62%),
+  linear-gradient(180deg,color-mix(in srgb,var(--rc) 14%,#140e1e),#0a0710)!important;
+ box-shadow:inset 0 0 0 1px rgba(0,0,0,.6)!important}
+/* gradient frame in the rarity colour, bright at the top and fading down, like the tooltip border */
+.t::before{content:""!important;position:absolute;inset:0!important;height:auto!important;border-radius:2px!important;padding:1.5px;z-index:1;pointer-events:none;
+ background:linear-gradient(180deg,var(--rc),color-mix(in srgb,var(--rc) 25%,#000))!important;
+ -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.t.r0::before{background:linear-gradient(180deg,#8a8f99,#2a2d35)!important}
+.t.r4,.t.r5,.t.r6{box-shadow:inset 0 0 12px color-mix(in srgb,var(--rc) 40%,transparent),inset 0 0 0 1px rgba(0,0,0,.6)!important}
+.t.r5::before,.t.r6::before{padding:2px;background:linear-gradient(180deg,#fff 0,var(--rc) 18%,color-mix(in srgb,var(--rc) 30%,#000))!important}
+.t.r6{background:radial-gradient(120% 85% at 50% 0%,rgba(255,210,31,.42),transparent 62%),repeating-linear-gradient(135deg,rgba(255,210,31,.07) 0 3px,transparent 3px 7px),linear-gradient(180deg,#2a1d06,#0d0904)!important}
+.t:hover,.t:focus-visible{border-color:#fff!important}
+/* slot type: the real Curios empty-slot icon in a tiny inventory slot, bottom-right */
+.t .slk{position:absolute;right:2px;bottom:2px;z-index:2;width:15px;height:15px;border-radius:1px;background:#8b8b8b center/13px no-repeat;image-rendering:pixelated;
+ box-shadow:inset 1px 1px 0 #373737,inset -1px -1px 0 #fff;font:700 8px/15px var(--body);color:#222;text-align:center;font-style:normal;pointer-events:auto}
+.t .kv{z-index:2}.t .ct{z-index:2}
+
+/* ===== v5 recipe: a vanilla-style GUI window + an ingredient list ===== */
+.mcwin{--sz:40px;display:grid;grid-template-columns:auto minmax(220px,1fr);gap:18px 22px;align-items:start;background:#c6c6c6;color:#3f3f3f;padding:12px 14px 14px;border-radius:3px;
+ box-shadow:0 0 0 2px #000,inset 2px 2px 0 #fff,inset -2px -2px 0 #555;max-width:760px}
+.mct{grid-column:1/-1;font:15px var(--disp);color:#3f3f3f;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.mct span{font:12px var(--body);color:#5d5d5d}
+.mcrow{display:flex;align-items:center;gap:16px}
+.mcg{display:grid;gap:0}
+.mcg.free{grid-template-columns:repeat(3,var(--sz))}
+.mcs{width:var(--sz);height:var(--sz);background:#8b8b8b;box-shadow:inset 2px 2px 0 #373737,inset -2px -2px 0 #fff;display:grid;place-items:center;position:relative}
+.mcs img{width:32px;height:32px;image-rendering:pixelated}
+.mcs .ph{font:9px/1.1 var(--body);color:#fff;text-align:center;padding:2px;overflow:hidden}
+.mcs .tagm{position:absolute;right:2px;top:1px;font:700 10px var(--body);color:#fff;text-shadow:1px 1px 0 #3f3f3f}
+.mcs.big{--sz:56px}.mcs.big img{width:40px;height:40px}
+.mcs .cnt{position:absolute;right:3px;bottom:1px;font:700 13px var(--disp);color:#fff;text-shadow:2px 2px 0 #3f3f3f}
+.mcs[data-k]{cursor:default}.mcs[data-t]{cursor:pointer}
+.mcs.on{background:#c5c5ff;box-shadow:inset 2px 2px 0 #373737,inset -2px -2px 0 #fff,0 0 0 2px #fff}
+/* the vanilla crafting arrow, drawn in pixels */
+.mca{width:28px;height:20px;background:#8b8b8b;-webkit-mask:linear-gradient(#000 0 0) 0 7px/16px 6px no-repeat,conic-gradient(from 225deg at 100% 50%,#000 0 90deg,transparent 0) 16px 0/12px 20px no-repeat;
+ mask:linear-gradient(#000 0 0) 0 7px/16px 6px no-repeat,conic-gradient(from 225deg at 100% 50%,#000 0 90deg,transparent 0) 16px 0/12px 20px no-repeat}
+.mcli{background:#8b8b8b;box-shadow:inset 2px 2px 0 #373737,inset -2px -2px 0 #fff;padding:8px 10px;align-self:stretch;color:#fff}
+.mch{font:12px var(--disp);color:#fff;margin-bottom:4px;text-shadow:1px 1px 0 #3f3f3f}
+.mcl{list-style:none;margin:0;padding:0;display:grid;gap:3px}
+.mcl li{display:flex;align-items:center;gap:8px;font-size:14px;padding:2px 4px;border-radius:2px;text-shadow:1px 1px 0 #3f3f3f}
+.mcl li b{font-family:var(--disp);font-weight:400;min-width:24px}
+.mcl li a{color:#ffff7f}
+.mcl li.on{background:rgba(255,255,255,.25)}
+.mcl .mcs.sm{--sz:22px;flex:none}.mcl .mcs.sm img{width:16px;height:16px}
+.mcl .tg{font-size:10.5px;background:#555!important;color:#fff;border:0!important;padding:0 4px}
+.mcn{margin:6px 0 0;font-size:12px;color:#eee;text-shadow:1px 1px 0 #3f3f3f}
+@media (max-width:640px){.mcwin{grid-template-columns:1fr;--sz:34px}.mcs.big{--sz:48px}}
+/* the slot silhouettes are faint grey-on-grey; redraw them as a solid dark mask so they read at 17px */
+.t .slk{width:17px;height:17px;background-image:none}
+.t .slk::after{content:"";position:absolute;inset:1px;background:#1b1b1b;-webkit-mask:var(--si) center/15px no-repeat;mask:var(--si) center/15px no-repeat}
+.t .slk.tx::after{display:none}
+.legend .slk.lg{display:inline-block;position:relative;vertical-align:-3px;width:15px;height:15px;background:#8b8b8b;box-shadow:inset 1px 1px 0 #373737,inset -1px -1px 0 #fff}
+.legend .slk.lg::after{content:"";position:absolute;inset:1px;background:#1b1b1b;-webkit-mask:var(--si) center/13px no-repeat;mask:var(--si) center/13px no-repeat}
