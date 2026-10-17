@@ -130,7 +130,7 @@ function refreshSide(){
  return xs}
 
 /* ---------- shared bits ---------- */
-const tile=(d,i=99)=>`<a style="--i:${Math.min(i,40)}" class="t c${d.c} r${d.r}${d.g==="Loot"?" L":""}" data-mf="${mf(d.m)[0]}" href="#i${d.ix}" data-t="${d.ix}" aria-label="${esc(d.n)}">${AN[d.id]?`<span class="aimg" data-an="${esc(d.id)}">${img(d.id)}</span>`:img(d.id)}${d.k>1?`<span class="kv">${d.k}</span>`:""}${d.uid.length?CT:""}${d.nw?'<span class="nwb">new</span>':""}${isMust(d)?'<span class="star" aria-label="Must-Have">★</span>':""}<span class="sh" style="--dl:${(d.ix*.37%5).toFixed(2)}s"></span></a>`;
+const tile=(d,i=99)=>`<a style="--i:${i}" class="t c${d.c} r${d.r}${d.g==="Loot"?" L":""}" data-mf="${mf(d.m)[0]}" href="#i${d.ix}" data-t="${d.ix}" aria-label="${esc(d.n)}">${AN[d.id]?`<span class="aimg" data-an="${esc(d.id)}">${img(d.id)}</span>`:img(d.id)}${d.k>1?`<span class="kv">${d.k}</span>`:""}${d.uid.length?CT:""}${d.nw?'<span class="nwb">new</span>':""}${isMust(d)?'<span class="star" aria-label="Must-Have">★</span>':""}<span class="sh" style="--dl:${(d.ix*.37%5).toFixed(2)}s"></span></a>`;
 const gcard=(d,i)=>`<a class="gc r${d.r}" style="--i:${Math.min(i,40)}" href="#i${d.ix}" data-t="${d.ix}"><span class="ak">${ACT[d.t][0]}</span><span class="rk">${isMust(d)?"★ Must-Have":RN[d.r]}</span><span class="pic">${img(d.id)}</span><b>${esc(d.n)}</b><small>${esc(d.sl.join(", "))} · ${esc(d.m)}</small></a>`;
 const rbar=xs=>`<span class="bar5">${RNS.map(i=>{const n=xs.filter(d=>d.r===i).length;return n?`<i style="flex:${n};background:${RC[i]}"></i>`:""}).join("")}</span>`;
 const cards=xs=>`<div class="cards">${xs.map(x=>`<a class="card" href="#i${x.ix}" data-t="${x.ix}">${img(x.id)}<span>${esc(x.n)}</span></a>`).join("")}</div>`;
@@ -216,7 +216,7 @@ function home(xs,asTable){
  seedBg("path"+st.a,xs.filter(d=>d.r>=4));
  if(!asTable){
   for(const a of ORDER){if(st.a!==""&&a>+st.a)continue;const ys=xs.filter(d=>d.t===a);if(a===-1&&!ys.length)continue;const cl=st.cl.includes(a);
-   h+=`<section class="tier${cl?" closed":""}${VBOSS[a]?" vb":""}" style="--tc:${ACT[a][2]};${tex(a)}" id="p${String(a).replace(".","_")}"><button class="tl" data-tier="${a}" aria-expanded="${!cl}"><span class="tlem">${emblem(a)}</span><span class="ta">${actL(a)}</span><small>${esc(ACT[a][1])}</small>${a==-1?"":`<span class="tn">next: ${esc(ACTN[a]||"")}</span>`}${VBOSS[a]?`<small class="vbi">${VBI[VBOSS[a]].hp} HP · vanilla boss</small>`:""}<span class="rs">${RNS.map(i=>{const n=ys.filter(d=>d.r===i).length;return n?`<i class="r${i}" style="flex:${n}" title="${RN[i]}: ${n}"></i>`:""}).join("")}</span><small>${count(ys)} items</small></button><div class="tiles">${ys.length?ys.map(tile).join(""):'<span class="empty">No items match the filters.</span>'}</div></section>`}
+   h+=`<section class="tier${cl?" closed":""}${VBOSS[a]?" vb":""}" style="--tc:${ACT[a][2]};${tex(a)}" id="p${String(a).replace(".","_")}"><button class="tl" data-tier="${a}" aria-expanded="${!cl}"><span class="tlem">${emblem(a)}</span><span class="ta">${actL(a)}</span><small>${esc(ACT[a][1])}</small>${a==-1?"":`<span class="tn">next: ${esc(ACTN[a]||"")}</span>`}${VBOSS[a]?`<small class="vbi">${VBI[VBOSS[a]].hp} HP · vanilla boss</small>`:""}<span class="rs">${RNS.map(i=>{const n=ys.filter(d=>d.r===i).length;return n?`<i class="r${i}" style="flex:${n}" title="${RN[i]}: ${n}"></i>`:""}).join("")}</span><small>${count(ys)} items</small></button><div class="tiles">${ys.length?ys.map((d,i)=>tile(d,i)).join(""):'<span class="empty">No items match the filters.</span>'}</div></section>`}
  }else{
   const COLS=[["n","Curio"],["r","Rarity"],["c","Role"],["t","Tier"],["a","Usable from"],["g","Source"],["m","Mod"],["fx","Effect"]];
   const CO=Object.keys(ROLE);
@@ -356,7 +356,7 @@ function decorate(){
  document.querySelectorAll(".bpt[data-snap]:not([data-done])").forEach(el=>{el.dataset.done=1;const k=el.dataset.snap,big=el.classList.contains("lg")||el.classList.contains("xl");
   snapQ=snapQ.then(()=>window.Boss3D&&Boss3D.snapshot(k,big?240:120,big?240:120)).then(u=>{if(u)el.innerHTML=`<img alt="" src="${u}">`}).catch(()=>{})});
  document.querySelectorAll("[data-boss]:not([data-live])").forEach(el=>{el.dataset.live=1;window.Boss3D&&Boss3D.mount(el,el.dataset.boss,{spin:0})});
- document.querySelectorAll("[data-an]:not([data-done])").forEach(el=>{el.dataset.done=1;const a=AN[el.dataset.an];if(!a)return;el.style.setProperty("--strip",`url(data:image/png;base64,${a[0]})`);el.style.setProperty("--n",a[1]);el.style.setProperty("--ms",(a[1]*a[2])+"ms");el.classList.add("anim")});
+ document.querySelectorAll("[data-an]:not([data-done])").forEach(el=>{el.dataset.done=1;const a=AN[el.dataset.an];if(!a)return;el.style.setProperty("--n",a[1]);el.style.setProperty("--ms",(a[1]*a[2])+"ms");el.insertAdjacentHTML("beforeend",`<img class="strip" alt="" src="data:image/png;base64,${a[0]}">`);el.classList.add("anim")});
 }
 function render(){
  save();const xs=refreshSide();const h=decodeURIComponent(location.hash);

@@ -54,6 +54,8 @@ def load():
 
 _L = load()
 D, U, IC, NM = _L["D"], _L.get("U", []), _L["IC"], _L["NM"]
+# MAR Relics removed from the wiki at the user's request
+D = [d for d in D if not d["id"].startswith("marrelics:")]
 NM = {k: re.sub(r"§.", "", v) for k, v in NM.items()}  # strip Minecraft colour codes
 BYID = {d["id"]: d for d in D}
 BYNAME, NAME2IDS = {}, {}
@@ -794,6 +796,9 @@ if "lg/config/fancymenu/assets/default_background.png" in uim:
     UI["bg"] = base64.b64encode(buf.getvalue()).decode()
 TT = json.loads((EX / "tooltip/assets.json").read_text()) if (EX / "tooltip/assets.json").exists() else {}
 
+IC = {k: v for k, v in IC.items() if not k.startswith("marrelics:")}
+NM = {k: v for k, v in NM.items() if not k.startswith("marrelics:")} if isinstance(NM, dict) else NM
+U = [u for u in U if not str(u.get("id", "")).startswith("marrelics:")] if isinstance(U, list) else U
 OUT.mkdir(parents=True, exist_ok=True)
 js = "const D=" + json.dumps(D, ensure_ascii=False, separators=(",", ":")) + ",IC=" + json.dumps(IC, separators=(",", ":")) + \
      ",NM=" + json.dumps(NM, ensure_ascii=False, separators=(",", ":")) + ",U=" + json.dumps(U, ensure_ascii=False, separators=(",", ":")) + ",VA=" + json.dumps(VA, separators=(",", ":")) + ",AN=" + json.dumps(AN, separators=(",", ":")) + \

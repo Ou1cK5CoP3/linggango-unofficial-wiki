@@ -286,3 +286,19 @@ details.raw ul{margin:4px 0;padding-left:18px}
 @keyframes sweep{to{transform:translateX(320%) skewX(-20deg)}}
 @media (min-width:1600px){.t{width:60px;height:60px}.t img,.t .aimg,.t .aimg img{width:48px;height:48px}}
 @media (prefers-reduced-motion:reduce){.t .sh::before{animation:none!important}}
+/* animated textures: the strip slides one whole frame per step (fixes the frames scrolling down) */
+.aimg.anim{position:relative;overflow:hidden;background:none!important;animation:none!important}
+.aimg.anim>img:first-child{opacity:0}
+.aimg.anim .strip{position:absolute;left:0;top:0;width:100%!important;height:calc(var(--n)*100%)!important;opacity:1;image-rendering:pixelated;animation:stripY var(--ms) steps(var(--n)) infinite}
+@keyframes stripY{to{transform:translateY(-100%)}}
+/* idle motion for every other relic: float, sway or breathe, out of phase, only in tiers on screen */
+.tier.seen .t>img{animation:mvA 3.4s ease-in-out infinite;animation-delay:calc(var(--i,0)*-173ms)}
+.tier.seen .t:nth-child(3n+1)>img{animation-name:mvB;animation-duration:4.2s}
+.tier.seen .t:nth-child(3n+2)>img{animation-name:mvC;animation-duration:3.8s}
+@keyframes mvA{50%{transform:translateY(-3px)}}
+@keyframes mvB{25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+@keyframes mvC{50%{transform:scale(1.09) translateY(-1px)}}
+.tier.seen .t.r4>img,.tier.seen .t.r5>img,.tier.seen .t.r6>img{animation-name:mvA,glowP;animation-duration:3.4s,2.6s}
+@keyframes glowP{50%{filter:drop-shadow(0 0 6px var(--rc2)) drop-shadow(0 2px 0 rgba(0,0,0,.5))}}
+.t:hover>img{animation:bob .9s ease-in-out infinite!important}
+@media (prefers-reduced-motion:reduce){.tier .t>img,.aimg.anim .strip{animation:none!important}}
