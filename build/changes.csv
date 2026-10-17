@@ -22,11 +22,13 @@ l2hostility:curse_of_envy,Curse Of Envy,L2 Hostility,Path V,Wither,Path V,Wither
 l2hostility:divinity_light,Divinity Light,L2 Hostility,Path VI,Path VI,Path V,Path V,Rare,Epic,Epic,
 moreartifacts:lucky_emerald_ring,Lucky Emerald Ring,More Artifacts,Path V,Wither,Path V,Wither,Epic,Legendary,Legendary,Needs the Wither to be defeated first (vanilla boss path)
 morerelics:whispering_amulett,Whispering Amulet,More Relics,Path V,Wither,Path V,Wither,Uncommon,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
+sophisticatedbackpacks:netherite_backpack,Netherite Backpack,Sophisticated Backpacks,Path V,Path V,Path V,Path III,Uncommon,Uncommon,Uncommon,"Netherite Ingot also drops from level 3+ tank-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on. That trait level is rare early, so only the earliest path moves."
+toms_storage:ts.adv_wireless_terminal,Advanced Wireless Terminal,Tom's Storage,Path V,Path V,Path V,Path III,Uncommon,Uncommon,Uncommon,"Netherite Ingot also drops from level 3+ tank-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on. That trait level is rare early, so only the earliest path moves."
 fallen_traits:universal_point_of_discontinuity,Universal Point of Discontinuity,Fallen Traits & Relics,Path V,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
 armageddon_mod:abyssal_charm,Abyssal Charm,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Rare,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
 armageddon_mod:dragonborn_empyreans,Dragonborn Empyreans,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Mythic,Mythic,Needs the Ender Dragon to be defeated first (vanilla boss path)
 armageddon_mod:the_zenith_walkers,The Zenith Walkers,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Mythic,Mythic,Needs the Ender Dragon to be defeated first (vanilla boss path)
-terramity:band_of_drifting,Band of Drifting,Terramity,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Rare,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
+terramity:band_of_drifting,Band of Drifting,Terramity,Path VI,Ender Dragon,Path VI,Path III,Rare,Rare,Rare,"Needs the Ender Dragon to be defeated first (vanilla boss path) | Shulker Shell also drops from level 3+ protection-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on. That trait level is rare early, so only the earliest path moves."
 terramity:blink_belt,Blink Belt,Terramity,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Rare,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
 brutality:broken_clock,Broken Clock,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
 brutality:emerald_anklet,Emerald Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
@@ -44,17 +46,26 @@ oddaccessories:enlightening_tablet,Enlightening Tablet,Odd Accessories,Path II,P
 oddaccessories:regret_of_a_salaryman,Regret Of A Salaryman,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Broken Telephone, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 oddaccessories:universal_attractor,Universal Attractor,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Common,Common,Common,"Crafted from Collectible Meal Toy, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 oddaccessories:villager_mask,Villager Mask,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Rare,Rare,"Crafted from Malice, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
+armageddon_mod:netherbound_shackles,Netherbound Shackles,Armageddon,Path V,Path V,Path V,Path III,Rare,Rare,Rare,"Netherite Ingot also drops from level 3+ tank-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on. That trait level is rare early, so only the earliest path moves."
+brutality:old_guillotine,Old Guillotine,Brutality,Path V,Path V,Path V,Path III,Epic,Epic,Epic,"Netherite Scrap also drops from level 3+ tank-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on. That trait level is rare early, so only the earliest path moves."
+brutality:pride,Sin of Pride,Brutality,Path V,Path V,Path V,Path III,Rare,Rare,Rare,"Netherite Scrap also drops from level 3+ tank-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on. That trait level is rare early, so only the earliest path moves."
+brutality:smart_fridge_charm,Smart Fridge,Brutality,Path V,Path V,Path V,Path III,Rare,Rare,Rare,"Netherite Ingot also drops from level 3+ tank-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on. That trait level is rare early, so only the earliest path moves."
 brutality:wrath,Sin of Wrath,Brutality,Path VI,Path VI,Path VI,Path VI,Rare,Legendary,Legendary,
 confluence:celestial_stone,Celestial Stone,Terra Curio,Path VI,Path V,Path VI,Path V,Epic,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+enigmaticdelicacy:gluttony_charm,Emblem of Boundless Voracity,Enigmatic Delicacy,Path V,Path V,Path V,Path III,Rare,Rare,Rare,"Netherite Ingot also drops from level 3+ tank-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on. That trait level is rare early, so only the earliest path moves."
+goety:nether_crown,Nether Crown,Goety,Path V,Path V,Path V,Path III,Rare,Rare,Rare,"Netherite Ingot also drops from level 3+ tank-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on. That trait level is rare early, so only the earliest path moves."
 goety:nether_robe_warped,Nether Robe,Goety,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
 goety:unholy_hat_halo,Unholy Hat,Goety,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
 goety_revelation:apollyon_robe,Apollyon Robe,Goety Revelation,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
 l2hostility:flaming_thorn,Flaming Thorn,L2 Hostility,Path VI,Warden,Path V,Warden,Rare,Rare,Rare,Needs the Warden to be defeated first (vanilla boss path)
 l2hostility:platinum_star,Platinum Star,L2 Hostility,Path VI,Wither,Path V,Wither,Rare,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
 moreartifacts:decay_stone,Decay Stone,More Artifacts,Path V,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
+moreartifacts:molten_quiver,Molten Quiver,More Artifacts,Path V,Path V,Path V,Path III,Epic,Epic,Epic,"Netherite Scrap also drops from level 3+ tank-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on. That trait level is rare early, so only the earliest path moves."
 morerelics:made_in_heaven,Made in Heaven,More Relics,Path V,Wither,Path V,Wither,Rare,Epic,Epic,"Crafted from Whispering Amulet, which now sits on the same path"
 summonity:arc_reactor_core,Arc Reactor Core,Summonity,Path VI,Wither,Path VI,Wither,Rare,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
+summonity:soloists_seal,Soloist's Seal,Summonity,Path V,Path III,Path V,Path III,Uncommon,Uncommon,Uncommon,"Ghast Tear also drops from regenerate-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on."
 summonity:withered_visage,Withered Visage,Summonity,Path V,Wither,Path V,Wither,Rare,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
+terramity:band_of_power,Band of Power,Terramity,Path V,Path V,Path V,Path III,Rare,Rare,Rare,"Netherite Ingot also drops from level 3+ tank-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on. That trait level is rare early, so only the earliest path moves."
 celestial_artifacts:hidden_bracelet,Hidden Bracelet,Celestial Artifacts,Path V,Wither,Path V,Wither,Rare,Epic,Epic,"Crafted from Truth Etching, which now sits on the same path"
 celestial_artifacts:holy_sword,Holy Sword,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Epic,Epic,"Crafted from Desire Etching, which now sits on the same path"
 celestial_artifacts:lock_of_abyss,Lock Of Abyss,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Legendary,Legendary,"Crafted from Chaotic Etching, which now sits on the same path"
@@ -122,9 +133,9 @@ brutality:ultra_dodge_anklet,Ultra Dodge Anklet,Brutality,Path IX,Path IX,Path I
 confluence:bee_cloak,Bee Cloak,Terra Curio,Path II,Path 0–I,Path II,Path 0–I,Uncommon,Uncommon,Uncommon,"Crafted from Honey Comb, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
 confluence:nutrient_solution,Nutrient Solution,Terra Curio,Path II,Path V,Path II,Path V,Uncommon,Rare,Rare,"Crafted from Energy Bar, which sits on a later path"
 confluence:obsidian_shield,Obsidian Shield,Terra Curio,Path 0–I,Path V,Path 0–I,Path V,Common,Rare,Rare,"Crafted from Obsidian Skull, which sits on a later path"
-confluence:obsidian_skull,Obsidian Skull,Terra Curio,Path 0–I,Path V,Path 0–I,Path V,Common,Uncommon,Uncommon,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+confluence:obsidian_skull,Obsidian Skull,Terra Curio,Path 0–I,Path V,Path 0–I,Path III,Common,Uncommon,Uncommon,"Nether material, but Wither Skeleton Skull also drops from level 3+ wither-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility). The earliest path counts that route; the usual path waits for the Nether when the trait level needed is rare early on"
 lethality:pale_branch,Pale Branch,Lethality,Path 0–I,Path V,Path 0–I,Path V,Common,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
-moreartifacts:decay_amulet,Decay Amulet,More Artifacts,Path 0–I,Path V,Path 0–I,Path V,Common,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+moreartifacts:decay_amulet,Decay Amulet,More Artifacts,Path 0–I,Path V,Path 0–I,Path III,Common,Rare,Rare,"Nether material, but Wither Skeleton Skull also drops from level 3+ wither-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility). The earliest path counts that route; the usual path waits for the Nether when the trait level needed is rare early on"
 moreartifacts:necroplasm_amulet,Necroplasm Amulet,More Artifacts,Path 0–I,Path V,Path 0–I,Path V,Uncommon,Epic,Epic,"Crafted from Decay Amulet, which sits on a later path"
 morerelics:wonder_of_u,Wonder of U,More Relics,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Legendary,Legendary,Needs the Warden to be defeated first (vanilla boss path)
 oddaccessories:crown_of_nails,Crown Of Nails,Odd Accessories,Path II,Path 0–I,Path II,Path 0–I,Rare,Rare,Rare,"Crafted from Rusted Nail, which can be had from the start (random loot, or crafted from it), so it sits on Path 0 too"
@@ -264,6 +275,7 @@ terramity:inverse_sarashi,Inverse Sarashi,Terramity,Path II,Path 0–I,Path 0–
 terramity:slam_belt,Slam Belt,Terramity,Path II,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Random loot: it can drop from the start, so it sits on Path 0 even though the chance is low"
 goety:focus_pack,Focus Pack,Goety,Path II,Path II,Path II,Path II,Common,Uncommon,Uncommon,
 armageddon_mod:necrotoxic_shell,Necrotoxic Shell,Armageddon,Path VI,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
+armageddon_mod:souls_repellent,Souls Repellent,Armageddon,Path V,Path V,Path V,Path III,Epic,Epic,Epic,"Netherite Scrap also drops from level 3+ tank-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on. That trait level is rare early, so only the earliest path moves."
 armageddon_mod:withered_bone_effigy,Withered Bone Effigy,Armageddon,Path V,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
 brutality:second_heart,Second Heart,Brutality,Path VII,Path VII,Path VII,Path VII,Rare,Epic,Epic,
 brutality:self_repair_nexus,Self-Repair Nexus,Brutality,Path V,Wither,Path V,Wither,Epic,Legendary,Legendary,Needs the Wither to be defeated first (vanilla boss path)
@@ -278,6 +290,7 @@ confluence:molten_skull_rose,Molten Skull Rose,Terra Curio,Path VI,Path V,Path V
 goety:star_amulet,Soul Shield Amulet,Goety,Path V,Wither,Path V,Wither,Uncommon,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
 goety:warlock_robe_dark,Warlock Robe,Goety,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
 l2complements:eternal_totem_of_dream,Eternal Totem Of Dream,L2 Complements,Path V,Wither,Path V,Wither,Uncommon,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
+l2hostility:ring_of_healing,Ring Of Healing,L2 Hostility,Path V,Path III,Path V,Path III,Uncommon,Uncommon,Uncommon,"Ghast Tear also drops from regenerate-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on."
 moreartifacts:withered_bezoar,Withered Bezoar,More Artifacts,Path V,Wither,Path V,Wither,Rare,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
 celestial_artifacts:angel_desire,Angel Desire,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
 celestial_artifacts:angel_heart,Angel Heart,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Legendary,Legendary,Needs the Wither to be defeated first (vanilla boss path)
@@ -383,6 +396,7 @@ ramcompat:stink_gland,Stink Gland,Relics: Alex's Mobs Compat,Path II,Path 0–I,
 confluence:fart_in_a_balloon,Fart In A Balloon,Terra Curio,Path VI,Path V,Path VI,Path V,Rare,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
 confluence:green_horseshoe_balloon,Green Horseshoe Balloon,Terra Curio,Path VI,Path V,Path VI,Path V,Rare,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
 confluence:terraspark_boots,Terraspark Boots,Terra Curio,Path VI,Path V,Path VI,Path V,Rare,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+lethality:sorrowful_ghast,Sorrowful Ghast,Lethality,Path V,Path III,Path V,Path III,Rare,Uncommon,Uncommon,"Ghast Tear also drops from regenerate-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility), from Path III on."
 confluence:black_belt,Black Belt,Terra Curio,Path VI,Path V,Path V,Path V,Legendary,Legendary,Legendary,"Only drops in the Nether, which stays locked until Eldorath falls"
 confluence:holy_water,Holy Water,Terra Curio,Path VI,Path V,Path V,Path V,Rare,Rare,Rare,"Only drops in the Nether, which stays locked until Eldorath falls"
 confluence:lava_charm,Lava Charm,Terra Curio,Path VI,Path V,Path V,Path V,Rare,Rare,Rare,"Only drops in the Nether, which stays locked until Eldorath falls"
@@ -415,7 +429,7 @@ wizard_terra_cuiros:chaos_stone,Chaos Stone,Wizard Terra Curios,Path VI,Ender Dr
 wizard_terra_cuiros:elemental_quiver,Elemental Quiver,Wizard Terra Curios,Path II,Path V,Path II,Path V,Rare,Epic,Epic,"Crafted from Deadshot Brooch, which sits on a later path"
 wizard_terra_cuiros:goety_focus,Evil and Desolate Crystalline,Wizard Terra Curios,Path 0–I,Path V,Path 0–I,Path V,Rare,Legendary,Legendary,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
 wizard_terra_cuiros:dimensional_soul_artifact,Dimensional Soul Artifact,Wizard Terra Curios,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
-wizard_terra_cuiros:wulfrum_battery,Wulfrum Battery,Wizard Terra Curios,Path 0–I,Path V,Path 0–I,Path V,Common,Rare,Rare,"Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+wizard_terra_cuiros:wulfrum_battery,Wulfrum Battery,Wizard Terra Curios,Path 0–I,Path V,Path 0–I,Path III,Common,Rare,Rare,"Nether material, but Netherite Scrap also drops from level 3+ tank-trait mobs while you wear the Unpolished Looting Charm (L2 Hostility). The earliest path counts that route; the usual path waits for the Nether when the trait level needed is rare early on"
 wizard_terra_cuiros:hide_of_astrum_deus,Hide of Astrum Deus,Wizard Terra Curios,Path V,Warden,Path V,Warden,Legendary,Legendary,Legendary,Needs the Warden to be defeated first (vanilla boss path)
 wizard_terra_cuiros:statis_blessing,Statis' Blessing,Wizard Terra Curios,Path V,Path VI,Path V,Path VI,Legendary,Legendary,Legendary,"Crafted from Papyrus Scarab, which sits on a later path"
 wizard_terra_cuiros:statis_curse,Statis' Curse,Wizard Terra Curios,Path V,Path VI,Path V,Path VI,Legendary,Mythic,Mythic,"Crafted from Statis' Blessing, which sits on a later path"

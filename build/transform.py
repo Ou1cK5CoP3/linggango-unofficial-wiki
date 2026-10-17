@@ -278,6 +278,36 @@ for _ in range(3):
 # Nether-only sources: the pack keeps the Nether locked until Eldorath falls (Path V), so random loot that only
 # exists there, and recipes that need a Nether-only material, cannot sit before Path V.
 NETHER = 5
+# L2 Hostility trait drops (data/l2hostility/loot_modifiers in the jar, overridden by the pack's kubejs data):
+# item -> lowest Looting Charm tier and the trait level it needs. A charm's own path is when that drop opens up;
+# trait level 3+ mobs are uncommon that early, so those count only as "earliest with luck".
+_L2F = pathlib.Path("/tmp/claude-0/-home-user-Linggango-Relic-Wiki/4288cb83-ead3-5324-91d4-51e578dc641c/scratchpad/extract/l2loot.json")
+L2LOOT = json.loads(_L2F.read_text()) if _L2F.exists() else {}
+CHARM = {k: BYID.get(f"l2hostility:charm_of_looting_{k}") for k in (1, 2, 3, 4)}
+CHARM_T = {k: NT[v["id"]] if v else 99 for k, v in CHARM.items()}
+L2NAME = {"Wither Skeleton Skull": "minecraft:wither_skeleton_skull", "Ghast Tear": "minecraft:ghast_tear",
+          "Netherite Scrap": "minecraft:netherite_scrap", "Netherite Ingot": "minecraft:netherite_scrap"}
+L2NAME = {k: v for k, v in L2NAME.items() if v in L2LOOT}
+def L2PATH(mid, realistic):
+    e = L2LOOT[mid]
+    t = CHARM_T[e["tier"]]
+    return t if (e["lv"] <= 1 or not realistic) else NETHER
+def PLABEL(t):
+    return {0: "Path 0", 1: "Path I", 2: "Path II", 3: "Path III", 4: "Path IV", 5: "Path V", 6: "Path VI", 6.1: "the Warden path",
+            6.2: "the Wither path", 6.3: "the Ender Dragon path", 7: "Path VII", 8: "Path VIII", 9: "Path IX", 10: "Path X", 11: "Path XI"}.get(t, f"Path {t}")
+def L2WHY_ONE(x, e):
+    c = CHARM[e["tier"]]["n"] if CHARM[e["tier"]] else "a Looting Charm"
+    lvl = "" if e["lv"] <= 1 else f" level {e['lv']}+"
+    note = "" if e["lv"] <= 1 else " That trait level is rare early, so only the earliest path moves."
+    return f"{x} also drops from{lvl} {e['trait'].replace('_', ' ')}-trait mobs while you wear the {c} (L2 Hostility), from {PLABEL(CHARM_T[e['tier']])} on.{note}"
+def L2WHY(mats):
+    parts = []
+    for x in sorted(mats):
+        e = L2LOOT[L2NAME[x]]
+        c = CHARM[e["tier"]]["n"] if CHARM[e["tier"]] else "a Looting Charm"
+        lvl = "" if e["lv"] <= 1 else f" level {e['lv']}+"
+        parts.append(f"{x} also drops from{lvl} {e['trait'].replace('_', ' ')}-trait mobs while you wear the {c}")
+    return "Nether material, but " + "; ".join(parts) + " (L2 Hostility). The earliest path counts that route; the usual path waits for the Nether when the trait level needed is rare early on"
 _NMOB = re.compile(r"^(Blaze|Wither Skeleton|Ghast|Magma Cube|Piglin|Piglin Brute|Hoglin|Strider|Zombified Piglin) drop \([\d.]+%\)$")
 _NCHEST = re.compile(r"^chest: (Bastion Remnant|Crimson Tower|Fortress|Nether Bridge|Soul Fortress|Piglin Ruin|Nether)\b")
 _NING = re.compile(r"\b(Wither Skeleton Skull|Obsidian Rose|Netherite (Scrap|Ingot)|Shroomlight|Ghast Tear|Nether Wart|Warped Focus|Ancient Debris)\b")
@@ -291,10 +321,47 @@ for d in D:
         why = "Only drops in the Nether, which stays locked until Eldorath falls"
     elif d["g"] == "Craft" and (_NING.search(head) or _KEYN.search(src)):
         why = "Needs a Nether-only material, and the Nether stays locked until Eldorath falls"
+        # L2 Hostility: with a Looting Charm worn, trait mobs in the Overworld drop some Nether materials
+        mats = {m.group(1) for m in _NING.finditer(head)}
+        if mats and not _KEYN.search(src) and all(L2NAME.get(x) for x in mats):
+            t_r = max(L2PATH(L2NAME[x], realistic=True) for x in mats)
+            t_e = max(L2PATH(L2NAME[x], realistic=False) for x in mats)
+            if t_e < NETHER and NT[i] < NETHER:
+                NT[i] = max(NT[i], t_r); NA[i] = max(NA[i], t_e)
+                RNG.discard(i)
+                WHY_ADD[i] = [w for w in WHY_ADD[i] if "from the start" not in w] + [L2WHY(mats)]
+                continue
     if why and NT[i] < NETHER:
         NT[i] = max(NT[i], NETHER); NA[i] = max(NA[i], NETHER)
         RNG.discard(i)
         WHY_ADD[i] = [w for w in WHY_ADD[i] if "from the start" not in w] + [why]
+# Same idea for the pack's own "key item: X (Nether/End material)" notes and for the Shulker Shell gate:
+# when the hardest ingredient is also an L2 trait drop, the path opens with that Looting Charm.
+L2KEY = {"Ghast Tear": "minecraft:ghast_tear", "Netherite Scrap": "minecraft:netherite_scrap", "Netherite Ingot": "minecraft:netherite_scrap",
+         "Wither Skeleton Skull": "minecraft:wither_skeleton_skull", "Shulker Shell": "minecraft:shulker_shell", "Blaze Rod": "minecraft:blaze_rod"}
+for d in D:
+    i = d["id"]
+    src = d["src"] if isinstance(d["src"], str) else " ".join(d["src"])
+    m = re.search(r"key item: ([^·(]+?) \((?:Nether|End) material\)", src)
+    if d["g"] != "Craft" or not m or L2KEY.get(m.group(1).strip()) not in L2LOOT:
+        continue
+    x = m.group(1).strip(); e = L2LOOT[L2KEY[x]]
+    if x == "Shulker Shell" and GATE[i] != DRAGON:
+        continue
+    if GATE[i] and x != "Shulker Shell":
+        continue
+    if x != "Shulker Shell" and NT[i] > NETHER:
+        continue  # something later than the Nether holds it back anyway
+    cp = CHARM_T[e["tier"]]
+    floor = max([cp] + [NT[r] for r in ING[i]])
+    if floor >= NT[i] and floor >= NA[i]:
+        continue
+    if e["lv"] <= 1:
+        NT[i] = max(floor, min(NT[i], floor)); NA[i] = min(NA[i], NT[i])
+    else:
+        NA[i] = min(NA[i], floor)
+    WHY_ADD[i].append(L2WHY_ONE(x, e))
+
 # a recipe can never come earlier than any curio it is made from
 for _ in range(6):
     for d in D:

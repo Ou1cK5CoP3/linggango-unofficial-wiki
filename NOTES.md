@@ -60,3 +60,11 @@ python3 build/build.py       # assemble dist/Linggango_Relic_Wiki.html
 - **Tooltip** reproduces Tooltip Overhaul as configured by Linggango: compact layout, palette by in-game rarity, notch corners, glint gradient, mod-name and rating footer, emerge animation.
 - Hub uses Linggango's own title background and logo from its FancyMenu config. Animated item textures (.mcmeta) play on item pages and tooltips.
 - Performance work (effects kept): icons are shared Blob URLs instead of inline base64 per tile, hover is handled once per animation frame without DOM sweeps, tile pop-ins only run for tiers entering the viewport, 3D stops when nothing is on screen. Long tasks after load fell from 10.2 s to about 2.7–5 s in this GPU-less container (software raster); real GPU frame times will be far lower but were not measurable here.
+
+## v5 placement rules (path = when you can realistically get it; "earliest" = with luck)
+1. Random loot (structure chests, Suspicious Bags, archaeology, ordinary mob drops) sits on Path 0 however low the chance; recipes held back only by such loot follow it down.
+2. Dimension locks: Nether-only loot and recipes with a Nether-only material start at Path V (the pack locks the Nether until Eldorath); End loot needs the Ender Dragon.
+3. Boss drops are never random loot; a side boss's drops share one path, placed by that boss's strength.
+4. Evolution chains ("upgraded from", "evolves from", "fed a Nether Star") count as ingredients, and a recipe is never earlier than any curio it is made from.
+5. L2 Hostility Looting Charms (trait drops read from the jar and the pack's kubejs overrides): with the Unpolished charm (Path III), trait mobs drop Ghast Tear, Blaze Rod, Wither Skeleton Skull, Netherite Scrap, Shulker Shell and more. Trait-level-1 drops move the path itself; level 3+ drops (rare early) move only the earliest path.
+6. More Relics stats are rebuilt from the mod's classes (the old data was ×100).
