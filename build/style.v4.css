@@ -8,7 +8,7 @@
 html,body{background:var(--bg)!important}
 body{font-size:15.5px;line-height:1.6}
 .ip-orb,.ip-orbit{display:none!important}
-#bgfx{z-index:0}main,.main,#main,#side,.side{position:relative;z-index:1}
+#bgfx{z-index:0}main,.main,#main{position:relative;z-index:1}#side{z-index:2}
 
 /* top bar */
 .top{background:var(--head)!important;box-shadow:0 2px 0 var(--line2)!important;backdrop-filter:none!important;border-bottom:2px solid var(--line)}
@@ -73,7 +73,14 @@ p.note{background:none!important;border:0!important;box-shadow:none!important;pa
 .hero .hfl .hf{opacity:.55}
 .hero .hfl .hf img{filter:saturate(.8) drop-shadow(0 3px 4px rgba(0,0,0,.5))}
 .shell{border:0!important;box-shadow:none!important;background:transparent!important}
-.ip-hero{grid-template-columns:minmax(0,1fr) 220px!important}.ip-stage{max-height:220px}
+@media (min-width:981px){.ip-hero{grid-template-columns:minmax(0,1fr) 220px!important}.ip-stage{max-height:220px}}
+/* phones: one column, art first and small, long names wrap instead of running under the art */
+@media (max-width:980px){.ip-hero{grid-template-columns:1fr!important;gap:14px!important}.ip-art{order:-1;width:min(220px,60vw);justify-self:center}}
+@media (max-width:760px){
+ .ip-title{font-size:clamp(24px,8vw,34px)!important}}
+.ip-title{overflow-wrap:anywhere;hyphens:auto}
 body:not(.hub) #main{background:var(--bg)}
 .stt tr.sth td{font-weight:700;color:var(--accent2);background:var(--panel2)!important;font-size:13px;letter-spacing:.03em;text-transform:uppercase}
 .stsrc{margin:6px 0 0;font-size:12.5px;color:var(--mute)}
+/* phones: the hero is too narrow for side bands, so drifting relics and the splash would sit on the text */
+@media (max-width:760px){.hero .hfl,.hero .splash{display:none!important}}

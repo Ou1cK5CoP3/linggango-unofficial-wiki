@@ -746,7 +746,9 @@ AN = {}
 if (EX / "items/icons.json").exists():
     icj = json.loads((EX / "items/icons.json").read_text())
     for k, v in icj.items():
-        if k not in IC and v.get("png"):
+        # icons rendered from the pack's own models win over the old wiki's icons, which were sometimes
+        # the wrong texture (an entity skin, a model UV sheet or another item's sprite)
+        if v.get("png") and (k not in IC or v.get("kind") != "fallback-sprite"):
             IC[k] = v["png"]
         a = v.get("anim")
         if a and a.get("strip") and (k in BYID):
@@ -805,9 +807,10 @@ def junk(d):
         return "storage"
     if re.search(r"creative only", " ".join(d.get("st") or []), re.I):
         return "creative-only"
-    if NOFX.search(d.get("fx") or "") and not d.get("uid"):
+    if NOFX.search(d.get("fx") or "") and not any(u in CURIO_IDS for u in d.get("uid", [])):
         return "no effect"
     return None
+CURIO_IDS = {d["id"] for d in D}
 DROPPED = [(d["n"], d["m"], junk(d)) for d in D if junk(d)]
 gone = {d["id"] for d in D if junk(d)}
 D = [d for d in D if d["id"] not in gone]
