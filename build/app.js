@@ -31,7 +31,8 @@ const actL=a=>ACT[a][3]||"Path "+ACT[a][0];
 const actF=a=>actL(a)+(ACTN[a]&&a!=-1?" · next: "+ACTN[a]:"");
 const count=xs=>xs.reduce((s,d)=>s+d.k,0);
 const byRank=xs=>[...xs].sort((a,b)=>b.r-a.r||b.sc-a.sc);
-const CT='<svg class="ct" viewBox="0 0 8 8" aria-label="Crafting ingredient"><rect width="8" height="8" fill="#9a6a3a"/><rect width="8" height="2" fill="#c08850"/><rect x="1" y="3" width="2" height="4" fill="#5b3b1c"/><rect x="5" y="3" width="2" height="4" fill="#5b3b1c"/></svg>';
+const CT='<i class="ct" title="Ingredient: used to craft another curio" aria-label="Crafting ingredient"></i>';
+if(UI.ctable)document.documentElement.style.setProperty("--ctimg",`url(${URL.createObjectURL(new Blob([Uint8Array.from(atob(UI.ctable),c=>c.charCodeAt(0))],{type:"image/png"}))})`);
 
 /* ---------- art: attribute icons, boss emblems, 3D heads ---------- */
 {const st=document.createElement("style");st.textContent=":root{"+Object.keys(VA).map(k=>`--v-${k}:url(data:image/png;base64,${VA[k]})`).join(";")+"}";document.head.appendChild(st)}
@@ -216,7 +217,7 @@ function modPage(m){
 function home(xs,asTable){
  let h=`${crumb("The Path")}<h1 class="qb">The Path</h1>
  <p class="lede">Every curio in Linggango V6.6.5b4 plus the 6 added curio mods, tiered by how hard it really is to get: the Keeper that unlocks it, the vanilla boss it needs (Warden, Wither, Ender Dragon), drop chances, pickaxe tier and trait farming. Inside each path, ★ Must-Have items come first, then the rarest.</p>
-  <div class="legend"><span>${CT.replace('class="ct"','width="12" height="12"')} crafting ingredient</span><span>Frame and glow: rarity (brighter = rarer)</span><span><i class="slk lg" style="--si:url(${slotIcon("Ring")})"></i> Corner badge: curio slot (hover for name)</span><span>Top-left number: merged variants</span><span><b class="lgs">★</b> Must-Have: get it first</span></div>
+  <div class="legend"><span><i class="ct lg"></i>Used to craft another curio</span><span><i class="lgr"></i>Frame colour: rarity, brighter = rarer</span><span><i class="slk lg" style="--si:url(${slotIcon("Ring")})"></i>Curio slot it goes in</span><span><b class="lgn">16</b>Variants merged into one tile</span><span><b class="lgs">★</b>Must-Have: get it first</span></div>
  ${activeBar()}`;
  seedBg("path"+st.a,xs.filter(d=>d.r>=4));
  if(!asTable){

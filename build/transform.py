@@ -993,6 +993,9 @@ UI = {}
 # Curios slot icons (the empty-slot silhouettes each mod registers), keyed by slot id
 if (EX / "slots/slot_icons.json").exists():
     UI["cslot"] = json.loads((EX / "slots/slot_icons.json").read_text())
+if (EX / "slots/crafting_table_front.png").exists():
+    # vanilla 1.20.1 crafting table, used as the "used in a recipe" marker
+    UI["ctable"] = base64.b64encode((EX / "slots/crafting_table_front.png").read_bytes()).decode()
 uim = json.loads((EX / "ui/assets.json").read_text()) if (EX / "ui/assets.json").exists() else {}
 for key, name in (("logo", "lg/config/fancymenu/assets/linggango_menu/logo_menu.png"), ("bars", "gui/bars"), ("slots", "gui/container/inventory")):
     if name in uim:

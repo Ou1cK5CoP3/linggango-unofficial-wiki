@@ -207,3 +207,15 @@ body:not(.hub) #main{background:var(--bg)}
 .t.r5>img{filter:drop-shadow(0 0 3px rgba(255,211,107,.55)) drop-shadow(0 2px 0 rgba(0,0,0,.6))}
 .t.r5:hover::after{animation-duration:1.4s!important}
 @media (prefers-reduced-motion:reduce){.t.r5::after{animation:none!important}}
+/* "used in a recipe" marker: the vanilla crafting table, small, outlined like the slot badge */
+.t .ct{position:absolute;left:3px;bottom:3px;width:11px;height:11px;z-index:2;background:var(--ctimg) center/100% no-repeat;image-rendering:pixelated;
+ filter:drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000) drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000)}
+/* legend: one compact row of chips, each with the exact mark it explains */
+.legend{display:flex;flex-wrap:wrap;gap:6px 8px;margin:8px 0 12px}
+.legend>span{display:inline-flex;align-items:center;gap:7px;padding:4px 9px;border-radius:3px;background:var(--panel2);border:1px solid var(--line);font-size:12.5px;color:var(--fg)}
+.legend .ct.lg{display:inline-block;width:14px;height:14px;background:var(--ctimg) center/100% no-repeat;image-rendering:pixelated}
+.legend .lgr{display:inline-block;width:14px;height:14px;border-radius:2px;background:linear-gradient(90deg,#9aa3ad,#3fbf5f,#3a8cff,#a35cff,#ffb21e,#ff3d5e)}
+.legend .lgn{font:700 9px var(--body);background:var(--accent);color:var(--panel);padding:0 3px;border-radius:2px}
+.legend .slk.lg{width:14px;height:14px}
+.legend .slk.lg{position:relative;display:inline-block;background:none!important;box-shadow:none!important;filter:drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000) drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000)}
+.legend .slk.lg::after{content:"";position:absolute;inset:0;background:#f1ead8!important;-webkit-mask:var(--si) center/14px no-repeat;mask:var(--si) center/14px no-repeat}
