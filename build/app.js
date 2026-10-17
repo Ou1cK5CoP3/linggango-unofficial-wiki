@@ -67,7 +67,7 @@ const srcText=d=>Array.isArray(d.src)?d.src.join(" "):d.src;
 /* floating relics behind the page, re-seeded per view */
 const bgfx=document.createElement("div");bgfx.id="bgfx";bgfx.setAttribute("aria-hidden","true");document.body.prepend(bgfx);
 let bgKey="";
-function seedBg(key,pool){if(key===bgKey)return;bgKey=key;pool=pool.filter(d=>IC[d.id]);if(!pool.length)pool=D.filter(d=>d.r>=4&&IC[d.id]);
+function seedBg(key,pool){return;bgKey=key;pool=pool.filter(d=>IC[d.id]);if(!pool.length)pool=D.filter(d=>d.r>=4&&IC[d.id]);
  const W=["i_netherite_sword","i_diamond_sword","i_trident","i_bow","i_totem_of_undying","i_nether_star","i_echo_shard","i_heart_of_the_sea"];
  const N=innerWidth<760?7:15;let h="";
  for(let i=0;i<N;i++){const z=i%3,x=(i*61+17)%96,y=(i*37+9)%92,dur=16+(i*13)%15,dl=-((i*2.7)%16).toFixed(1),dx=((i%2?1:-1)*(10+i*3%22));
@@ -130,7 +130,7 @@ function refreshSide(){
  return xs}
 
 /* ---------- shared bits ---------- */
-const tile=(d,i=99)=>`<a style="--i:${i}" class="t c${d.c} r${d.r}${d.g==="Loot"?" L":""}" data-mf="${mf(d.m)[0]}" href="#i${d.ix}" data-t="${d.ix}" aria-label="${esc(d.n)}">${AN[d.id]?`<span class="aimg" data-an="${esc(d.id)}">${img(d.id)}</span>`:img(d.id)}${d.k>1?`<span class="kv">${d.k}</span>`:""}${d.uid.length?CT:""}${d.nw?'<span class="nwb">new</span>':""}${isMust(d)?'<span class="star" aria-label="Must-Have">★</span>':""}<span class="sh" style="--dl:${(d.ix*.37%5).toFixed(2)}s"></span></a>`;
+const tile=(d,i=99)=>`<a style="--i:${i}" class="t c${d.c} r${d.r}${d.g==="Loot"?" L":""}" data-mf="${mf(d.m)[0]}" href="#i${d.ix}" data-t="${d.ix}" aria-label="${esc(d.n)}">${AN[d.id]?`<span class="aimg" data-an="${esc(d.id)}">${img(d.id)}</span>`:img(d.id)}${d.k>1?`<span class="kv">${d.k}</span>`:""}${d.uid.length?CT:""}${isMust(d)?'<span class="star" aria-label="Must-Have">★</span>':""}<span class="sh" style="--dl:${(d.ix*.37%5).toFixed(2)}s"></span></a>`;
 const gcard=(d,i)=>`<a class="gc r${d.r}" style="--i:${Math.min(i,40)}" href="#i${d.ix}" data-t="${d.ix}"><span class="ak">${ACT[d.t][0]}</span><span class="rk">${isMust(d)?"★ Must-Have":RN[d.r]}</span><span class="pic">${img(d.id)}</span><b>${esc(d.n)}</b><small>${esc(d.sl.join(", "))} · ${esc(d.m)}</small></a>`;
 const rbar=xs=>`<span class="bar5">${RNS.map(i=>{const n=xs.filter(d=>d.r===i).length;return n?`<i style="flex:${n};background:${RC[i]}"></i>`:""}).join("")}</span>`;
 const cards=xs=>`<div class="cards">${xs.map(x=>`<a class="card" href="#i${x.ix}" data-t="${x.ix}">${img(x.id)}<span>${esc(x.n)}</span></a>`).join("")}</div>`;

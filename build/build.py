@@ -18,6 +18,7 @@ html = "\n".join([
     "<style>",
     part("style.css"),
     part("style.extra.css"),
+    part("style.v4.css"),
     "</style>",
     part("body.html"),
     "<script>",
