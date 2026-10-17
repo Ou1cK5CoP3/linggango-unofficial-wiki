@@ -219,3 +219,10 @@ body:not(.hub) #main{background:var(--bg)}
 .legend .slk.lg{width:14px;height:14px}
 .legend .slk.lg{position:relative;display:inline-block;background:none!important;box-shadow:none!important;filter:drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000) drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000)}
 .legend .slk.lg::after{content:"";position:absolute;inset:0;background:#f1ead8!important;-webkit-mask:var(--si) center/14px no-repeat;mask:var(--si) center/14px no-repeat}
+/* crafting marker matches the slot badge: same 12px size, 3px inset, cream silhouette with a 1px black outline */
+.t .ct{left:3px!important;bottom:3px!important;width:12px!important;height:12px!important;background:none!important;
+ filter:drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000) drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000)}
+.t .ct::after,.legend .ct.lg::after{content:"";position:absolute;inset:0;background:#f1ead8;
+ -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Cpath fill-rule='evenodd' d='M1 1h10v5H1zM2 2h3.5v3H2zM6.5 2H10v3H6.5z'/%3E%3Cpath d='M2 6h1v5H2zM9 6h1v5H9z'/%3E%3C/svg%3E") center/12px no-repeat;
+ mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Cpath fill-rule='evenodd' d='M1 1h10v5H1zM2 2h3.5v3H2zM6.5 2H10v3H6.5z'/%3E%3Cpath d='M2 6h1v5H2zM9 6h1v5H9z'/%3E%3C/svg%3E") center/12px no-repeat}
+.legend .ct.lg{position:relative;width:14px;height:14px;background:none!important;filter:drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000) drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000)}

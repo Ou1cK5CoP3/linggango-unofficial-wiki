@@ -416,6 +416,10 @@ for d in D:
 
 # ---------------------------------------------------------------- 2. Rarity
 PRIORITY = {d["id"] for d in D if re.fullmatch(r"celestial_artifacts:\w+_etching|l2hostility:charm_of_looting_\d", d["id"])}
+# curios that add curio slots are must-haves too: every extra slot is one more curio worn
+SLOT_ADD = re.compile(r"\+\s*[\d–-]+\s*(?:slots? \w+|\w+(?: \w+)? slots?)\b", re.I)
+SLOTGIVERS = {d["id"] for d in D if SLOT_ADD.search(d.get("fx") or "") and not re.search(r"minion slot|doesn't add|doesn't take", d.get("fx") or "", re.I)}
+PRIORITY |= SLOTGIVERS
 
 
 def bucket(sc):
