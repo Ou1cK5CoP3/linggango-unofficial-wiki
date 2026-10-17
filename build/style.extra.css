@@ -201,3 +201,70 @@ details.raw ul{margin:4px 0;padding-left:18px}
 /* ---- motion & small screens ---- */
 @media (max-width:760px){.vbc{grid-template-columns:72px 1fr}.h3d.xl{--s:42px}.lhero{flex-direction:column;align-items:flex-start}.tier{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){#bgfx *,.hero .hf,.h3d .rig,.emb img,.ip-stage .orb i,#tip .pt i,#tip .nm,.mc{animation:none!important}#bgfx .sp,.ip-stage .orb{display:none}}
+
+/* ==== v3: pack-authentic visuals and 120 fps budget ==== */
+#glstage{position:fixed;inset:0;width:100vw;height:100vh;z-index:5;pointer-events:none}
+.shell,.top{z-index:2}
+/* animated item textures from the pack (.mcmeta strips) */
+.aimg{display:inline-grid;place-items:center;width:100%;height:100%}
+.aimg img{width:100%;height:100%;image-rendering:pixelated}
+.aimg.anim img{opacity:0}
+.aimg.anim{background:var(--strip) 0 0/100% calc(var(--n)*100%) no-repeat;image-rendering:pixelated;animation:strip var(--ms) steps(var(--n)) infinite}
+@keyframes strip{to{background-position:0 100%}}
+/* boss portraits rendered from the mod's own 3D models */
+.bpt{--s:56px;display:inline-grid;place-items:center;width:calc(var(--s)*1.25);height:calc(var(--s)*1.25);border-radius:50%;background:radial-gradient(circle at 50% 60%,color-mix(in srgb,var(--tc,#888) 38%,transparent),transparent 70%)}
+.bpt img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 6px 6px rgba(0,0,0,.45))}
+.bpt.sm{--s:34px}.bpt.xs{--s:20px}.bpt.lg{--s:120px}.bpt.xl{--s:72px}
+.tl .tlem .bpt{--s:64px}
+.tier.closed .tl .tlem .bpt{--s:28px}
+/* path page: live stage */
+.lhero.big{display:grid;grid-template-columns:minmax(260px,42%) 1fr;align-items:center;gap:24px;min-height:360px;padding:0 24px 0 0}
+.lhero .stage{height:360px;cursor:grab;touch-action:none}
+.lhero .stage:active{cursor:grabbing}
+.bcard{display:grid;gap:8px;align-content:center}
+.bcard b{font:700 28px "Pixelify Sans",var(--disp)}
+.bcard small{color:var(--mute)}
+.bstat{display:flex;flex-wrap:wrap;gap:8px}
+.bstat span{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:6px;background:var(--panel);border:1px solid var(--line);font:600 14px var(--body);font-variant-numeric:tabular-nums}
+.bnote{font-size:12px}
+.lhero.big .lhv{grid-column:1/-1;padding:0 0 16px 24px}
+/* hub hero: Linggango's own title background + logo, final Keeper live */
+.hero.real{background:linear-gradient(180deg,rgba(10,8,20,.15),rgba(10,8,20,.55) 70%,rgba(10,8,20,.85)),var(--hbg) 30% 50%/cover no-repeat}
+.hero.real .sky{display:none}
+.hero .hstage{position:absolute;right:2%;bottom:0;width:30%;height:92%;z-index:0;cursor:grab;touch-action:none}
+.hero.real h1.lg img.wm{width:min(620px,70%)}
+@media (max-width:1100px){.hero .hstage{display:none}}
+/* tooltip: Tooltip Overhaul compact layout as configured by Linggango */
+#tip.to{width:min(400px,calc(100vw - 24px));color:#fff;font:13px/1.45 var(--body)}
+#tip.to .tbox{position:relative;background:rgba(0,0,0,.94);padding:6px 8px 0;border-radius:2px;box-shadow:0 0 0 1px #000,0 12px 28px rgba(0,0,0,.55)}
+#tip.to .tfr{position:absolute;inset:1px;pointer-events:none;border:2px solid transparent;border-radius:1px;
+ background:linear-gradient(180deg,var(--c1),var(--c2) 55%,transparent) border-box;-webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+#tip.to .tfr::before,#tip.to .tfr::after{content:"";position:absolute;width:4px;height:4px;background:var(--c1);top:-2px}
+#tip.to .tfr::before{left:-2px;clip-path:polygon(0 0,100% 0,100% 50%,50% 50%,50% 100%,0 100%)}
+#tip.to .tfr::after{right:-2px;clip-path:polygon(0 0,100% 0,100% 100%,50% 100%,50% 50%,0 50%)}
+#tip.to .thd{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:center;padding:4px 2px 8px;border-bottom:1px solid color-mix(in srgb,var(--c1) 60%,transparent)}
+#tip.to .tslot{width:40px;height:40px;display:grid;place-items:center;background:rgba(62,62,62,.56);border-radius:2px}
+#tip.to .tslot .aimg,#tip.to .tslot img{width:32px;height:32px}
+#tip.to .tnm{font:400 15px/1.25 "Silkscreen",var(--disp);text-shadow:2px 2px 0 rgba(0,0,0,.6);overflow-wrap:anywhere}
+#tip.to [data-rb]{background:linear-gradient(90deg,#FF5A5A,#FFB45A,#FFFF5A,#78FF78,#78FFFF,#7878FF,#FF64FF,#FF5A5A) 0 0/200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:prism 4s linear infinite}
+#tip.to .tsub{font-size:11.5px;color:#AAAAAA}
+#tip.to .tbd{display:grid;gap:6px;padding:8px 2px 10px}
+#tip.to .tbd p{margin:0}
+#tip.to .tfx{color:#E8E8E8}
+#tip.to .tst{margin:0;padding:0;list-style:none;display:grid;gap:2px;color:#5555FF;font-size:12.5px}
+#tip.to .tst li{color:#7A9CFF}
+#tip.to .tlock{color:#FF5555;font-size:12px}
+#tip.to .tmust{color:#FFE14D;font-size:12px;font-weight:600}
+#tip.to .tsrc{color:#AAAAAA;font-size:12px}
+#tip.to .twhere{color:#AA88CC;font-size:11.5px;font-style:italic}
+#tip.to .tft{display:flex;justify-content:space-between;gap:12px;margin:0 -8px;padding:4px 10px;font-size:11.5px;background:linear-gradient(180deg,color-mix(in srgb,var(--c2) 8%,transparent),color-mix(in srgb,var(--c3) 22%,transparent));border-top:1px solid color-mix(in srgb,var(--c3) 60%,transparent)}
+#tip.to .tmod{color:#3873AE;font-style:italic}
+#tip.to .trt{color:#EDDE76;text-align:right}
+#tip.to .ign{font-weight:700}
+#tip.to.in .tbox{animation:emerge .1s ease-out both;transform-origin:0 0}
+@keyframes emerge{from{transform:scale(.001);opacity:0}}
+.ign{font-weight:700}
+@media (prefers-reduced-motion:reduce){.aimg.anim,#tip.to [data-rb]{animation:none!important}}
+/* tiles play their pop-in only when their tier scrolls into view (same effect, ~60 animations instead of 1,715) */
+.tier:not(.seen) .t{animation:none}
+.tier{contain-intrinsic-size:auto 420px}

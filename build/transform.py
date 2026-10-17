@@ -738,9 +738,67 @@ for p in sorted(VAN.glob("*.png")):
     if n.startswith(("mob_effect_", "particle_", "item_", "block_")) or n == "environment_end_sky":
         VA[n.replace("mob_effect_", "fx_").replace("particle_", "p_").replace("item_", "i_").replace("block_", "b_").replace("environment_", "")] = base64.b64encode(p.read_bytes()).decode()
 
+# ---------------------------------------------------------------- 5. Pack-verified extras
+EX = pathlib.Path("/tmp/claude-0/-home-user-Linggango-Relic-Wiki/4288cb83-ead3-5324-91d4-51e578dc641c/scratchpad/extract")
+AN = {}
+if (EX / "items/icons.json").exists():
+    icj = json.loads((EX / "items/icons.json").read_text())
+    for k, v in icj.items():
+        if k not in IC and v.get("png"):
+            IC[k] = v["png"]
+        a = v.get("anim")
+        if a and a.get("strip") and (k in BYID):
+            AN[k] = [a["strip"], a.get("frames", 1), a.get("frametime_ms", 50)]
+# in-game rarity from the server dump (name + colour as the game draws it)
+VAN_RC = {"COMMON": "#FFFFFF", "UNCOMMON": "#FFFF55", "RARE": "#55FFFF", "EPIC": "#FF55FF"}
+CONF = {"gray": "#828282", "white": "#FFFFFF", "blue": "#9696FF", "green": "#96FF96", "orange": "#FFC896", "light_red": "#FF9696", "pink": "#FF96FF",
+        "light_purple": "#D2A0FF", "lime": "#96FF0A", "yellow": "#FFFF0A", "cyan": "#05C8FF", "red": "#FF2864", "purple": "#B428FF", "expert": "rainbow", "master": "#FF2864"}
+CELC = {"red": "#FF5555", "green": "#55FF55", "gold": "#FFAA00", "yellow": "#FFFF55", "blue": "#5555FF", "pink": "#FF55FF", "dark_green": "#00AA00", "dark_purple": "#AA00AA", "dark_aqua": "#00AAAA"}
+BRUT = {"LEGENDARY": "#FFCD14", "FABLED": "#C896FF", "MYTHIC": "#14CDFF", "DIVINE": "#FFFFAF", "GODLY": "rainbow", "CATACLYSMIC": "#4D8CDC", "STYGIAN": "#FF0000",
+        "NOCTURNAL": "#5020C8", "PRISMATIC": "#B35FE9", "ICE": "#96DCF5", "SCULK": "#00F2FF", "DARK": "#5A5A5F", "FIRE": "#FF9600"}
+OTH = {"legendary": "#FFAA00", "calamitous": "#FFAA00", "strange": "#FF55FF"}
+dump = EX / "runtime/wiki_dump.json"
+if dump.exists():
+    DI = json.loads(dump.read_text())["items"]
+    for d in D:
+        it = DI.get(d["id"])
+        if not it:
+            continue
+        r = it["r"]; ns = d["id"].split(":")[0]
+        c = VAN_RC.get(r) or (CELC.get(r) if ns.startswith("celestial") else None) or BRUT.get(r) or OTH.get(r) or CONF.get(r) or "#FFFFFF"
+        d["ig"] = [words(r.split(":")[-1].lower()).title(), c]
+# Celestial Artifacts etchings: Chaotic and Truth have no Catastrophe Scroll condition (loot modifiers in the jar)
+ETCH["celestial_artifacts:chaotic_etching"] = "30% chance when the Wither is killed by an explosion. No Catastrophe Scroll needed."
+ETCH["celestial_artifacts:truth_etching"] = "50% chance when the Wither is killed by a raider (Pillager, Vindicator, Ravager…). No Catastrophe Scroll needed."
+for d in D:
+    if d["id"] in ETCH:
+        d["src"] = [ETCH[d["id"]]]
+# boss models and stats
+B3 = {}
+for f in sorted((EX / "bosses").glob("*.json")):
+    if f.name in ("index.json", "package.json", "package-lock.json"):
+        continue
+    rec = json.loads(f.read_text())
+    if rec.get("geo"):
+        B3[rec["key"]] = rec
+BST = json.loads((EX / "stats/bosses.json").read_text()) if (EX / "stats/bosses.json").exists() else {}
+UI = {}
+uim = json.loads((EX / "ui/assets.json").read_text()) if (EX / "ui/assets.json").exists() else {}
+for key, name in (("logo", "lg/config/fancymenu/assets/linggango_menu/logo_menu.png"), ("bars", "gui/bars"), ("slots", "gui/container/inventory")):
+    if name in uim:
+        UI[key] = base64.b64encode((EX / "ui" / uim[name]["file"]).read_bytes()).decode()
+if "lg/config/fancymenu/assets/default_background.png" in uim:
+    im = Image.open(EX / "ui" / uim["lg/config/fancymenu/assets/default_background.png"]["file"]).convert("RGB")
+    im = im.resize((2400, round(im.height * 2400 / im.width)), Image.LANCZOS)
+    buf = io.BytesIO(); im.save(buf, "JPEG", quality=84, optimize=True, progressive=True)
+    UI["bg"] = base64.b64encode(buf.getvalue()).decode()
+TT = json.loads((EX / "tooltip/assets.json").read_text()) if (EX / "tooltip/assets.json").exists() else {}
+
 OUT.mkdir(parents=True, exist_ok=True)
 js = "const D=" + json.dumps(D, ensure_ascii=False, separators=(",", ":")) + ",IC=" + json.dumps(IC, separators=(",", ":")) + \
-     ",NM=" + json.dumps(NM, ensure_ascii=False, separators=(",", ":")) + ",U=" + json.dumps(U, ensure_ascii=False, separators=(",", ":")) + ",VA=" + json.dumps(VA, separators=(",", ":")) + ";"
+     ",NM=" + json.dumps(NM, ensure_ascii=False, separators=(",", ":")) + ",U=" + json.dumps(U, ensure_ascii=False, separators=(",", ":")) + ",VA=" + json.dumps(VA, separators=(",", ":")) + ",AN=" + json.dumps(AN, separators=(",", ":")) + \
+     ",B3=" + json.dumps(B3, separators=(",", ":")) + ",BST=" + json.dumps(BST, ensure_ascii=False, separators=(",", ":")) + \
+     ",UI=" + json.dumps(UI, separators=(",", ":")) + ",TT=" + json.dumps({k: v for k, v in TT.items() if "/overlay/" in k}, separators=(",", ":")) + ";"
 (OUT / "data.js").write_text(js, encoding="utf-8")
 
 # summary
