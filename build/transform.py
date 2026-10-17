@@ -813,6 +813,21 @@ def junk(d):
     if NOFX.search(d.get("fx") or "") and not any(u in CURIO_IDS for u in d.get("uid", [])):
         return "no effect"
     return None
+# Odd-sized sprites (14/15/17/19/26 px) get scaled by a non-integer factor and lose their pixel grid;
+# pad them onto a 16 or 32 px canvas instead, centred, without resampling.
+from PIL import Image as _Im
+def _pad(b64):
+    im = _Im.open(io.BytesIO(base64.b64decode(b64))).convert("RGBA")
+    w, h = im.size
+    if (w, h) in ((16, 16), (32, 32), (64, 64), (128, 128)) or max(w, h) > 32:
+        return b64
+    n = 16 if max(w, h) <= 16 else 32
+    c = _Im.new("RGBA", (n, n)); c.paste(im, ((n - w) // 2, (n - h) // 2))
+    out = io.BytesIO(); c.save(out, "PNG"); return base64.b64encode(out.getvalue()).decode()
+for _k in list(IC):
+    if not _k.startswith("v_"):
+        try: IC[_k] = _pad(IC[_k])
+        except Exception: pass
 CURIO_IDS = {d["id"] for d in D}
 DROPPED = [(d["n"], d["m"], junk(d)) for d in D if junk(d)]
 gone = {d["id"] for d in D if junk(d)}

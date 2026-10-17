@@ -140,3 +140,28 @@ body:not(.hub) #main{background:var(--bg)}
 .t .slk.tx::after{display:none}
 .legend .slk.lg{display:inline-block;position:relative;vertical-align:-3px;width:15px;height:15px;background:#8b8b8b;box-shadow:inset 1px 1px 0 #373737,inset -1px -1px 0 #fff}
 .legend .slk.lg::after{content:"";position:absolute;inset:1px;background:#1b1b1b;-webkit-mask:var(--si) center/13px no-repeat;mask:var(--si) center/13px no-repeat}
+
+/* ===== v5.1 crisp icons =====
+   Rotating, scaling or easing pixel art by fractions of a pixel makes the browser resample it, which is what
+   blurred the icons. Idle motion now moves whole pixels only (stepped), and "breathe" is a brightness pulse. */
+.tier.seen .t>img{animation:mvA 3.4s step-end infinite;animation-delay:calc(var(--i,0)*-173ms);will-change:auto}
+.tier.seen .t:nth-child(3n+1)>img{animation-name:mvB;animation-duration:4.2s}
+.tier.seen .t:nth-child(3n+2)>img{animation:mvC 3.8s ease-in-out infinite;animation-delay:calc(var(--i,0)*-173ms)}
+.tier.seen .t.r4>img,.tier.seen .t.r5>img,.tier.seen .t.r6>img{animation:mvA 3.4s step-end infinite,glowP 2.6s ease-in-out infinite;animation-delay:calc(var(--i,0)*-173ms)}
+@keyframes mvA{0%,100%{transform:translateY(0)}25%,75%{transform:translateY(-1px)}50%{transform:translateY(-2px)}}
+@keyframes mvB{0%,50%,100%{transform:translateX(0)}25%{transform:translateX(-1px)}75%{transform:translateX(1px)}}
+@keyframes mvC{50%{filter:brightness(1.22) drop-shadow(1px 1px 0 rgba(0,0,0,.45))}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+.t:hover img{animation-timing-function:step-end!important}
+.t img,.aimg img,.ip-art img,.card img,.mcs img,.idx img,#side img{image-rendering:pixelated;image-rendering:crisp-edges;image-rendering:pixelated}
+
+/* slot badge: no box, just the silhouette, small but outlined so it reads on any rarity background */
+.t .slk{width:12px;height:12px;right:3px;bottom:3px;background:none!important;box-shadow:none!important;
+ filter:drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000) drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000)}
+.t .slk::after{inset:0;background:#f1ead8;-webkit-mask-size:12px;mask-size:12px}
+.t .slk.tx{font-size:7px;line-height:12px;color:#f1ead8}
+.legend .slk.lg{background:none;box-shadow:none;filter:drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000) drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000)}
+.legend .slk.lg::after{background:#f1ead8;inset:0}
+.sc:hover .ics img:nth-child(1),.sc:hover .ics img:nth-child(3){transform:translateY(-3px)!important}
+.t:hover{transform:translateY(-2px)!important}
+.tier .t:hover>img,.t:hover>img{animation:bob .9s step-end infinite!important}
