@@ -1036,6 +1036,16 @@ body:not(.hub) #main{background:var(--bg)}
  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Cpath fill-rule='evenodd' d='M1 1h10v5H1zM2 2h3.5v3H2zM6.5 2H10v3H6.5z'/%3E%3Cpath d='M2 6h1v5H2zM9 6h1v5H9z'/%3E%3C/svg%3E") center/12px no-repeat;
  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' shape-rendering='crispEdges'%3E%3Cpath fill-rule='evenodd' d='M1 1h10v5H1zM2 2h3.5v3H2zM6.5 2H10v3H6.5z'/%3E%3Cpath d='M2 6h1v5H2zM9 6h1v5H9z'/%3E%3C/svg%3E") center/12px no-repeat}
 .legend .ct.lg{position:relative;width:14px;height:14px;background:none!important;filter:drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000) drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000)}
+/* v5.4 crafting marker: the real 1.20.1 crafting_table_top grid (dark pixels only, centre 12x12, 1:1),
+   drawn in black with a cream outline so it reads on dark tiles; same size and inset as the slot badge */
+.t .ct::after,.legend .ct.lg::after{background:#141414!important;
+ -webkit-mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAKklEQVR4nGNgYGD4z0A8+M8IYxCpAaYeRQNeNhMJzkGxYtRJVHcSSUkDAEOEE/vjv2VHAAAAAElFTkSuQmCC) center/12px no-repeat!important;mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAKklEQVR4nGNgYGD4z0A8+M8IYxCpAaYeRQNeNhMJzkGxYtRJVHcSSUkDAEOEE/vjv2VHAAAAAElFTkSuQmCC) center/12px no-repeat!important;image-rendering:pixelated}
+.t .ct,.legend .ct.lg{filter:drop-shadow(1px 0 0 #f1ead8) drop-shadow(-1px 0 0 #f1ead8) drop-shadow(0 1px 0 #f1ead8) drop-shadow(0 -1px 0 #f1ead8)!important}
+.legend .ct.lg{width:12px!important;height:12px!important}
+/* Must-Have star: inside the top-right corner, gold with a 1px black outline and a soft glow */
+.t .star{top:2px!important;right:3px!important;font:700 13px/1 var(--body)!important;color:#ffd21f!important;z-index:4!important;
+ text-shadow:1px 0 0 #000,-1px 0 0 #000,0 1px 0 #000,0 -1px 0 #000,1px 1px 0 #000,-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,0 0 6px rgba(255,190,40,.9)!important}
+.legend .lgs{color:#ffd21f;text-shadow:1px 0 0 #000,-1px 0 0 #000,0 1px 0 #000,0 -1px 0 #000,0 0 6px rgba(255,190,40,.9)}
 
 </style>
 <header class="top">
