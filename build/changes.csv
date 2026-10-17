@@ -1,0 +1,189 @@
+id,name,mod,path_old,path_new,earliest_old,earliest_new,rarity_old,rarity_new,base_rarity,reason
+brutality:profanum_reactor,Profanum Reactor,Brutality,Path IX,Path IX,Path VIII,Path VIII,Epic,Legendary,Legendary,
+terramity:cyber_glasses,Cyber Glasses,Terramity,Path IX,Path IX,Path VIII,Path VIII,Epic,Legendary,Legendary,
+armageddon_mod:cinder_hand,Cinder Hand,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Rare,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:hand_of_the_storms,Hand Of The Storms,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:hand_of_the_weaks,Hand of the Weaks,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:poisonous_hand,Poisonous Hand,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Rare,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:ring_of_the_conqueror,Ring Of The Conqueror,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:venerated_locket,Venerated Locket,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+somakespells:invoker_canon_2_spell_book,Invoker Canon II,Somake Spells,Path VI,Path VI,Path VI,Path VI,Epic,Legendary,Legendary,
+somakespells:tidebound_2_spell_book,Tidebound II,Somake Spells,Path VI,Path VI,Path VI,Path VI,Epic,Legendary,Legendary,
+somakespells:voidbound_codex_2_spell_book,Voidbound Codex II,Somake Spells,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Legendary,Legendary,"Crafted from Voidbound Codex, which now sits on the same path"
+somakespells:voidbound_codex_spell_book,Voidbound Codex,Somake Spells,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+summonity:dragon_mask,Dragon Mask,Summonity,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Rare,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
+summonity:vanquishers_mask,Vanquishers Mask,Summonity,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+traveloptics:ender_echo,Ender Echo,T.O Magic 'n Extras,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+celestial_artifacts:corrupt_badge,Corrupt Badge,Celestial Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+celestial_artifacts:cursed_talisman,Cursed Talisman,Celestial Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Legendary,Legendary,"Crafted from Origin Etching, which now sits on the same path"
+ae2wtlib:wireless_pattern_encoding_terminal,Wireless Pattern Encoding Terminal,AE2 WTLib,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
+l2hostility:charm_of_looting_2,Magical Looting Charm,L2 Hostility,Path V,Path V,Path V,Path V,Rare,Must-Have ★,Rare,
+l2hostility:curse_of_envy,Curse Of Envy,L2 Hostility,Path V,Wither,Path V,Wither,Rare,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
+l2hostility:divinity_light,Divinity Light,L2 Hostility,Path VI,Path VI,Path V,Path V,Rare,Epic,Epic,
+moreartifacts:lucky_emerald_ring,Lucky Emerald Ring,More Artifacts,Path V,Wither,Path V,Wither,Epic,Legendary,Legendary,Needs the Wither to be defeated first (vanilla boss path)
+fallen_traits:universal_point_of_discontinuity,Universal Point of Discontinuity,Fallen Traits & Relics,Path V,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
+armageddon_mod:abyssal_charm,Abyssal Charm,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Rare,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:dragonborn_empyreans,Dragonborn Empyreans,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Mythic,Mythic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:the_zenith_walkers,The Zenith Walkers,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Mythic,Mythic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+terramity:band_of_drifting,Band of Drifting,Terramity,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Rare,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
+terramity:blink_belt,Blink Belt,Terramity,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Rare,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
+brutality:broken_clock,Broken Clock,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+brutality:emerald_anklet,Emerald Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
+brutality:gamblers_chain,Gambler's Chain,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
+brutality:shattered_clock,Shattered Clock,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+confluence:goblin_tech,Goblin Tech,Terra Curio,Path 0–I,Warden,Path 0–I,Warden,Common,Rare,Rare,"Crafted from Metal Detector, which now sits on the same path"
+confluence:pda,PDA,Terra Curio,Path II,Warden,Path II,Warden,Uncommon,Epic,Epic,"Crafted from Goblin Tech, which now sits on the same path"
+lethality:warden_spine,Warden Spine,Lethality,Path VI,Warden,Path 0–I,Warden,Rare,Rare,Rare,Needs the Warden to be defeated first (vanilla boss path)
+oddaccessories:enlightening_tablet,Enlightening Tablet,Odd Accessories,Path II,Path II,Path II,Path II,Common,Uncommon,Uncommon,
+oddaccessories:villager_mask,Villager Mask,Odd Accessories,Path II,Path II,Path II,Path II,Uncommon,Rare,Rare,
+goety:nether_robe_warped,Nether Robe,Goety,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
+goety:unholy_hat_halo,Unholy Hat,Goety,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
+goety_revelation:apollyon_robe,Apollyon Robe,Goety Revelation,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
+l2hostility:flaming_thorn,Flaming Thorn,L2 Hostility,Path VI,Warden,Path V,Warden,Rare,Rare,Rare,Needs the Warden to be defeated first (vanilla boss path)
+l2hostility:platinum_star,Platinum Star,L2 Hostility,Path VI,Wither,Path V,Wither,Rare,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
+moreartifacts:decay_stone,Decay Stone,More Artifacts,Path V,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
+summonity:arc_reactor_core,Arc Reactor Core,Summonity,Path VI,Wither,Path VI,Wither,Rare,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
+summonity:withered_visage,Withered Visage,Summonity,Path V,Wither,Path V,Wither,Rare,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
+celestial_artifacts:hidden_bracelet,Hidden Bracelet,Celestial Artifacts,Path V,Wither,Path V,Wither,Rare,Epic,Epic,"Crafted from Truth Etching, which now sits on the same path"
+celestial_artifacts:holy_sword,Holy Sword,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Epic,Epic,"Crafted from Desire Etching, which now sits on the same path"
+celestial_artifacts:lock_of_abyss,Lock Of Abyss,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Legendary,Legendary,"Crafted from Chaotic Etching, which now sits on the same path"
+celestial_artifacts:scarlet_bracelet,Scarlet Bracelet,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Legendary,Legendary,"Crafted from Truth Etching, which now sits on the same path"
+celestial_artifacts:war_dead_badge,War Dead Badge,Celestial Artifacts,Path V,Warden,Path V,Warden,Legendary,Legendary,Legendary,"Crafted from Nihility Etching, which now sits on the same path"
+fallen_traits:law_of_scale,Law of Scale,Fallen Traits & Relics,Path VI,Warden,Path V,Warden,Epic,Mythic,Mythic,"Crafted from Titan's Heart, which now sits on the same path"
+terramity:acidic_ampoule,Acidic Ampoule,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+celestial_artifacts:desire_etching,Desire Etching,Celestial Artifacts,Path V,Wither,Path V,Wither,Rare,Must-Have ★,Rare,Needs the Wither to be defeated first (vanilla boss path)
+goety_revelation:halo_of_the_end,Halo of The-End,Goety Revelation,Path IX,Path IX,Path IX,Path IX,Legendary,Mythic,Mythic,
+l2hostility:abrahadabra,Abrahadabra,L2 Hostility,Path IX,Path IX,Path IX,Path IX,Epic,Mythic,Mythic,
+l2hostility:ring_of_divinity,Ring Of Divinity,L2 Hostility,Path IX,Path IX,Path IX,Path IX,Legendary,Mythic,Mythic,
+brutality:conductite_anklet,Conductite Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
+brutality:fiery_anklet,Fiery Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
+brutality:frozen_heart,Frozen Heart,Brutality,Path VII,Path VII,Path 0–I,Path 0–I,Rare,Epic,Epic,
+brutality:ruby_anklet,Ruby Anklet,Brutality,Path II,Path II,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
+brutality:sapphire_anklet,Sapphire Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
+brutality:ultra_dodge_anklet,Ultra Dodge Anklet,Brutality,Path IX,Path IX,Path IX,Path IX,Legendary,Mythic,Mythic,
+lethality:pale_branch,Pale Branch,Lethality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+morerelics:wonder_of_u,Wonder of U,More Relics,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Legendary,Legendary,Needs the Warden to be defeated first (vanilla boss path)
+oddaccessories:enlightening_ring,Enlightening Ring,Odd Accessories,Path II,Path II,Path II,Path II,Common,Uncommon,Uncommon,
+oddaccessories:homunculus_2,Omunculus,Odd Accessories,Path II,Path II,Path II,Path II,Common,Uncommon,Uncommon,
+oddaccessories:pelmen_3,Pelmen III,Odd Accessories,Path II,Path II,Path II,Path II,Uncommon,Rare,Rare,
+terramity:prismatic_gauntlet,Prismatic Gauntlet,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+celestial_artifacts:soul_box,Soul Box,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Epic,Epic,Needs the Warden to be defeated first (vanilla boss path)
+armageddon_mod:blindfold,Blindfold,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:eye_of_darkness,Eye of The Darkness,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:fisher_hat,Fisher's Hat,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:golden_spoon,Golden Spoon,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:guardians_crystal,Guardian's Crystal,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:hunter_cloak,Hunter's Cloak,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:protectors_core,Protector's Core,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:shield_of_the_resilients,Shield Of The Resilients,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:vagabonds_hood,Vagabond's Hood,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+ars_additions:void_protection_charm,Charm of Void's Salvation,Ars Additions,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Rare,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
+confluence:frozen_shield,Frozen Shield,Terra Curio,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+confluence:hero_shield,Hero Shield,Terra Curio,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+moreartifacts:hero_shield,Hero Shield,More Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+moreartifacts:shulked_clock,Shulked Clock,More Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+celestial_artifacts:angel_pearl,Angel Pearl,Celestial Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Epic,Epic,"Crafted from Origin Etching, which now sits on the same path"
+celestial_artifacts:cursed_protector,Cursed Protector,Celestial Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Mythic,Mythic,Mythic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+celestial_artifacts:ender_protector,Ender Protector,Celestial Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+celestial_artifacts:holy_talisman,Holy Talisman,Celestial Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Mythic,Mythic,"Crafted from Origin Etching, which now sits on the same path"
+celestial_artifacts:knight_shelter,Knight Shelter,Celestial Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Mythic,Mythic,"Crafted from Origin Etching, which now sits on the same path"
+celestial_artifacts:undead_charm,Undead Charm,Celestial Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+brutality:basketball_anklet,Basketball Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
+brutality:big_steppa,Big Steppa,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
+brutality:topaz_anklet,Topaz Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
+brutality:windswept_anklet,Windswept Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Rare,Rare,
+confluence:bundle_of_horseshoe_balloons,Bundle Of Horseshoe Balloons,Terra Curio,Path II,Path II,Path II,Path II,Common,Rare,Rare,
+confluence:tiger_climbing_gear,Tiger Climbing Gear,Terra Curio,Path II,Path II,Path II,Path II,Common,Uncommon,Uncommon,
+oddaccessories:pelmen_2,Pelmen II,Odd Accessories,Path II,Path II,Path II,Path II,Uncommon,Rare,Rare,
+terramity:agility_ring,Agility Ring,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
+terramity:carton_of_glowberry_milk,Carton of Glow Berry Milk,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
+terramity:express_ring,Express Ring,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+terramity:hurricane_belt,Hurricane Belt,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+celestial_artifacts:yellow_duck,Yellow Duck,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Common,Epic,Epic,"Crafted from Life Etching, which now sits on the same path"
+armageddon_mod:cloak_of_the_abyss,Cloak Of The Abyss,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Rare,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:moon_charm,Moon Charm,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:spelunker_talisman,Spelunker Talisman,Armageddon,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+ars_additions:ender_mask_charm,Charm of Ender Serenity,Ars Additions,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Rare,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
+brutality:golden_headband,Golden Headband,Brutality,Path IX,Path IX,Path IX,Path IX,Rare,Epic,Epic,
+l2hostility:charm_of_looting_3,Chaotic Looting Charm,L2 Hostility,Path VI,Ender Dragon,Path VI,Ender Dragon,Rare,Must-Have ★,Rare,Needs the Ender Dragon to be defeated first (vanilla boss path)
+armageddon_mod:the_heart,The Heart,Armageddon,Path VII,Path VII,Path VII,Path VII,Rare,Epic,Epic,
+armageddon_mod:sculk_eye_gem,Schulk Eye Gem,Armageddon,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Epic,Epic,Needs the Warden to be defeated first (vanilla boss path)
+moreartifacts:tainted_mirror,Tainted Mirror,More Artifacts,Path 0–I,Warden,Path 0–I,Warden,Rare,Legendary,Legendary,Needs the Warden to be defeated first (vanilla boss path)
+celestial_artifacts:end_etching,End Etching,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Common,Must-Have ★,Rare,Needs the Warden to be defeated first (vanilla boss path)
+celestial_artifacts:life_etching,Life Etching,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Must-Have ★,Epic,Needs the Warden to be defeated first (vanilla boss path)
+celestial_artifacts:nihility_etching,Nihility Etching,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Must-Have ★,Epic,Needs the Warden to be defeated first (vanilla boss path)
+goety:focus_pack,Focus Pack,Goety,Path II,Path II,Path II,Path II,Common,Uncommon,Uncommon,
+armageddon_mod:necrotoxic_shell,Necrotoxic Shell,Armageddon,Path VI,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
+armageddon_mod:withered_bone_effigy,Withered Bone Effigy,Armageddon,Path V,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
+brutality:second_heart,Second Heart,Brutality,Path VII,Path VII,Path VII,Path VII,Rare,Epic,Epic,
+brutality:self_repair_nexus,Self-Repair Nexus,Brutality,Path V,Wither,Path V,Wither,Epic,Legendary,Legendary,Needs the Wither to be defeated first (vanilla boss path)
+goety:star_amulet,Soul Shield Amulet,Goety,Path V,Wither,Path V,Wither,Uncommon,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
+goety:warlock_robe_dark,Warlock Robe,Goety,Path V,Path V,Path V,Path V,Uncommon,Rare,Rare,
+l2complements:eternal_totem_of_dream,Eternal Totem Of Dream,L2 Complements,Path V,Wither,Path V,Wither,Uncommon,Rare,Rare,Needs the Wither to be defeated first (vanilla boss path)
+moreartifacts:withered_bezoar,Withered Bezoar,More Artifacts,Path V,Wither,Path V,Wither,Rare,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
+celestial_artifacts:angel_desire,Angel Desire,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
+celestial_artifacts:angel_heart,Angel Heart,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Legendary,Legendary,Needs the Wither to be defeated first (vanilla boss path)
+celestial_artifacts:bearing_stamen,Bearing Stamen,Celestial Artifacts,Path V,Warden,Path V,Warden,Epic,Legendary,Legendary,"Crafted from Life Etching, which now sits on the same path"
+celestial_artifacts:cursed_totem,Cursed Totem,Celestial Artifacts,Path V,Warden,Path V,Warden,Rare,Epic,Epic,"Crafted from End Etching, Life Etching, which now sits on the same path"
+celestial_artifacts:sacrificial_object,Sacrificial Object,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Legendary,Legendary,"Crafted from Desire Etching, Truth Etching, which now sits on the same path"
+fallen_traits:titans_heart,Titan's Heart,Fallen Traits & Relics,Path VI,Warden,Path V,Warden,Legendary,Legendary,Legendary,Needs the Warden to be defeated first (vanilla boss path)
+brutality:brain_rot,Brainrot,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+brutality:caramel_crunch_medallion,Caramel Crunch Medallion,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+brutality:crowbar,Crowbar,Brutality,Path V,Path 0–I,Path 0–I,Path 0–I,Legendary,Legendary,Legendary,"Daemonium and Iridium can be looted from Terramity structures, so this is craftable on Path 0 with luck; rated one rarity higher for it"
+brutality:crypto_wallet_charm,Crypto Wallet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
+brutality:daemonium_sewing_kit,Daemonium Sewing Kit,Brutality,Path V,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Daemonium and Iridium can be looted from Terramity structures, so this is craftable on Path 0 with luck; rated one rarity higher for it"
+brutality:daemonium_whetstone,Daemonium Whetstone,Brutality,Path V,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Daemonium and Iridium can be looted from Terramity structures, so this is craftable on Path 0 with luck; rated one rarity higher for it"
+brutality:deadshot_brooch,Deadshot Brooch,Brutality,Path V,Path 0–I,Path 0–I,Path 0–I,Uncommon,Uncommon,Uncommon,"Daemonium and Iridium can be looted from Terramity structures, so this is craftable on Path 0 with luck; rated one rarity higher for it"
+brutality:dumbbell,Dumbbell,Brutality,Path V,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Daemonium and Iridium can be looted from Terramity structures, so this is craftable on Path 0 with luck; rated one rarity higher for it"
+brutality:dunked_donut,Dunked Donut,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+brutality:energy_focuser,Energy Focuser,Brutality,Path V,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Daemonium and Iridium can be looted from Terramity structures, so this is craftable on Path 0 with luck; rated one rarity higher for it"
+brutality:gladiators_anklet,Gladiator's Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
+brutality:lollipop_of_eternity,Lollipop of Eternity,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+brutality:lucky_insoles,Lucky Insoles,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
+brutality:microblade_band,Microblade Band,Brutality,Path V,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Daemonium and Iridium can be looted from Terramity structures, so this is craftable on Path 0 with luck; rated one rarity higher for it"
+brutality:pincushion,Pincushion,Brutality,Path V,Path 0–I,Path V,Path 0–I,Uncommon,Rare,Rare,Follows Daemonium Sewing Kit down to Path 0 (Terramity scarce materials)
+brutality:redstone_anklet,Redstone Anklet,Brutality,Path II,Path II,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
+brutality:scope_goggles,Scope Goggles,Brutality,Path V,Path 0–I,Path 0–I,Path 0–I,Epic,Epic,Epic,"Daemonium and Iridium can be looted from Terramity structures, so this is craftable on Path 0 with luck; rated one rarity higher for it"
+brutality:sharpness_anklet,Sharpness Anklet,Brutality,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
+brutality:soldiers_syringe,Soldier's Syringe,Brutality,Path V,Path 0–I,Path 0–I,Path 0–I,Rare,Rare,Rare,"Daemonium and Iridium can be looted from Terramity structures, so this is craftable on Path 0 with luck; rated one rarity higher for it"
+oddaccessories:malicious_ring,Malicious Ring,Odd Accessories,Path II,Path II,Path II,Path II,Common,Rare,Rare,
+summonity:deepward_mask,Deepward Mask,Summonity,Path 0–I,Warden,Path 0–I,Warden,Common,Rare,Rare,Needs the Warden to be defeated first (vanilla boss path)
+summonity:fuel_rod,Fuel Rod,Summonity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+summonity:gilded_scarab,Gilded Scarab,Summonity,Path VI,Path VI,Path VI,Path VI,Rare,Epic,Epic,
+summonity:glass_scarab,Glass Scarab,Summonity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+summonity:hercules_beetle,Hercules Beetle,Summonity,Path VI,Path VI,Path VI,Path VI,Rare,Epic,Epic,
+summonity:papyrus_scarab,Papyrus Scarab,Summonity,Path VI,Path VI,Path VI,Path VI,Rare,Epic,Epic,
+summonity:spireguard_mask,Spireguard Mask,Summonity,Path VII,Path VII,Path VII,Path VII,Epic,Legendary,Legendary,
+terramity:famine_gauntlet,Famine Gauntlet,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Common,Uncommon,Uncommon,
+terramity:proximity_badge,Proximity Badge,Terramity,Path 0–I,Path 0–I,Path 0–I,Path 0–I,Uncommon,Rare,Rare,
+celestial_artifacts:abyss_will_badge,Abyss Will Badge,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Legendary,Legendary,"Crafted from End Etching, Nihility Etching, which now sits on the same path"
+celestial_artifacts:deer_inscribed_amulet,Deer Inscribed Amulet,Celestial Artifacts,Path 0–I,Warden,Path 0–I,Warden,Uncommon,Legendary,Legendary,"Crafted from Life Etching, which now sits on the same path"
+terramity:sacrificial_sash,Sacrificial Sash,Terramity,Path VI,Ender Dragon,Path V,Path V,Rare,Rare,Rare,"Crafted from Blink Belt, which now sits on the same path"
+brutality:dragonheart,Dragonheart,Brutality,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+moreartifacts:ender_dragon_claw,Ender Dragon Claw,More Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+uniqueaccessories:hero_emblem,Hero Emblem,Unique Accessories,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+celestial_artifacts:origin_etching,Origin Etching,Celestial Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Must-Have ★,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+enigmaticlegacy:escape_scroll,Scroll of Postmortal Recall,Enigmatic Legacy,Path VII,Path VII,Path VII,Path VII,Rare,Legendary,Legendary,
+l2hostility:charm_of_looting_1,Unpolished Looting Charm,L2 Hostility,Path III,Path III,Path III,Path III,Uncommon,Must-Have ★,Uncommon,
+confluence:metal_detector,Metal Detector,Terra Curio,Path 0–I,Warden,Path 0–I,Warden,Common,Rare,Rare,Needs the Warden to be defeated first (vanilla boss path)
+confluence:terraspark_boots,Terraspark Boots,Terra Curio,Path VI,Path VI,Path VI,Path VI,Rare,Epic,Epic,
+moreartifacts:wither_shard,Wither Shard,More Artifacts,Path V,Wither,Path V,Wither,Rare,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
+celestial_artifacts:chaotic_etching,Chaotic Etching,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Must-Have ★,Legendary,Needs the Wither to be defeated first (vanilla boss path)
+celestial_artifacts:truth_etching,Truth Etching,Celestial Artifacts,Path V,Wither,Path V,Wither,Epic,Must-Have ★,Epic,Needs the Wither to be defeated first (vanilla boss path)
+celestial_artifacts:twisted_brain,Twisted Brain,Celestial Artifacts,Path VI,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
+confluence:gravity_globe,Gravity Globe,Terra Curio,Path VII,Path VII,Path VI,Ender Dragon,Epic,Epic,Epic,
+celestial_artifacts:twisted_heart,Twisted Heart,Celestial Artifacts,Path VI,Wither,Path V,Wither,Epic,Epic,Epic,Needs the Wither to be defeated first (vanilla boss path)
+confluence:paladins_shield,Paladin's Shield,Terra Curio,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+moreartifacts:dragon_eye,Ender Dragon Eye,More Artifacts,Path VII,Path VII,Path VI,Ender Dragon,Legendary,Legendary,Legendary,
+moreartifacts:shulker_heart,Shulker Heart,More Artifacts,Path VI,Ender Dragon,Path VI,Ender Dragon,Epic,Epic,Epic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+goety_revelation:broken_halo,Broken Halo,Goety Revelation,Path X,Path X,Path IX,Path IX,Legendary,Mythic,Mythic,
+l2hostility:charm_of_looting_4,Miraculous Looting Charm,L2 Hostility,Path XI,Path XI,Path XI,Path XI,Mythic,Must-Have ★,Mythic,
+wizard_terra_cuiros:mana_polarizer,Magic Resonator,Wizard Terra Curios,Path VI,Wither,Path VI,Wither,Legendary,Legendary,Legendary,Needs the Wither to be defeated first (vanilla boss path)
+wizard_terra_cuiros:chaos_stone,Chaos Stone,Wizard Terra Curios,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+wizard_terra_cuiros:dimensional_soul_artifact,Dimensional Soul Artifact,Wizard Terra Curios,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+wizard_terra_cuiros:hide_of_astrum_deus,Hide of Astrum Deus,Wizard Terra Curios,Path V,Warden,Path V,Warden,Legendary,Legendary,Legendary,Needs the Warden to be defeated first (vanilla boss path)
+wizard_terra_cuiros:magic_sword_upgrade_orb,Magic Sword Upgrade Orb,Wizard Terra Curios,Path V,Warden,Path V,Warden,Epic,Legendary,Legendary,Needs the Warden to be defeated first (vanilla boss path)
+wizard_terra_cuiros:void_of_calamity,Void Of Calamity,Wizard Terra Curios,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Legendary,Legendary,Needs the Ender Dragon to be defeated first (vanilla boss path)
+wizard_terra_cuiros:affliction,Affliction,Wizard Terra Curios,Path VI,Ender Dragon,Path VI,Ender Dragon,Legendary,Mythic,Mythic,Needs the Ender Dragon to be defeated first (vanilla boss path)
+wizard_terra_cuiros:echo_wings,Echo Wings,Wizard Terra Curios,Path V,Warden,Path V,Warden,Mythic,Mythic,Mythic,Needs the Warden to be defeated first (vanilla boss path)
+wizard_terra_cuiros:ender_wings,Ender Wings,Wizard Terra Curios,Path VI,Ender Dragon,Path VI,Ender Dragon,Mythic,Mythic,Mythic,Needs the Ender Dragon to be defeated first (vanilla boss path)
