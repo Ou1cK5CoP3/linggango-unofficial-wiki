@@ -254,3 +254,10 @@ body:not(.hub) #main{background:var(--bg)}
 @keyframes spark2{0%,84%{opacity:0;transform:translate(-50%,-50%) scale(.3)}90%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + 3px),calc(-50% + 12px)) scale(1) rotate(-90deg)}}
 .t.r6:hover .star{animation-duration:1.2s!important}
 @media (prefers-reduced-motion:reduce){.t .star,.t .star::before,.t .star::after{animation:none!important}}
+/* v5.6 smaller crafting marker: a 7px 3x3 grid (1:1), box 9px with its outline */
+.t .ct{width:9px!important;height:9px!important;left:4px!important;bottom:4px!important}
+.t .ct::after{-webkit-mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAGklEQVR4nGNkYGD4z4AH/MfFZsKni3EAjAUA/usI/6hWfwIAAAAASUVORK5CYII=) center/7px no-repeat!important;mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAGklEQVR4nGNkYGD4z4AH/MfFZsKni3EAjAUA/usI/6hWfwIAAAAASUVORK5CYII=) center/7px no-repeat!important}
+/* float amplitude kept small and centred on the resting spot, so no icon rides up near the frame */
+@keyframes fA{0%,100%{transform:translate3d(0,1px,0)}50%{transform:translate3d(0,-1px,0)}}
+@keyframes fB{0%,100%{transform:translate3d(0,1px,0)}25%{transform:translate3d(-1px,0,0)}50%{transform:translate3d(0,-1px,0)}75%{transform:translate3d(1px,0,0)}}
+.t .ct::after{-webkit-mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAGUlEQVR4nGNkYGD4z4ADMEFpRmw042DTCQDHJgQQoV2HSAAAAABJRU5ErkJggg==) center/7px no-repeat!important;mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAGUlEQVR4nGNkYGD4z4ADMEFpRmw042DTCQDHJgQQoV2HSAAAAABJRU5ErkJggg==) center/7px no-repeat!important}
