@@ -382,11 +382,15 @@ function render(){
  const mn=el("main");mn.classList.remove("enter");void mn.offsetWidth;mn.classList.add("enter");
  const m=h.match(/^#(slot|act|mod)\/(.+)$/);
  if(h===""||h==="#")hubHome();
+ else if(h.startsWith("#build"))buildPage(h);
+ else if(h==="#bosses")bossList();
+ else if(h.startsWith("#boss/"))bossPage(h.slice(6));
+ else if(h==="#mechanics")mechPage();
  else if(m)hubList(m[1],m[2]);
  else if(h==="#mods")hubList("mods");
- else if(h.startsWith("#i")&&D[+h.slice(2)])page(D[+h.slice(2)]);
+ else if(h.startsWith("#i")&&D[+h.slice(2)]){page(D[+h.slice(2)]);recipeTree(D[+h.slice(2)])}
  else{document.title="Tier list · Linggango Relic Wiki";home(xs,false)}
- if(!h.startsWith("#home")&&h!=="#table")scrollTo(0,0);
+ if(!h.startsWith("#home")&&!h.startsWith("#build")&&h!=="#table")scrollTo(0,0);
 }
 function refresh(){const h=location.hash;if(h==="#home")render();else location.hash="#home"}
 addEventListener("hashchange",()=>{hideTip();window.Boss3D&&Boss3D.unmountAll();render();decorate()});

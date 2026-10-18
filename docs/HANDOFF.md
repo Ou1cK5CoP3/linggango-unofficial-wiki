@@ -21,12 +21,26 @@ Branch `base-pack`; the original upstream branch `claude/zen-pasteur-qi26dz` is 
 - **Tearing:** live 3D bosses were drawn on one fixed full-screen WebGL canvas that redraws a frame behind scroll. They're now static snapshots (`Boss3D.snapshot`), so there's no WebGL loop and no drag-to-rotate.
 - **Phone layout:** path hero stacks below 640 px. The boss card used to be clipped off-screen.
 
+## New pages (18 Oct 2026, second pass)
+Code lives in `src/features.js` and `src/features.css`. `build.py` puts `features.js` *before* `app.js` because app.js renders on load, and appends `features.css` after `style.css`. Nav: Mods · Builder · Bosses · Mechanics.
+- **`#build` loadout planner.** Pick your furthest Path, then fill slots. Slot caps start from the base pack's player slots (`SLOT_BASE`) and rise with curios that grant slots (`slotAdds` parses the stat text). Curios from a later Path, or past the cap, are flagged red.
+  - Stat totals add up the "+N Stat" lines (`statsOf`). The effects list shows every equipped curio's text.
+  - Class presets (Melee, Ranged, Mage…) take slot-adders first, then Must-Haves and role curios by score.
+  - Share link: `#build/<path>/<Slot>=id,id|<Slot>=…`. Copy link copies it.
+- **`#bosses` and `#boss/<key>`.** The Keepers in fight order, plus the vanilla bosses where they sit on the path. Each page has HP, armor and damage, how to summon it, notes, phase stats, the side bosses to farm first (`BOSSR`), the curios it unlocks, and prev/next links.
+- **`#mechanics`.** The upstream's disabled `guide()` page, retitled, with "Act" changed to "Path".
+- **Recipe tree.** It appears on any item page where an ingredient is itself a crafted curio (325 items).
+- **Header overlap fix.** `.top{z-index:30}` at the end of `style.css`. The hero used to paint over the sticky header.
+
 ## Verified
 - All three scripts parse, and there are no console errors on the hub, path, item, mods and slot pages.
 - Automated overlap and overflow audit at 1024 px and 375 px: no overlaps, no horizontal page scroll. The hub path strip scrolls sideways by design.
+- New pages: every route loads with no console errors. That covers builder presets, share links reopened from a different page, the picker search, all boss pages, mechanics and recipe trees. The overlap audit is clean at 375, 1024 and 1900 px.
 
 ## Not done / open
 - Curio list still comes from the upstream data, filtered by mod. Items the base pack adds through KubeJS curio tags, if any, aren't cross-checked against the jars.
 - Rarity and "Must-Have" are the upstream wiki's ratings, not recomputed.
 - Not checked on a real GPU or a real phone; the in-app browser pane was hidden during the checks.
-- The disabled `#guide` page (old "Act" text, still lists The Calamities) is untouched.
+- `#mechanics` reuses the upstream guide text. Its keeper table may still name The Calamities in places, so check it against the config.
+- Stat totals only cover the plain "+N Stat" lines, about 250 of the 3,899 stat lines. Conditional and multiplier effects are listed, not summed.
+- Player slot counts for Scroll, Spellstone and Focus are assumed to be 1. Confirm them in the instance's curios config.

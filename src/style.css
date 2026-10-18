@@ -1075,3 +1075,4 @@ body:not(.hub) #main{background:var(--bg)}
 .tier .t:hover>img,.t:hover>img{animation:fA .9s cubic-bezier(.45,0,.55,1) infinite!important}
 @media (max-width:640px){.lhero.big{grid-template-columns:1fr;gap:0;padding:0 0 16px}.lhero .stage{height:260px}.lhero.big .bcard{margin:0 16px}}
 .lhero .stage,.lhero .stage:active,.hstage{cursor:default}
+.top{z-index:30!important}

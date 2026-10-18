@@ -1,0 +1,62 @@
+/* ===== build planner ===== */
+.bbar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:14px 0;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+.bbar label{display:flex;gap:8px;align-items:center;font:600 12px var(--body);color:var(--mute)}
+.bbar select{max-width:280px}
+.bpre,.bact{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font:600 12px var(--body);color:var(--mute)}
+.bact{margin-left:auto}
+.bwarn{color:#e0565b;font-weight:600;margin:6px 0}
+.bgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,360px);gap:18px;align-items:start}
+.bslot{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;align-items:start;padding:8px 0;border-bottom:1px solid var(--line)}
+.bsh{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;padding-top:8px}
+.bsh b{font:600 13px var(--body)}
+.bsh span{font:12px var(--body);color:var(--mute)}
+.bsh span.bad{color:#e0565b;font-weight:700}
+.bsh em{font:normal 600 11px var(--body);color:var(--accent)}
+.bsb{display:flex;flex-wrap:wrap;gap:6px}
+.bx{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-width:44px;height:44px;padding:0 8px;border:1px dashed var(--line);border-radius:6px;background:var(--tile);color:var(--mute);font:600 18px var(--body);cursor:pointer}
+.bx:hover,.bx.sel{border-color:var(--accent);color:var(--accent)}
+.bx.on{border-style:solid;justify-content:flex-start;max-width:220px;font-size:12px;color:var(--fg)}
+.bx.on img{width:28px;height:28px;image-rendering:pixelated;flex:none}
+.bx.on span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bx.on:hover{border-color:#e0565b}
+.bx.late,.bx.over{border-color:#e0565b;background:color-mix(in srgb,#e0565b 12%,var(--tile))}
+.bmore{margin-top:10px}
+.bmore summary{cursor:pointer;font:600 13px var(--body);color:var(--accent);padding:6px 0}
+.bside{display:flex;flex-direction:column;gap:14px;position:sticky;top:76px;max-height:calc(100vh - 92px);overflow:auto}
+.bside h2{font-size:15px;margin:0 0 8px}
+.bpick,.bstats,.bfx{border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:12px}
+.bph{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.bpick input{width:100%;box-sizing:border-box;margin-bottom:8px}
+.bopts{display:flex;flex-direction:column;gap:4px;max-height:340px;overflow:auto}
+.bopt{display:flex;gap:8px;align-items:center;text-align:left;padding:6px;border:1px solid transparent;border-radius:6px;background:none;color:var(--fg);cursor:pointer;font:13px var(--body)}
+.bopt:hover{border-color:var(--accent);background:var(--tile)}
+.bopt img{width:28px;height:28px;image-rendering:pixelated;flex:none}
+.bopt span{display:flex;flex-direction:column;min-width:0}
+.bopt b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bopt small{color:var(--mute);font-size:11px}
+.bstats table{width:100%;border-collapse:collapse;font-size:13px}
+.bstats td{padding:3px 0;border-bottom:1px solid var(--line)}
+.bstats td.num{text-align:right;font-weight:700;color:#3fae5f}
+.bstats td.neg{color:#e0565b}
+.bfx ul{margin:0;padding-left:16px;font-size:12px;line-height:1.5;color:var(--mute)}
+.bfx a{font-weight:600}
+@media (max-width:860px){.bgrid{grid-template-columns:1fr}.bside{position:static;max-height:none}.bact{margin-left:0}}
+@media (max-width:520px){.bslot{grid-template-columns:1fr;gap:4px}.bsh{padding-top:0}.bx.on{max-width:100%}}
+/* ===== bosses ===== */
+.blist{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-top:14px}
+.bcardl{display:flex;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-left:4px solid var(--tc);border-radius:8px;background:var(--panel);color:var(--fg);text-decoration:none}
+.bcardl:hover{border-color:var(--tc)}
+.bcardl>span:last-child{display:flex;flex-direction:column;gap:2px;min-width:0}
+.bcardl small{color:var(--mute);font-size:12px}
+.bcardl .bnum{font-variant-numeric:tabular-nums}
+.bpg p{max-width:75ch;line-height:1.6}
+.bnav{display:flex;justify-content:space-between;margin-top:28px;font-weight:600}
+/* ===== recipe tree ===== */
+.rtree,.rtree ul{list-style:none;margin:0;padding-left:0}
+.rtree ul{padding-left:22px;border-left:1px dashed var(--line);margin-left:13px}
+.rtree li{margin:4px 0}
+.rn{display:inline-flex;gap:6px;align-items:center;font-size:13px}
+.rn img{width:24px;height:24px;image-rendering:pixelated}
+.rn i{font-style:normal;font-weight:700;color:var(--mute)}
+.rn small{color:var(--mute);font-size:11px}
+.bnote{display:block;margin-top:8px;line-height:1.5}.bnote span{font-weight:700;color:var(--fg)}
