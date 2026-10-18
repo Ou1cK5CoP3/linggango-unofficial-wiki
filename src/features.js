@@ -126,3 +126,53 @@ function recipeTree(d){
  const node=(id,n,depth)=>{const x=BYID[id],sub=x&&x.gr&&depth<6&&!seen.has(id)?(seen.add(id),ingr(x)):[];
   return `<li><span class="rn">${img(id)}${n>1?`<i>${n}×</i>`:""}${x?`<a href="#i${x.ix}" data-t="${x.ix}">${esc(x.n)}</a><small>${esc(actL(x.t))}</small>`:`<span>${esc(nmI(id.replace(/^#/,"")))}</span>`}</span>${sub.length?`<ul>${sub.map(([i,c])=>node(i,c,depth+1)).join("")}</ul>`:""}</li>`};
  host.insertAdjacentHTML("afterend",`<section class="s ip-sec" id="s-tree"><h2>Recipe tree</h2><ul class="rtree">${node(d.id,1,0)}</ul><p class="note">Curio ingredients open into their own recipes. Counts are per craft.</p></section>`)}
+
+/* ---------- field search: free words plus mod:x slot:y stat:z … ---------- */
+var SOFT=false,IDXSIG="",FQT=0,FQS=null,FHINT=false,FKEY="mod",QP={raw:null};
+var QK={mod:"m",slot:"s",stat:"st",stats:"st",effect:"fx",fx:"fx",source:"src",src:"src",drop:"src",path:"p",rarity:"r",role:"ro",type:"g",tag:"x",name:"n"};
+var QOR={m:1,s:1,p:1,r:1,ro:1,g:1,x:1};
+var QFIELDS=[["mod","Mod"],["slot","Slot"],["stat","Stat"],["effect","Effect"],["source","Source"],["path","Path"],["rarity","Rarity"],["role","Role"],["type","Craft or loot"],["tag","Element or mechanic"],["name","Name"]];
+var QNAME={m:"Mod",s:"Slot",st:"Stat",fx:"Effect",src:"Source",p:"Path",r:"Rarity",ro:"Role",g:"Type",x:"Tag",n:"Name"};
+function qNorm(s){return String(s||"").toLowerCase().replace(/[–—]/g,"-")}
+function parseQ(q){const o={raw:q,t:[],k:{}};
+ (q.match(/-?[a-z]+:"[^"]*"?|-?"[^"]*"?|\S+/gi)||[]).forEach(w=>{const raw=w;let neg=false;if(w[0]==="-"&&w.length>1){neg=true;w=w.slice(1)}
+  const m=w.match(/^([a-z]+):(.*)$/i),k=m&&QK[m[1].toLowerCase()],v=qNorm((k?m[2]:w).replace(/"/g,"")).trim();if(!v)return;
+  const e={v,neg,raw,k:k||""};k?(o.k[k]=o.k[k]||[]).push(e):o.t.push(e)});return o}
+function qParsed(){if(QP.raw!==st.q)QP=parseQ(st.q);return QP}
+function qTokens(){const P=qParsed();return [...P.t,...Object.values(P.k).flat()]}
+function qLabel(e){return (e.neg?"not ":"")+(e.k?QNAME[e.k]+": ":"“")+e.v+(e.k?"":"”")}
+function qDrop(raw){return st.q.split(raw).join(" ").replace(/\s+/g," ").trim()}
+function qf(d){if(d._q)return d._q;const F=mf(d.m);
+ return d._q={n:qNorm(d.n),m:qNorm(d.m+"|"+(F?F[2]:"")),s:qNorm(d.sl.join("|")),st:qNorm(d.st.join(" | ")),fx:qNorm(d.fx),src:qNorm(srcText(d)),
+  p:qNorm(ACT[d.t][0]),pl:qNorm(actL(d.t)),r:qNorm(RN[d.r]+(isMust(d)?"|"+RN[d.br]:"")),ro:qNorm(d.ro.map(k=>ROLE[k]).join("|")),g:qNorm(d.g),
+  x:qNorm(d.mt.map(t=>t.slice(2)).join("|")),all:qNorm(d.n+" "+d.fx+" "+srcText(d)+" "+d.m+" "+d.id+" "+d.st.join(" "))}}
+function qHit(d,f,k,v){
+ if(k==="p")return v===f.p||v===String(d.t)||v===f.pl||"path "+v===f.pl||(f.p==="0-i"&&(v==="0"||v==="i"))||(v.length>2&&f.pl.includes(v));
+ if(k==="r"||k==="ro"||k==="g")return f[k].split("|").some(x=>x.startsWith(v));
+ return qHas(f[k],v)}
+function qHas(s,v){if(!/^[a-z0-9]/.test(v))return s.includes(v);for(let i=s.indexOf(v);i>=0;i=s.indexOf(v,i+1))if(!i||!/[a-z0-9]/.test(s[i-1]))return true;return false}
+function qMatch(d){if(!st.q)return true;const P=qParsed(),f=qf(d);
+ for(const e of P.t)if(qHas(f.all,e.v)===e.neg)return false;
+ for(const k in P.k){const es=P.k[k],pos=es.filter(e=>!e.neg);
+  if(es.some(e=>e.neg&&qHit(d,f,k,e.v)))return false;
+  if(pos.length&&!(QOR[k]?pos.some(e=>qHit(d,f,k,e.v)):pos.every(e=>qHit(d,f,k,e.v))))return false}
+ return true}
+function fOn(){return !!(st.c.length||st.r.length||st.x.length||st.g.length||st.nw||st.m||st.s||st.a!==""||st.q)}
+function fSug(k){const u=new Set(),add=x=>x&&u.add(x);
+ if(k==="mod")MODS.forEach(([m])=>add(m));else if(k==="slot")SLOTS.forEach(([s])=>add(s));else if(k==="path")ORDER.forEach(a=>add(ACT[a][0]));
+ else if(k==="rarity")RN.forEach(add);else if(k==="role")Object.values(ROLE).forEach(add);else if(k==="type"){add("Craft");add("Loot")}
+ else if(k==="tag")D.forEach(d=>d.mt.forEach(t=>add(t.slice(2))));else if(k==="stat")D.forEach(d=>statsOf(d).forEach(s=>add(s.k)));
+ return [...u].sort((a,b)=>String(a).localeCompare(String(b)))}
+function fbar(n,total){
+ return `<div class="fbar" role="search"><div class="fbr"><input id="fq" type="search" autocomplete="off" spellcheck="false" placeholder="Search, or filter: mod:terramity slot:ring stat:damage" aria-label="Search and filter curios" value="${esc(st.q)}"><span class="fn">${n===total?`${total} curios`:`${n} of ${total}`}</span></div>
+<div class="fbr fadd"><select id="fk" aria-label="Filter field">${QFIELDS.map(([k,t])=>`<option value="${k}"${k===FKEY?" selected":""}>${t}</option>`).join("")}</select><input id="fv" list="fvl" autocomplete="off" placeholder="Value" aria-label="Filter value"><datalist id="fvl"></datalist><button class="chip" id="fgo">Add filter</button><button class="ghost" id="fhelp" aria-expanded="${FHINT}">How it works</button></div>
+<p class="fhint" id="fhint"${FHINT?"":" hidden"}>Words search names, effects, stats and sources. Add <b>field:value</b> to narrow it down, e.g. <code>mod:terramity slot:ring stat:damage</code>. The same field twice means either one (<code>slot:ring slot:charm</code>); different fields must all match. Put <b>-</b> in front to exclude (<code>-mod:brutality</code>) and quotes around spaces (<code>stat:"attack speed"</code>). Fields: mod, slot, stat, effect, source, path, rarity, role, type, tag, name. Sidebar filters stack with these.</p>
+${activeBar()}</div>`}
+function fbind(){const q=el("fq");if(!q)return;
+ q.oninput=()=>{clearTimeout(FQT);FQT=setTimeout(()=>{st.q=q.value.trim();el("q").value=st.q;FQS=[q.selectionStart,q.selectionEnd];refresh()},220)};
+ const k=el("fk"),v=el("fv"),sug=()=>{el("fvl").innerHTML=fSug(k.value).map(x=>`<option value="${esc(x)}">`).join("")};
+ k.onchange=()=>{FKEY=k.value;sug();v.focus()};sug();
+ const add=()=>{const val=v.value.trim().replace(/"/g,"");if(!val)return;st.q=(st.q+" "+k.value+":"+(/\s/.test(val)?`"${val}"`:val)).trim();el("q").value=st.q;refresh()};
+ el("fgo").onclick=add;v.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();add()}};
+ el("fhelp").onclick=()=>{FHINT=!FHINT;el("fhint").hidden=!FHINT;el("fhelp").setAttribute("aria-expanded",FHINT)};
+ if(FQS){q.focus({preventScroll:true});q.setSelectionRange(FQS[0],FQS[1]);FQS=null}}

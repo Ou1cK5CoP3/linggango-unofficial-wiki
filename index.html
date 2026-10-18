@@ -1156,6 +1156,20 @@ body:not(.hub) #main{background:var(--bg)}
 .rn i{font-style:normal;font-weight:700;color:var(--mute)}
 .rn small{color:var(--mute);font-size:11px}
 .bnote{display:block;margin-top:8px;line-height:1.5}.bnote span{font-weight:700;color:var(--fg)}
+/* ===== filter bar ===== */
+.fbar{display:flex;flex-direction:column;gap:8px;margin:12px 0 16px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+.fbr{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.fbar #fq{flex:1 1 260px;min-width:0;font-size:14px;padding:8px 10px}
+.fbar .fn{font:600 12px var(--body);color:var(--mute);white-space:nowrap}
+.fadd select,.fadd #fv{min-width:0}
+.fadd select{width:auto;flex:0 0 auto}
+.fadd #fv{flex:1 1 160px;max-width:280px}
+.fhint{margin:0;font-size:12px;line-height:1.6;color:var(--mute)}
+.fhint code{font-size:11px;padding:1px 4px;border-radius:4px;background:var(--tile);color:var(--fg)}
+.fbar .act-bar{margin:0}
+@media (max-width:520px){.fadd #fv{max-width:none}.fadd select{flex:1 1 120px}}
+.idx li{content-visibility:auto;contain-intrinsic-size:auto 30px}
+@media (max-width:640px){.top .nav{flex-wrap:wrap;gap:6px 14px;min-width:0}.top .nav a{white-space:nowrap}}
 </style>
 <header class="top">
  <a class="logo" href="#"><img class="coin" alt="" src="data:image/png;base64,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"><span class="lb">{</span>LINGGANGO<span class="lb">}</span><small>·RELIC WIKI·</small></a>
@@ -5162,6 +5176,56 @@ function recipeTree(d){
   return `<li><span class="rn">${img(id)}${n>1?`<i>${n}×</i>`:""}${x?`<a href="#i${x.ix}" data-t="${x.ix}">${esc(x.n)}</a><small>${esc(actL(x.t))}</small>`:`<span>${esc(nmI(id.replace(/^#/,"")))}</span>`}</span>${sub.length?`<ul>${sub.map(([i,c])=>node(i,c,depth+1)).join("")}</ul>`:""}</li>`};
  host.insertAdjacentHTML("afterend",`<section class="s ip-sec" id="s-tree"><h2>Recipe tree</h2><ul class="rtree">${node(d.id,1,0)}</ul><p class="note">Curio ingredients open into their own recipes. Counts are per craft.</p></section>`)}
 
+/* ---------- field search: free words plus mod:x slot:y stat:z … ---------- */
+var SOFT=false,IDXSIG="",FQT=0,FQS=null,FHINT=false,FKEY="mod",QP={raw:null};
+var QK={mod:"m",slot:"s",stat:"st",stats:"st",effect:"fx",fx:"fx",source:"src",src:"src",drop:"src",path:"p",rarity:"r",role:"ro",type:"g",tag:"x",name:"n"};
+var QOR={m:1,s:1,p:1,r:1,ro:1,g:1,x:1};
+var QFIELDS=[["mod","Mod"],["slot","Slot"],["stat","Stat"],["effect","Effect"],["source","Source"],["path","Path"],["rarity","Rarity"],["role","Role"],["type","Craft or loot"],["tag","Element or mechanic"],["name","Name"]];
+var QNAME={m:"Mod",s:"Slot",st:"Stat",fx:"Effect",src:"Source",p:"Path",r:"Rarity",ro:"Role",g:"Type",x:"Tag",n:"Name"};
+function qNorm(s){return String(s||"").toLowerCase().replace(/[–—]/g,"-")}
+function parseQ(q){const o={raw:q,t:[],k:{}};
+ (q.match(/-?[a-z]+:"[^"]*"?|-?"[^"]*"?|\S+/gi)||[]).forEach(w=>{const raw=w;let neg=false;if(w[0]==="-"&&w.length>1){neg=true;w=w.slice(1)}
+  const m=w.match(/^([a-z]+):(.*)$/i),k=m&&QK[m[1].toLowerCase()],v=qNorm((k?m[2]:w).replace(/"/g,"")).trim();if(!v)return;
+  const e={v,neg,raw,k:k||""};k?(o.k[k]=o.k[k]||[]).push(e):o.t.push(e)});return o}
+function qParsed(){if(QP.raw!==st.q)QP=parseQ(st.q);return QP}
+function qTokens(){const P=qParsed();return [...P.t,...Object.values(P.k).flat()]}
+function qLabel(e){return (e.neg?"not ":"")+(e.k?QNAME[e.k]+": ":"“")+e.v+(e.k?"":"”")}
+function qDrop(raw){return st.q.split(raw).join(" ").replace(/\s+/g," ").trim()}
+function qf(d){if(d._q)return d._q;const F=mf(d.m);
+ return d._q={n:qNorm(d.n),m:qNorm(d.m+"|"+(F?F[2]:"")),s:qNorm(d.sl.join("|")),st:qNorm(d.st.join(" | ")),fx:qNorm(d.fx),src:qNorm(srcText(d)),
+  p:qNorm(ACT[d.t][0]),pl:qNorm(actL(d.t)),r:qNorm(RN[d.r]+(isMust(d)?"|"+RN[d.br]:"")),ro:qNorm(d.ro.map(k=>ROLE[k]).join("|")),g:qNorm(d.g),
+  x:qNorm(d.mt.map(t=>t.slice(2)).join("|")),all:qNorm(d.n+" "+d.fx+" "+srcText(d)+" "+d.m+" "+d.id+" "+d.st.join(" "))}}
+function qHit(d,f,k,v){
+ if(k==="p")return v===f.p||v===String(d.t)||v===f.pl||"path "+v===f.pl||(f.p==="0-i"&&(v==="0"||v==="i"))||(v.length>2&&f.pl.includes(v));
+ if(k==="r"||k==="ro"||k==="g")return f[k].split("|").some(x=>x.startsWith(v));
+ return qHas(f[k],v)}
+function qHas(s,v){if(!/^[a-z0-9]/.test(v))return s.includes(v);for(let i=s.indexOf(v);i>=0;i=s.indexOf(v,i+1))if(!i||!/[a-z0-9]/.test(s[i-1]))return true;return false}
+function qMatch(d){if(!st.q)return true;const P=qParsed(),f=qf(d);
+ for(const e of P.t)if(qHas(f.all,e.v)===e.neg)return false;
+ for(const k in P.k){const es=P.k[k],pos=es.filter(e=>!e.neg);
+  if(es.some(e=>e.neg&&qHit(d,f,k,e.v)))return false;
+  if(pos.length&&!(QOR[k]?pos.some(e=>qHit(d,f,k,e.v)):pos.every(e=>qHit(d,f,k,e.v))))return false}
+ return true}
+function fOn(){return !!(st.c.length||st.r.length||st.x.length||st.g.length||st.nw||st.m||st.s||st.a!==""||st.q)}
+function fSug(k){const u=new Set(),add=x=>x&&u.add(x);
+ if(k==="mod")MODS.forEach(([m])=>add(m));else if(k==="slot")SLOTS.forEach(([s])=>add(s));else if(k==="path")ORDER.forEach(a=>add(ACT[a][0]));
+ else if(k==="rarity")RN.forEach(add);else if(k==="role")Object.values(ROLE).forEach(add);else if(k==="type"){add("Craft");add("Loot")}
+ else if(k==="tag")D.forEach(d=>d.mt.forEach(t=>add(t.slice(2))));else if(k==="stat")D.forEach(d=>statsOf(d).forEach(s=>add(s.k)));
+ return [...u].sort((a,b)=>String(a).localeCompare(String(b)))}
+function fbar(n,total){
+ return `<div class="fbar" role="search"><div class="fbr"><input id="fq" type="search" autocomplete="off" spellcheck="false" placeholder="Search, or filter: mod:terramity slot:ring stat:damage" aria-label="Search and filter curios" value="${esc(st.q)}"><span class="fn">${n===total?`${total} curios`:`${n} of ${total}`}</span></div>
+<div class="fbr fadd"><select id="fk" aria-label="Filter field">${QFIELDS.map(([k,t])=>`<option value="${k}"${k===FKEY?" selected":""}>${t}</option>`).join("")}</select><input id="fv" list="fvl" autocomplete="off" placeholder="Value" aria-label="Filter value"><datalist id="fvl"></datalist><button class="chip" id="fgo">Add filter</button><button class="ghost" id="fhelp" aria-expanded="${FHINT}">How it works</button></div>
+<p class="fhint" id="fhint"${FHINT?"":" hidden"}>Words search names, effects, stats and sources. Add <b>field:value</b> to narrow it down, e.g. <code>mod:terramity slot:ring stat:damage</code>. The same field twice means either one (<code>slot:ring slot:charm</code>); different fields must all match. Put <b>-</b> in front to exclude (<code>-mod:brutality</code>) and quotes around spaces (<code>stat:"attack speed"</code>). Fields: mod, slot, stat, effect, source, path, rarity, role, type, tag, name. Sidebar filters stack with these.</p>
+${activeBar()}</div>`}
+function fbind(){const q=el("fq");if(!q)return;
+ q.oninput=()=>{clearTimeout(FQT);FQT=setTimeout(()=>{st.q=q.value.trim();el("q").value=st.q;FQS=[q.selectionStart,q.selectionEnd];refresh()},220)};
+ const k=el("fk"),v=el("fv"),sug=()=>{el("fvl").innerHTML=fSug(k.value).map(x=>`<option value="${esc(x)}">`).join("")};
+ k.onchange=()=>{FKEY=k.value;sug();v.focus()};sug();
+ const add=()=>{const val=v.value.trim().replace(/"/g,"");if(!val)return;st.q=(st.q+" "+k.value+":"+(/\s/.test(val)?`"${val}"`:val)).trim();el("q").value=st.q;refresh()};
+ el("fgo").onclick=add;v.onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();add()}};
+ el("fhelp").onclick=()=>{FHINT=!FHINT;el("fhint").hidden=!FHINT;el("fhelp").setAttribute("aria-expanded",FHINT)};
+ if(FQS){q.focus({preventScroll:true});q.setSelectionRange(FQS[0],FQS[1]);FQS=null}}
+
 
 "use strict";
 /* ---------- constants ---------- */
@@ -5260,7 +5324,7 @@ function pass(d,skip){
  return (skip==="x"||st.x.every(k=>d.mt.includes(k)))&&(skip==="r"||!st.r.length||st.r.includes(String(d.r)))
   &&(skip==="c"||!st.c.length||isMust(d)||st.c.some(k=>d.ro.includes(k)))&&(skip==="g"||!st.g.length||st.g.includes(d.g))
   &&(!st.nw||d.nw)&&(!st.m||d.m===st.m)&&(!st.s||d.sl.includes(st.s))&&(st.a===""||d.a<=+st.a)
-  &&(!st.q||(d.n+" "+d.fx+" "+srcText(d)+" "+d.m+" "+d.id+" "+d.st.join(" ")).toLowerCase().includes(st.q));
+  &&qMatch(d);
 }
 
 /* ---------- sidebar ---------- */
@@ -5278,7 +5342,7 @@ opts("fs",SLOTS.map(([s])=>s).sort().map(s=>[s,s]));
 opts("fa",ORDER.filter(a=>a>=0).map(a=>[a,"Up to "+actL(a)]));
 for(const k of ["m","s","a"]){const s=el("f"+k);s.value=st[k];s.onchange=()=>{st[k]=s.value;refresh()}}
 el("q").value=st.q;
-el("q").oninput=e=>{st.q=e.target.value.toLowerCase().trim();location.hash.startsWith("#i")?refreshSide():refresh()};
+el("q").oninput=e=>{clearTimeout(FQT);FQT=setTimeout(()=>{st.q=e.target.value.trim();const f=el("fq");if(f)f.value=st.q;location.hash.startsWith("#i")?refreshSide():refresh()},220)};
 el("q").onkeydown=e=>{if(e.key==="Enter"){location.hash="#home";refresh()}};
 function resetFilters(){Object.assign(st,{c:[],g:[],r:[],x:[],m:"",s:"",a:"",q:"",nw:false});["fm","fs","fa","q"].forEach(i=>el(i).value="");refresh()}
 el("reset").onclick=resetFilters;
@@ -5291,8 +5355,9 @@ function refreshSide(){
  nb.setAttribute("aria-pressed",st.nw);
  const xs=D.filter(d=>pass(d));el("cnt").textContent=`${count(xs)} / ${TOTAL} curios`;
  const cur=location.hash.startsWith("#i")?+location.hash.slice(2):-9;
- el("idx").innerHTML=[...xs].sort((a,b)=>a.n.localeCompare(b.n)).slice(0,600).map(d=>`<li><a href="#i${d.ix}" data-t="${d.ix}"${d.ix===cur?' aria-current="page"':""}>${img(d.id)}<span>${esc(d.n)}</span><span class="act">${ACT[d.t][0]}</span></a></li>`).join("")
-  +(xs.length>600?`<li class="meta">… ${xs.length-600} more, narrow the filters to see them</li>`:"");
+ const sig=xs.map(d=>d.ix).join();if(sig!==IDXSIG){IDXSIG=sig;el("idx").innerHTML=[...xs].sort((a,b)=>a.n.localeCompare(b.n)).slice(0,600).map(d=>`<li><a href="#i${d.ix}" data-t="${d.ix}">${img(d.id)}<span>${esc(d.n)}</span><span class="act">${ACT[d.t][0]}</span></a></li>`).join("")
+  +(xs.length>600?`<li class="meta">… ${xs.length-600} more, narrow the filters to see them</li>`:"")}
+ el("idx").querySelectorAll("[aria-current]").forEach(a=>a.removeAttribute("aria-current"));const ca=el("idx").querySelector(`a[href="#i${cur}"]`);if(ca)ca.setAttribute("aria-current","page");
  return xs}
 
 /* ---------- shared bits ---------- */
@@ -5309,7 +5374,7 @@ const cards=xs=>`<div class="cards">${xs.map(x=>`<a class="card" href="#i${x.ix}
 const crumb=(...p)=>`<div class="crumb"><a href="#">Home</a> / ${p.join(" / ")}</div>`;
 function activeBar(){const P=[];
  st.c.forEach(k=>P.push(["c",k,ROLE[k]]));st.r.forEach(k=>P.push(["r",k,RN[k]]));st.x.forEach(k=>P.push(["x",k,k.slice(2)]));st.g.forEach(k=>P.push(["g",k,k]));
- if(st.nw)P.push(["nw","","Added mods"]);if(st.m)P.push(["m","",st.m]);if(st.s)P.push(["s","","Slot "+st.s]);if(st.a!=="")P.push(["a","","Up to "+actL(st.a)]);if(st.q)P.push(["q","","“"+st.q+"”"]);
+ if(st.nw)P.push(["nw","","Added mods"]);if(st.m)P.push(["m","",st.m]);if(st.s)P.push(["s","","Slot "+st.s]);if(st.a!=="")P.push(["a","","Up to "+actL(st.a)]);if(st.q)qTokens().forEach(e=>P.push(["qt",e.raw,qLabel(e)]));
  return P.length?`<div class="act-bar" role="group" aria-label="Active filters">${P.map(([k,v,t])=>`<button class="pill" data-k="${k}" data-v="${esc(v)}" aria-label="Remove filter ${esc(t)}">${esc(t)}<b aria-hidden="true">×</b></button>`).join("")}<button class="ghost" id="clr2">Clear all</button></div>`:""}
 
 /* ---------- views ---------- */
@@ -5323,7 +5388,7 @@ function hubHome(){
  <p>Every curio in the pack: what it does, where it drops or how it is crafted, and which Keeper you must defeat before you can wear it. Sorted along the Path: the Keepers of the quest book, with the Warden, the Wither and the Ender Dragon slotted in where your gear can take them.</p>
  <form class="hsearch" id="hs"><input id="hq" type="search" placeholder="Demon Heart, Arion, Terramity…" aria-label="Search curios" autocomplete="off"><button>Search</button></form>
  <div class="hstats"><span><b>${TOTAL}</b>curios</span><span><b>${SLOTS.length}</b>slot types</span><span><b>${MODS.length}</b>mods</span><span><b>${D.filter(d=>d.gk).length}</b>Keeper-gated</span><span><b>${D.filter(isMust).length}</b>Must-Have ★</span></div></section>
- <div class="pillars">${P("#home",ic(d=>d.t===8),"The Path","From Path 0: Sticks and Stones to Path XI, Keeper by Keeper, plus three vanilla-boss paths.")}${P("#slot/Charm",ic(d=>d.sl.includes("Ring")),"Artifacts","The same Hands, Charms, Rings… chapters as the quest book.")}${P("#mods",ic(d=>/^Terramity/.test(d.m)),"Mods",`${MODS.length} mods with curios: Terramity, Brutality, Enigmatic…`)}</div>
+ <div class="pillars">${P("#home",ic(d=>d.t===8),"The Path","From Path 0: Sticks and Stones to Path XII, Keeper by Keeper, plus three vanilla-boss paths.")}${P("#slot/Charm",ic(d=>d.sl.includes("Ring")),"Artifacts","The same Hands, Charms, Rings… chapters as the quest book.")}${P("#mods",ic(d=>/^Terramity/.test(d.m)),"Mods",`${MODS.length} mods with curios: Terramity, Brutality, Enigmatic…`)}</div>
  <div class="hsec"><div><h2>Artifacts</h2><p>Every slot of the pack's Curios menu.</p></div></div>
  <div class="slots">${BIGSLOTS.map(([s,xs],i)=>`<a class="sc" style="--i:${i}" href="#slot/${enc(s)}"><span class="ics">${byRank(xs).filter(d=>IC[d.id]).slice(0,3).map(d=>img(d.id)).join("")}</span><b>${esc(s)}</b><small>${xs.length} items</small>${rbar(xs)}</a>`).join("")}</div>
  <div class="hsec"><div><h2>The Path</h2><p>When a path's Keeper falls, the next path opens. The Warden, Wither and Ender Dragon paths sit between Path VI and VII.</p></div><a href="#home">Open The Path →</a></div>
@@ -5345,17 +5410,17 @@ function heroFloat(){const xs=byRank(D.filter(d=>d.r>=4&&IC[d.id])).filter((d,i)
 function hubList(kind,key){
  let xs,title,lede="",bar="",cr,hero="";
  if(kind==="slot"){const rf=key.includes("?r=")?+key.split("?r=")[1]:null;key=key.split("?")[0];xs=key==="*"?D:D.filter(d=>d.sl.includes(key));if(rf!=null)xs=xs.filter(d=>d.r===rf);
-  title=key==="*"?(rf!=null?`All ${RN[rf]} curios`:"All curios"):`${key} slot`;cr="Slot";if(key!=="*")lede=`Every curio worn in the ${key} slot, rarest first.`;
+  title=key==="*"?(rf!=null?`All ${RN[rf]} curios`:"All curios"):`${key} slot`;cr="Slot";if(key!=="*")lede=`Every curio worn in the ${key} slot, rarest first.${!SLOT_BASE[key]?` Players start with no ${key} slot: a curio or its own mod has to add one.`:""}`;
   bar=`<div class="brw-bar">${BIGSLOTS.map(([s])=>`<a href="#slot/${enc(s)}"${s===key?' aria-current="page"':""}>${esc(s)}</a>`).join("")}</div>`}
- else if(kind==="act"){const a=+key;xs=D.filter(d=>d.t===a);title=actL(a);cr="Path";lede=`${ACT[a][1]}.${a!=-1?` Next boss: ${ACTN[a]}.`:""} Must-Have ★ items first, then rarest first.`;const bk=PB[a],bs=bst(bk);hero=`<div class="lhero big" style="--tc:${ACT[a][2]};${tex(a)}">${bk&&B3[bk]?`<div class="stage" data-boss="${bk}"></div>`:emblem(a,"lg")}${bs?`<div class="bcard"><b>${esc(bs.name)}</b><small>Defeat it to open ${esc(actL(a))}</small><div class="bstat"><span><i class="ai" style="--ai:var(--v-gui_heart)"></i>${Math.round(bs.effective.hp).toLocaleString()} HP</span><span><i class="ai" style="--ai:var(--v-gui_armor)"></i>${bs.effective.armor} armor</span>${bs.effective.dmg!=null?`<span><i class="ai" style="--ai:var(--v-fx_strength)"></i>${+(+bs.effective.dmg).toFixed(1)} damage</span>`:""}</div><small class="bnote">${esc(bs.summon||"")}${bs.rules&&bs.rules.some(r=>/Hardmode/i.test(r))?" · "+esc(bs.rules.find(r=>/Hardmode/i.test(r))):""}</small></div>`:""}${VBOSS[a]?`<p class="lhv">${esc(VBI[VBOSS[a]].sum)} ${fmt(VBI[VBOSS[a]].line)} <span class="vbp">${esc(VBI[VBOSS[a]].pack)}</span> <a href="${VBI[VBOSS[a]].url}" target="_blank" rel="noopener">Minecraft Wiki ↗</a></p>`:""}</div>`;
+ else if(kind==="act"){const a=+key;xs=D.filter(d=>d.t===a);title=actL(a);cr="Path";lede=`${ACT[a][1]}.${a!=-1?` Next boss: ${ACTN[a]}.`:""} Must-Have ★ items first, then rarest first.`;const bk=PB[a],bs=bst(bk);hero=`<div class="lhero big" style="--tc:${ACT[a][2]};${tex(a)}">${bk&&B3[bk]?`<div class="stage" data-boss="${bk}"></div>`:emblem(a,"lg")}${bs?`<div class="bcard"><b>${esc(bs.name)}</b><small>Defeat it to open ${esc(actL(a))}</small><div class="bstat"><span><i class="ai" style="--ai:var(--v-gui_heart)"></i>${Math.round(bs.effective.hp).toLocaleString()} HP</span><span><i class="ai" style="--ai:var(--v-gui_armor)"></i>${bs.effective.armor} armor</span>${bs.effective.dmg!=null?`<span><i class="ai" style="--ai:var(--v-fx_strength)"></i>${+(+bs.effective.dmg).toFixed(1)} damage</span>`:""}</div><small class="bnote">${esc(bs.summon||"")}${bs.rules&&bs.rules.some(r=>/Hardmode/i.test(r))?" · Hardmode stats (×2.1 HP and damage)":""}</small></div>`:""}${VBOSS[a]?`<p class="lhv">${esc(VBI[VBOSS[a]].sum)} ${fmt(VBI[VBOSS[a]].line)} <span class="vbp">${esc(VBI[VBOSS[a]].pack)}</span> <a href="${VBI[VBOSS[a]].url}" target="_blank" rel="noopener">Minecraft Wiki ↗</a></p>`:""}</div>`;
   bar=`<div class="brw-bar">${ORDER.filter(a=>D.some(d=>d.t===a)).map(b=>`<a href="#act/${b}"${b===a?' aria-current="page"':""}>${actL(b)}</a>`).join("")}</div>`}
  else if(kind==="mod"){modPage(key);return}
- else{document.title="Mods · Linggango Relic Wiki";const ms=[...MODS].sort((a,b)=>b[1].length-a[1].length);el("main").innerHTML=`${crumb("Mods")}<h1 class="qb">Mods</h1><p class="lede">${MODS.length} mods with curios in the pack, each framed in its own style.</p><div class="mgrid">${ms.map(([m,xs])=>{const F=mf(m),top=byRank(xs).filter(d=>IC[d.id]).slice(0,4);return `<a class="mcard" data-mf="${F[0]}" href="#mod/${enc(m)}"><span class="mbg"></span><span class="mic">${top.map(d=>img(d.id)).join("")}</span><b>${esc(m)}</b><span class="fam">${F[2]}</span><small>${xs.length} curio${minfo(m)?" · official page":""}</small></a>`}).join("")}</div>`;return}
- xs=byRank(xs);document.title=title+" · Linggango Relic Wiki";seedBg(kind+key,xs);
+ else{document.title="Mods · Linggango Relic Wiki";const ms=[...MODS].sort((a,b)=>b[1].length-a[1].length);el("main").innerHTML=`${crumb("Mods")}<h1 class="qb">Mods</h1><p class="lede">${MODS.length} mods with curios in the pack, each framed in its own style.</p><div class="mgrid">${ms.map(([m,xs])=>{const F=mf(m),top=byRank(xs).filter(d=>IC[d.id]).slice(0,4);return `<a class="mcard" data-mf="${F[0]}" href="#mod/${enc(m)}"><span class="mbg"></span><span class="mic">${top.map(d=>img(d.id)).join("")}</span><b>${esc(m)}</b><span class="fam">${F[2]}</span><small>${xs.length} curio${xs.length===1?"":"s"}${minfo(m)?" · official page":""}</small></a>`}).join("")}</div>`;return}
+ const all=xs.length;xs=byRank(xs.filter(d=>pass(d)));document.title=title+" · Linggango Relic Wiki";seedBg(kind+key,xs);
  let shown=60;
- const draw=()=>{el("gl").innerHTML=xs.slice(0,shown).map(gcard).join("");el("bc").innerHTML=`Showing <b>1–${Math.min(shown,xs.length)}</b> of <b>${xs.length}</b> curios`;el("mr").hidden=shown>=xs.length};
- el("main").innerHTML=`${crumb(cr,esc(title))}${hero}<h1>${esc(title)}</h1>${lede?`<p class="lede">${esc(lede)}</p>`:""}${bar}<div class="brw-ct" id="bc"></div><div class="gridc" id="gl"></div><button class="more" id="mr">Show 60 more</button>`;
- el("mr").onclick=()=>{shown+=60;draw()};draw();
+ const draw=()=>{el("gl").innerHTML=xs.slice(0,shown).map(gcard).join("");el("bc").innerHTML=xs.length?`Showing <b>1–${Math.min(shown,xs.length)}</b> of <b>${xs.length}</b> curios${all>xs.length?` · ${all-xs.length} hidden by filters`:""}`:`No curios here match these filters.`;el("mr").hidden=shown>=xs.length};
+ el("main").innerHTML=`${crumb(cr,esc(title))}${hero}<h1>${esc(title)}</h1>${lede?`<p class="lede">${esc(lede)}</p>`:""}${bar}${fbar(xs.length,all)}<div class="brw-ct" id="bc"></div><div class="gridc" id="gl"></div><button class="more" id="mr">Show 60 more</button>`;
+ el("mr").onclick=()=>{shown+=60;draw()};draw();fbind();
 }
 
 function modPage(m){
@@ -5364,28 +5429,30 @@ function modPage(m){
  const sl={};xs.forEach(d=>d.sl.forEach(s=>sl[s]=(sl[s]||0)+1));const sls=Object.entries(sl).sort((a,b)=>b[1]-a[1]);
  const acts=ORDER.map(a=>[a,xs.filter(d=>d.t===a)]).filter(x=>x[1].length),mx=Math.max(...acts.map(x=>x[1].length));
  const rc=RN.map((n,i)=>xs.filter(d=>d.r===i).length);
+ const fx=xs.filter(d=>pass(d)),fa=ORDER.map(a=>[a,fx.filter(d=>d.t===a)]).filter(x=>x[1].length);
  const links=I?`<a class="mbtn" href="${I[1]}" target="_blank" rel="noopener">CurseForge ↗</a>`:`<a class="mbtn" href="https://www.curseforge.com/minecraft/search?search=${enc(m)}" target="_blank" rel="noopener">Search on CurseForge ↗</a>`;
  el("main").innerHTML=`<div class="mp" data-mf="${F[0]}">${crumb('<a href="#mods">Mods</a>',esc(m))}
  <section class="mhero"><span class="mbg"></span><span class="mwm" aria-hidden="true"></span>
   <div class="mht"><span class="fam">${F[2]}</span><h1>${esc(m)}</h1>${I?`<p class="mby">by ${esc(I[0])}</p><p>${esc(I[2])}</p>`:`<p>${xs.length} curios from this mod are in Linggango.</p>`}<div class="mlinks">${links}</div></div>
   <div class="mshow">${hero.map((d,i)=>`<a class="ms r${d.r}" style="--i:${i}" href="#i${d.ix}" data-t="${d.ix}">${img(d.id)}</a>`).join("")}</div></section>
  <div class="mstat">
-  <div class="mbox"><h3>Curio</h3><b class="big">${xs.length}</b><div class="rmix">${rc.map((n,i)=>n?`<i class="r${i}" style="flex:${n}" title="${RN[i]}: ${n}"></i>`:"").join("")}</div><small>${rc.map((n,i)=>n?`${RN[i]} ${n}`:"").filter(Boolean).join(" · ")}</small></div>
+  <div class="mbox"><h3>Curios</h3><b class="big">${xs.length}</b><div class="rmix">${rc.map((n,i)=>n?`<i class="r${i}" style="flex:${n}" title="${RN[i]}: ${n}"></i>`:"").join("")}</div><small>${rc.map((n,i)=>n?`${RN[i]} ${n}`:"").filter(Boolean).join(" · ")}</small></div>
   <div class="mbox"><h3>Slot</h3><div class="slb">${sls.slice(0,8).map(([s,n])=>`<a href="#slot/${enc(s)}"><span>${esc(s)}</span><i style="width:${n/sls[0][1]*100}%"></i><em>${n}</em></a>`).join("")}</div></div>
   <div class="mbox wide"><h3>Unlocks by Path</h3><div class="abars">${acts.map(([a,ys])=>`<a href="#act/${a}" style="--tc:${ACT[a][2]}" title="${esc(actF(a))}: ${ys.length}"><i style="height:${Math.max(6,ys.length/mx*100)}%"></i><span>${ACT[a][0]}</span><em>${ys.length}</em></a>`).join("")}</div></div>
  </div>
  ${I&&I[3]?`<aside class="mnote"><b>In Linggango</b><p>${esc(I[3])}</p></aside>`:""}
- ${acts.map(([a,ys])=>`<section class="mact" style="--tc:${ACT[a][2]}"><h2>${emblem(a,"xs")}<span>${actL(a)}</span>${esc(ACT[a][1])}<small>${ys.length}</small></h2><div class="gridc">${ys.map(gcard).join("")}</div></section>`).join("")}</div>`;
+ ${fbar(fx.length,xs.length)}${fa.length?"":`<p class="note">No curios from this mod match these filters.</p>`}
+ ${fa.map(([a,ys])=>`<section class="mact" style="--tc:${ACT[a][2]}"><h2>${emblem(a,"xs")}<span>${actL(a)}</span>${esc(ACT[a][1])}<small>${ys.length}</small></h2><div class="gridc">${ys.map(gcard).join("")}</div></section>`).join("")}</div>`;fbind()
 }
 
 function home(xs,asTable){
  let h=`${crumb("The Path")}<h1 class="qb">The Path</h1>
  <p class="lede">Every curio in base Linggango V6.6.5b4, tiered by how hard it really is to get: the Keeper that unlocks it, the vanilla boss it needs (Warden, Wither, Ender Dragon), drop chances, pickaxe tier and trait farming. Inside each path, ★ Must-Have items come first, then the rarest.</p>
   <div class="legend"><span><i class="ct lg"></i>Used to craft another curio</span><span><i class="lgr"></i>Frame colour: rarity, brighter = rarer</span><span><i class="slk lg" style="--si:url(${slotIcon("Ring")})"></i>Curio slot it goes in</span><span><b class="lgn">16</b>Variants merged into one tile</span><span><b class="lgs">★</b>Must-Have: get it first</span></div>
- ${activeBar()}`;
+ ${fbar(xs.length,D.length)}${xs.length?"":`<p class="note">No curios match these filters. Remove one above or clear them all.</p>`}`;
  seedBg("path"+st.a,xs.filter(d=>d.r>=4));
  if(!asTable){
-  for(const a of ORDER){if(st.a!==""&&a>+st.a)continue;const ys=xs.filter(d=>d.t===a);if(a===-1&&!ys.length)continue;const cl=st.cl.includes(a);
+  for(const a of ORDER){if(st.a!==""&&a>+st.a)continue;const ys=xs.filter(d=>d.t===a);if((a===-1||fOn())&&!ys.length)continue;const cl=st.cl.includes(a);
    h+=`<section class="tier${cl?" closed":""}${VBOSS[a]?" vb":""}" style="--tc:${ACT[a][2]};${tex(a)}" id="p${String(a).replace(".","_")}"><button class="tl" data-tier="${a}" aria-expanded="${!cl}"><span class="tlem">${emblem(a)}</span><span class="ta">${actL(a)}</span><small>${esc(ACT[a][1])}</small>${a==-1?"":`<span class="tn">next: ${esc(ACTN[a]||"")}</span>`}${VBOSS[a]?`<small class="vbi">${VBI[VBOSS[a]].hp} HP · vanilla boss</small>`:""}<span class="rs">${RNS.map(i=>{const n=ys.filter(d=>d.r===i).length;return n?`<i class="r${i}" style="flex:${n}" title="${RN[i]}: ${n}"></i>`:""}).join("")}</span><small>${count(ys)} items</small></button><div class="tiles">${ys.length?ys.map((d,i)=>tile(d,i)).join(""):'<span class="empty">No items match the filters.</span>'}</div></section>`}
  }else{
   const COLS=[["n","Curio"],["r","Rarity"],["c","Role"],["t","Tier"],["a","Usable from"],["g","Source"],["m","Mod"],["fx","Effect"]];
@@ -5393,7 +5460,7 @@ function home(xs,asTable){
   const ys=[...xs].sort((p,q)=>{const k=st.sort;const r=k==="a"?p.a-q.a:k==="t"?p.t-q.t:k==="r"?(p.r-q.r||p.sc-q.sc):k==="c"?CO.indexOf(p.c)-CO.indexOf(q.c):String(p[k]).localeCompare(String(q[k]));return r*st.dir});
   h+=`<div class="tw"><table><thead><tr><th></th>${COLS.map(([k,t])=>`<th><button class="ghost" data-s="${k}">${t}${st.sort===k?(st.dir>0?" ▲":" ▼"):""}</button></th>`).join("")}</tr></thead><tbody>${ys.map(d=>`<tr><td data-t="${d.ix}">${img(d.id)}</td><td><a href="#i${d.ix}" data-t="${d.ix}">${esc(d.n)}</a></td><td class="r${d.r}"><i class="rdot"></i>${RN[d.r]}</td><td>${d.ro.map(k=>ROLE[k]).join(", ")}</td><td class="num">${ACT[d.t][0]}</td><td class="num">${ACT[d.a][0]}</td><td>${d.g}</td><td>${esc(d.m)}</td><td>${esc(d.fx)}</td></tr>`).join("")}</tbody></table></div>`}
  h+=`<p class="note">Data read from the pack files (recipes, loot tables, KubeJS, config, curio tags) and the mod jars, updated 14 Oct 2026; paths and rarity re-rated 17 Oct 2026. Drop chances don't include the pack's difficulty rules. <b>Rarity is this wiki's rating</b> (power, path, gate and scarcity), not the in-game name colour; ★ Must-Have marks the Looting Charms and every curio that adds curio slots. Only mods shipped with the base pack are listed. The Warden, Wither and Ender Dragon paths are this wiki's suggested order 🔍; the pack itself does not gate them.</p>`;
- el("main").innerHTML=h;decorate();
+ el("main").innerHTML=h;decorate();fbind();
  el("main").querySelectorAll("th button").forEach(b=>b.onclick=()=>{const k=b.dataset.s;st.dir=st.sort===k?-st.dir:1;st.sort=k;render()});
 }
 
@@ -5441,7 +5508,7 @@ function page(d){
  const s0=d.sl[0],sx=s0?byRank(D.filter(x=>x.sl.includes(s0))):[],si=sx.indexOf(d),pv=sx[si-1],nx=sx[si+1];
  const near=sx.filter(x=>x!==d).slice(Math.max(0,si-4),Math.max(0,si-4)+8);
  el("main").innerHTML=`<div class="ip r${d.r}" data-mf="${F[0]}">
- <header class="ip-hero"><div class="ip-htext"><div class="ip-crumb"><a href="#">Wiki</a> / <a href="#mod/${enc(d.m)}">${esc(d.m)}</a> / <a href="#act/${d.t}">${actL(d.t)}</a></div>
+ <header class="ip-hero"><div class="ip-htext"><div class="ip-crumb"><a href="#">Home</a> / <a href="#mod/${enc(d.m)}">${esc(d.m)}</a> / <a href="#act/${d.t}">${actL(d.t)}</a></div>
  <h1 class="ip-title">${isMust(d)?'<span class="mstar">★</span>':""}${esc(d.n)}</h1><p class="ip-lead">${fmt(d.fx)}</p>
  <p class="ip-meta"><span class="ip-fam">${F[2]}</span><span>${rLabel(d)}</span><span>${esc(slot)}</span><span>${loot?"Loot":"Craft"}</span>${d.nw?"<span>added mod</span>":""}</p></div>
  <div class="ip-art"><span class="ip-badge">${RN[d.r]}</span><div class="ip-stage" style="${tex(d.t)}"><span class="orb" aria-hidden="true">${[0,1,2,3,4,5].map(i=>`<i style="--k:${i};--sp:var(--v-${MFSP[F[0]]||"p_glint"})"></i>`).join("")}</span><div class="ip-icon">${ic}</div></div><span class="ip-mini">${ic}</span><span class="ip-path" title="${esc(actL(d.t))}">${emblem(d.t,"xs")}</span></div></header>
@@ -5467,10 +5534,10 @@ const ACTS=[
 ["V","Zoranth the Forgotten","Frost / Holy (fought in the Nether)","Netherite (Act VI)","Magical","Grave Gloves (Reaper's Grave Dust); Magical Lectern materials: Hard Ice, Explosion Shard, Life Essence.","code"],
 ["VI","The Elvenite Paladin","Blunt / Dark (resists Holy)","Elvenite (Act VII)","—","The Ender Dragon is required before the Paladin (4 Khyros's Tears for Titan Insigna) → enables Hardmode ×2.1 health and damage; Heart of the Beloved (+1 Accessory).","code"],
 ["VII","Vaedric","Holy / Lightning","Voiderite (Act VIII)","Chaotic","Chaotic materials: Force Field, Captured Wind. Infinity Glove: +5 Ring, +1 Charm.","code"],
-["VIII","The Calamities","Bringer Holy/Pierce · Famine Fire/Holy · Chaos Frost/Pierce · Discord Arcane/Blunt","Cataclysm (Act IX)","—","The Cataclysm Keeper is NOT on the ladder (a “free” Act for difficulty). Sigil of Calamity summoning all three bosses at once: untested.","q"],
+["VIII","The Discord (Calamities)","Bringer Holy/Pierce · Famine Fire/Holy · Chaos Frost/Pierce · Discord Arcane/Blunt","Cataclysm (Act IX)","—","The pack config makes The Discord the Calamitous Keeper; Bringer of Doom, Famine and Chaos are side fights. Sigil of Calamity summoning all of them at once: untested.","code"],
 ["IX","Sanghor","Fire / Holy","Blood (Act X)","—","The ladder jumps 69 → 102. Hemalith Catalyst never drops from the Keeper bag (loop bug) → craft it from bloody ingot + blaze powder + quartz. Whether Judged blocks orb healing: untested.","q"],
 ["X","Zoranth Newborn","Dark / Frost","Sun (Act XI)","Miraculous","Miraculous materials: Resonant Feather, Sun Membrane, Void Eye.","q"],
-["XI","Nyxaris","Holy / Lightning","— (end game)","—","Helionite gate (damage floor 50). Act XI quest content not yet readable (locked in the quest book).","q"]];
+["XI","Nyxaris","Holy / Lightning","Act XII (end game)","—","Helionite gate (damage floor 50). Its treasure bag holds the three Act XII curios: The Eclypse, Heart of Creation, Non-Euclidean Cube. Act XI quest content not yet readable (locked in the quest book).","code"]];
 const L2=[["Unpolished","After Arion (Act III)",22,"Fiery → 8 blaze rods (25%); Gravity ≥ 50 → 4 dragon's breath (10%/level)"],["Magical","After Zoranth (Act V)",16,"Hard Ice, Explosion Shard, Life Essence"],["Chaotic","After Vaedric (Act VII)",8,"Force Field, Captured Wind"],["Miraculous","After Zoranth Newborn (Act X)",9,"Resonant Feather, Sun Membrane, Void Eye"]];
 const TF={Iron:6,Gold:8,Emerald:11,Diamond:14,Netherite:18,Elvenite:24,Voiderite:31,Bloody:40,Helionite:50};
 const CHN=["","Unpolished","Magical","Chaotic","Miraculous"];
@@ -5493,7 +5560,7 @@ function guide(){
 <p class="lede">Ties curios to the Act progression, L2 Hostility, Goety, Linggango Tweaks and the Tech/Magic mods. Each entry carries a confidence label.</p>
 <div class="legend">${cf("ok")}${cf("code")}${cf("q")}</div>
 <div class="toc"><b>CONTENTS</b><ol>${SEC.map(([id,t])=>`<li><a href="#guide" data-go="${id}">${t}</a></li>`).join("")}</ol></div>
-${sec("g1","1. Act axis",`<p class="note">The Keeper defeated at the end of Act N opens the gate for Act N+1. Acts IX–XI are still locked in the quest book, so their data comes from code/config only.</p>${tbl(["Act","Keeper","Weakness","Opens gate","Looting Charm","Curios / notes","Confidence"],ACTS.map(a=>`<tr><td class="num"><b>${a[0]}</b></td><td>${a[1]}</td><td>${a[2]}</td><td>${a[3]}</td><td>${a[4]}</td><td>${a[5]}</td><td>${CF[a[6]][0]}</td></tr>`).join(""))}`)}
+${sec("g1","1. Act axis",`<p class="note">The Keeper defeated at the end of Act N opens the gate for Act N+1. Acts IX–XII are still locked in the quest book, so their data comes from code/config only.</p>${tbl(["Act","Keeper","Weakness","Opens gate","Looting Charm","Curios / notes","Confidence"],ACTS.map(a=>`<tr><td class="num"><b>${a[0]}</b></td><td>${a[1]}</td><td>${a[2]}</td><td>${a[3]}</td><td>${a[4]}</td><td>${a[5]}</td><td>${CF[a[6]][0]}</td></tr>`).join(""))}`)}
 ${sec("g2","2. L2 Hostility — Looting Charms",`<p class="lede"><span class="badge new">IMPORTANT</span>A charm must be <b>worn in a curio slot</b> for its drops to appear (disableHostilityLootCurioRequirement = false). Trait-added drops are still cut by Lean Drops. Chance = chance + trait level × rankBonus, and each item in a stack rolls separately.</p>${tbl(["Charm","Unlocked","Drops","Worth farming"],L2.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td class="num">${r[2]}</td><td>${r[3]}</td></tr>`).join(""))}<p class="note">The original L2 Complements methods still work: Hard Ice = kill Drowned with Powder Snow; Force Field = finish the Wither with an arrow. These materials feed the Study Lectern (parry/dodge milestones are cumulative and never consumed).</p>`)}
 ${sec("g3","3. Goety",tbl(["Item","Recipe / source","Notes"],`<tr><td><b>Scroll of Blessing</b></td><td>Darkest Scroll + Heart of the Earth + nautilus shell + sunflower + feather + ink sac + gold</td><td>+1 Luck stat; each Luck point gives +2% damage, +2.5% attack speed, +2% dodge (dodge capped at 15%). This dodge does not trigger Brutality anklets.</td></tr>
 <tr><td><b>Potion of Transformation</b></td><td>Ritual sacrificing a villager; Unholy Blood, totem, end crystal, enchanted golden apple, echo shard</td><td>Used for Dimensional Will.</td></tr>
@@ -5543,7 +5610,7 @@ function render(){
  if(["#bang","#ngoai","#table","#unobtainable","#guide"].includes(h)){location.replace("#home");return}
  document.body.classList.toggle("hub",h===""||h==="#");
  if(innerWidth<=760&&(h.startsWith("#i")||h==="#guide")){el("side").classList.add("closed");el("fold").setAttribute("aria-expanded","false")}
- const mn=el("main");mn.classList.remove("enter");void mn.offsetWidth;mn.classList.add("enter");
+ const soft=SOFT;SOFT=false;const mn=el("main");if(!soft){mn.classList.remove("enter");void mn.offsetWidth;mn.classList.add("enter")}
  const m=h.match(/^#(slot|act|mod)\/(.+)$/);
  if(h===""||h==="#")hubHome();
  else if(h.startsWith("#build"))buildPage(h);
@@ -5554,9 +5621,9 @@ function render(){
  else if(h==="#mods")hubList("mods");
  else if(h.startsWith("#i")&&D[+h.slice(2)]){page(D[+h.slice(2)]);recipeTree(D[+h.slice(2)])}
  else{document.title="Tier list · Linggango Relic Wiki";home(xs,false)}
- if(!h.startsWith("#home")&&!h.startsWith("#build")&&h!=="#table")scrollTo(0,0);
+ if(!soft&&!h.startsWith("#home")&&!h.startsWith("#build")&&h!=="#table")scrollTo(0,0);
 }
-function refresh(){const h=location.hash;if(h==="#home")render();else location.hash="#home"}
+function refresh(){const h=decodeURIComponent(location.hash);if(h==="#home"||/^#(slot|act|mod)\//.test(h)){SOFT=true;render()}else location.hash="#home"}
 addEventListener("hashchange",()=>{hideTip();window.Boss3D&&Boss3D.unmountAll();render();decorate()});
 
 /* ---------- tooltip ---------- */
@@ -5592,7 +5659,7 @@ addEventListener("scroll",hideTip,{capture:true,passive:true});
 /* ---------- global events ---------- */
 document.addEventListener("click",e=>{
  const p=e.target.closest(".pill");if(p){const k=p.dataset.k,v=p.dataset.v;
-  if(Array.isArray(st[k]))st[k]=st[k].filter(x=>String(x)!==v);else if(k==="nw")st.nw=false;else{st[k]="";el(k==="q"?"q":"f"+k).value=""}refresh();return}
+  if(k==="qt"){st.q=qDrop(v);el("q").value=st.q}else if(Array.isArray(st[k]))st[k]=st[k].filter(x=>String(x)!==v);else if(k==="nw")st.nw=false;else{st[k]="";el(k==="q"?"q":"f"+k).value=""}refresh();return}
  if(e.target.id==="clr2"){resetFilters();return}
  const go=e.target.closest("[data-go]");if(go){e.preventDefault();el(go.dataset.go).scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});return}
  if(e.target.closest("[data-top]")){e.preventDefault();scrollTo({top:0,behavior:RM?"auto":"smooth"});return}

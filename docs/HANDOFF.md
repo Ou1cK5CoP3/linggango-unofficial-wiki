@@ -42,6 +42,28 @@ Code lives in `src/features.js` and `src/features.css`. `build.py` puts `feature
 - **Recipe tree.** It appears on any item page where an ingredient is itself a crafted curio (325 items).
 - **Header overlap fix.** `.top{z-index:30}` at the end of `style.css`. The hero used to paint over the sticky header.
 
+## Search and filters (18 Oct 2026, fourth pass)
+- **Filter bar.** It sits on The Path, every path page (`#act/…`, including Path 0–I), slot pages and mod pages. It has a search box, a field picker with suggestions, a "How it works" hint and removable pills. Code: `fbar()`/`fbind()` in `features.js`.
+- **Field search.** Both the bar and the header box accept free words plus `mod:`, `slot:`, `stat:`, `effect:`, `source:`, `path:`, `rarity:`, `role:`, `type:`, `tag:` and `name:`.
+  - The same field twice means either one. Different fields must all match. `-` excludes, and quotes wrap spaces.
+  - `mod:` also matches the frame family, so `mod:relic` finds the Relic-style mods. `path:` takes `ix`, `9`, `0` or `dragon`.
+  - Parsing and matching live in `parseQ`/`qMatch`. Per-item search strings are cached in `d._q`.
+- **Filters on list pages.** Path, slot and mod pages used to ignore the sidebar filters. They now apply them and say how many curios are hidden. A filter change re-renders the current page in place (`SOFT`): no jump to The Path, no scroll-to-top, no entrance animation.
+- **The Path while filtering.** Empty paths are hidden, and there's a "no curios match" message.
+- **Typing is debounced** (220 ms). The sidebar index only rebuilds when the filtered set changes (98 → 6.5 ms per update).
+- **Text fixes:**
+  - The hub now says "to Path XII".
+  - Mods show "curios" (plural).
+  - The item breadcrumb starts "Home /".
+  - Path boss cards say "Hardmode stats (×2.1 HP and damage)" instead of the raw config note.
+  - Mechanics: Path VIII's Keeper is The Discord, and Path XI's Keeper (Nyxaris) opens Path XII.
+  - Slot pages for Living Armour, Blasphemy and Sacrament note that players start with none of that slot.
+- **Fresh test fixes (same day):**
+  - Free words and text fields now match from the start of a word (`qHas`). Before, "ring" also matched "triggering" and "string".
+  - Re-focusing the search box after a re-render no longer scrolls the page.
+  - On phones the header nav wraps to two rows. It used to push the page 29 px wider than the screen.
+- **Still slow:** going back to The Path takes a few hundred ms, from rendering 1,327 tiles plus the boss emblem snapshots. This was already the case before.
+
 ## Verified
 - All three scripts parse, and there are no console errors on the hub, path, item, mods and slot pages.
 - Automated overlap and overflow audit at 1024 px and 375 px: no overlaps, no horizontal page scroll. The hub path strip scrolls sideways by design.

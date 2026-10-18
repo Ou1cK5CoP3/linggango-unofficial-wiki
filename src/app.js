@@ -96,7 +96,7 @@ function pass(d,skip){
  return (skip==="x"||st.x.every(k=>d.mt.includes(k)))&&(skip==="r"||!st.r.length||st.r.includes(String(d.r)))
   &&(skip==="c"||!st.c.length||isMust(d)||st.c.some(k=>d.ro.includes(k)))&&(skip==="g"||!st.g.length||st.g.includes(d.g))
   &&(!st.nw||d.nw)&&(!st.m||d.m===st.m)&&(!st.s||d.sl.includes(st.s))&&(st.a===""||d.a<=+st.a)
-  &&(!st.q||(d.n+" "+d.fx+" "+srcText(d)+" "+d.m+" "+d.id+" "+d.st.join(" ")).toLowerCase().includes(st.q));
+  &&qMatch(d);
 }
 
 /* ---------- sidebar ---------- */
@@ -114,7 +114,7 @@ opts("fs",SLOTS.map(([s])=>s).sort().map(s=>[s,s]));
 opts("fa",ORDER.filter(a=>a>=0).map(a=>[a,"Up to "+actL(a)]));
 for(const k of ["m","s","a"]){const s=el("f"+k);s.value=st[k];s.onchange=()=>{st[k]=s.value;refresh()}}
 el("q").value=st.q;
-el("q").oninput=e=>{st.q=e.target.value.toLowerCase().trim();location.hash.startsWith("#i")?refreshSide():refresh()};
+el("q").oninput=e=>{clearTimeout(FQT);FQT=setTimeout(()=>{st.q=e.target.value.trim();const f=el("fq");if(f)f.value=st.q;location.hash.startsWith("#i")?refreshSide():refresh()},220)};
 el("q").onkeydown=e=>{if(e.key==="Enter"){location.hash="#home";refresh()}};
 function resetFilters(){Object.assign(st,{c:[],g:[],r:[],x:[],m:"",s:"",a:"",q:"",nw:false});["fm","fs","fa","q"].forEach(i=>el(i).value="");refresh()}
 el("reset").onclick=resetFilters;
@@ -127,8 +127,9 @@ function refreshSide(){
  nb.setAttribute("aria-pressed",st.nw);
  const xs=D.filter(d=>pass(d));el("cnt").textContent=`${count(xs)} / ${TOTAL} curios`;
  const cur=location.hash.startsWith("#i")?+location.hash.slice(2):-9;
- el("idx").innerHTML=[...xs].sort((a,b)=>a.n.localeCompare(b.n)).slice(0,600).map(d=>`<li><a href="#i${d.ix}" data-t="${d.ix}"${d.ix===cur?' aria-current="page"':""}>${img(d.id)}<span>${esc(d.n)}</span><span class="act">${ACT[d.t][0]}</span></a></li>`).join("")
-  +(xs.length>600?`<li class="meta">… ${xs.length-600} more, narrow the filters to see them</li>`:"");
+ const sig=xs.map(d=>d.ix).join();if(sig!==IDXSIG){IDXSIG=sig;el("idx").innerHTML=[...xs].sort((a,b)=>a.n.localeCompare(b.n)).slice(0,600).map(d=>`<li><a href="#i${d.ix}" data-t="${d.ix}">${img(d.id)}<span>${esc(d.n)}</span><span class="act">${ACT[d.t][0]}</span></a></li>`).join("")
+  +(xs.length>600?`<li class="meta">… ${xs.length-600} more, narrow the filters to see them</li>`:"")}
+ el("idx").querySelectorAll("[aria-current]").forEach(a=>a.removeAttribute("aria-current"));const ca=el("idx").querySelector(`a[href="#i${cur}"]`);if(ca)ca.setAttribute("aria-current","page");
  return xs}
 
 /* ---------- shared bits ---------- */
@@ -145,7 +146,7 @@ const cards=xs=>`<div class="cards">${xs.map(x=>`<a class="card" href="#i${x.ix}
 const crumb=(...p)=>`<div class="crumb"><a href="#">Home</a> / ${p.join(" / ")}</div>`;
 function activeBar(){const P=[];
  st.c.forEach(k=>P.push(["c",k,ROLE[k]]));st.r.forEach(k=>P.push(["r",k,RN[k]]));st.x.forEach(k=>P.push(["x",k,k.slice(2)]));st.g.forEach(k=>P.push(["g",k,k]));
- if(st.nw)P.push(["nw","","Added mods"]);if(st.m)P.push(["m","",st.m]);if(st.s)P.push(["s","","Slot "+st.s]);if(st.a!=="")P.push(["a","","Up to "+actL(st.a)]);if(st.q)P.push(["q","","“"+st.q+"”"]);
+ if(st.nw)P.push(["nw","","Added mods"]);if(st.m)P.push(["m","",st.m]);if(st.s)P.push(["s","","Slot "+st.s]);if(st.a!=="")P.push(["a","","Up to "+actL(st.a)]);if(st.q)qTokens().forEach(e=>P.push(["qt",e.raw,qLabel(e)]));
  return P.length?`<div class="act-bar" role="group" aria-label="Active filters">${P.map(([k,v,t])=>`<button class="pill" data-k="${k}" data-v="${esc(v)}" aria-label="Remove filter ${esc(t)}">${esc(t)}<b aria-hidden="true">×</b></button>`).join("")}<button class="ghost" id="clr2">Clear all</button></div>`:""}
 
 /* ---------- views ---------- */
@@ -159,7 +160,7 @@ function hubHome(){
  <p>Every curio in the pack: what it does, where it drops or how it is crafted, and which Keeper you must defeat before you can wear it. Sorted along the Path: the Keepers of the quest book, with the Warden, the Wither and the Ender Dragon slotted in where your gear can take them.</p>
  <form class="hsearch" id="hs"><input id="hq" type="search" placeholder="Demon Heart, Arion, Terramity…" aria-label="Search curios" autocomplete="off"><button>Search</button></form>
  <div class="hstats"><span><b>${TOTAL}</b>curios</span><span><b>${SLOTS.length}</b>slot types</span><span><b>${MODS.length}</b>mods</span><span><b>${D.filter(d=>d.gk).length}</b>Keeper-gated</span><span><b>${D.filter(isMust).length}</b>Must-Have ★</span></div></section>
- <div class="pillars">${P("#home",ic(d=>d.t===8),"The Path","From Path 0: Sticks and Stones to Path XI, Keeper by Keeper, plus three vanilla-boss paths.")}${P("#slot/Charm",ic(d=>d.sl.includes("Ring")),"Artifacts","The same Hands, Charms, Rings… chapters as the quest book.")}${P("#mods",ic(d=>/^Terramity/.test(d.m)),"Mods",`${MODS.length} mods with curios: Terramity, Brutality, Enigmatic…`)}</div>
+ <div class="pillars">${P("#home",ic(d=>d.t===8),"The Path","From Path 0: Sticks and Stones to Path XII, Keeper by Keeper, plus three vanilla-boss paths.")}${P("#slot/Charm",ic(d=>d.sl.includes("Ring")),"Artifacts","The same Hands, Charms, Rings… chapters as the quest book.")}${P("#mods",ic(d=>/^Terramity/.test(d.m)),"Mods",`${MODS.length} mods with curios: Terramity, Brutality, Enigmatic…`)}</div>
  <div class="hsec"><div><h2>Artifacts</h2><p>Every slot of the pack's Curios menu.</p></div></div>
  <div class="slots">${BIGSLOTS.map(([s,xs],i)=>`<a class="sc" style="--i:${i}" href="#slot/${enc(s)}"><span class="ics">${byRank(xs).filter(d=>IC[d.id]).slice(0,3).map(d=>img(d.id)).join("")}</span><b>${esc(s)}</b><small>${xs.length} items</small>${rbar(xs)}</a>`).join("")}</div>
  <div class="hsec"><div><h2>The Path</h2><p>When a path's Keeper falls, the next path opens. The Warden, Wither and Ender Dragon paths sit between Path VI and VII.</p></div><a href="#home">Open The Path →</a></div>
@@ -181,17 +182,17 @@ function heroFloat(){const xs=byRank(D.filter(d=>d.r>=4&&IC[d.id])).filter((d,i)
 function hubList(kind,key){
  let xs,title,lede="",bar="",cr,hero="";
  if(kind==="slot"){const rf=key.includes("?r=")?+key.split("?r=")[1]:null;key=key.split("?")[0];xs=key==="*"?D:D.filter(d=>d.sl.includes(key));if(rf!=null)xs=xs.filter(d=>d.r===rf);
-  title=key==="*"?(rf!=null?`All ${RN[rf]} curios`:"All curios"):`${key} slot`;cr="Slot";if(key!=="*")lede=`Every curio worn in the ${key} slot, rarest first.`;
+  title=key==="*"?(rf!=null?`All ${RN[rf]} curios`:"All curios"):`${key} slot`;cr="Slot";if(key!=="*")lede=`Every curio worn in the ${key} slot, rarest first.${!SLOT_BASE[key]?` Players start with no ${key} slot: a curio or its own mod has to add one.`:""}`;
   bar=`<div class="brw-bar">${BIGSLOTS.map(([s])=>`<a href="#slot/${enc(s)}"${s===key?' aria-current="page"':""}>${esc(s)}</a>`).join("")}</div>`}
- else if(kind==="act"){const a=+key;xs=D.filter(d=>d.t===a);title=actL(a);cr="Path";lede=`${ACT[a][1]}.${a!=-1?` Next boss: ${ACTN[a]}.`:""} Must-Have ★ items first, then rarest first.`;const bk=PB[a],bs=bst(bk);hero=`<div class="lhero big" style="--tc:${ACT[a][2]};${tex(a)}">${bk&&B3[bk]?`<div class="stage" data-boss="${bk}"></div>`:emblem(a,"lg")}${bs?`<div class="bcard"><b>${esc(bs.name)}</b><small>Defeat it to open ${esc(actL(a))}</small><div class="bstat"><span><i class="ai" style="--ai:var(--v-gui_heart)"></i>${Math.round(bs.effective.hp).toLocaleString()} HP</span><span><i class="ai" style="--ai:var(--v-gui_armor)"></i>${bs.effective.armor} armor</span>${bs.effective.dmg!=null?`<span><i class="ai" style="--ai:var(--v-fx_strength)"></i>${+(+bs.effective.dmg).toFixed(1)} damage</span>`:""}</div><small class="bnote">${esc(bs.summon||"")}${bs.rules&&bs.rules.some(r=>/Hardmode/i.test(r))?" · "+esc(bs.rules.find(r=>/Hardmode/i.test(r))):""}</small></div>`:""}${VBOSS[a]?`<p class="lhv">${esc(VBI[VBOSS[a]].sum)} ${fmt(VBI[VBOSS[a]].line)} <span class="vbp">${esc(VBI[VBOSS[a]].pack)}</span> <a href="${VBI[VBOSS[a]].url}" target="_blank" rel="noopener">Minecraft Wiki ↗</a></p>`:""}</div>`;
+ else if(kind==="act"){const a=+key;xs=D.filter(d=>d.t===a);title=actL(a);cr="Path";lede=`${ACT[a][1]}.${a!=-1?` Next boss: ${ACTN[a]}.`:""} Must-Have ★ items first, then rarest first.`;const bk=PB[a],bs=bst(bk);hero=`<div class="lhero big" style="--tc:${ACT[a][2]};${tex(a)}">${bk&&B3[bk]?`<div class="stage" data-boss="${bk}"></div>`:emblem(a,"lg")}${bs?`<div class="bcard"><b>${esc(bs.name)}</b><small>Defeat it to open ${esc(actL(a))}</small><div class="bstat"><span><i class="ai" style="--ai:var(--v-gui_heart)"></i>${Math.round(bs.effective.hp).toLocaleString()} HP</span><span><i class="ai" style="--ai:var(--v-gui_armor)"></i>${bs.effective.armor} armor</span>${bs.effective.dmg!=null?`<span><i class="ai" style="--ai:var(--v-fx_strength)"></i>${+(+bs.effective.dmg).toFixed(1)} damage</span>`:""}</div><small class="bnote">${esc(bs.summon||"")}${bs.rules&&bs.rules.some(r=>/Hardmode/i.test(r))?" · Hardmode stats (×2.1 HP and damage)":""}</small></div>`:""}${VBOSS[a]?`<p class="lhv">${esc(VBI[VBOSS[a]].sum)} ${fmt(VBI[VBOSS[a]].line)} <span class="vbp">${esc(VBI[VBOSS[a]].pack)}</span> <a href="${VBI[VBOSS[a]].url}" target="_blank" rel="noopener">Minecraft Wiki ↗</a></p>`:""}</div>`;
   bar=`<div class="brw-bar">${ORDER.filter(a=>D.some(d=>d.t===a)).map(b=>`<a href="#act/${b}"${b===a?' aria-current="page"':""}>${actL(b)}</a>`).join("")}</div>`}
  else if(kind==="mod"){modPage(key);return}
- else{document.title="Mods · Linggango Relic Wiki";const ms=[...MODS].sort((a,b)=>b[1].length-a[1].length);el("main").innerHTML=`${crumb("Mods")}<h1 class="qb">Mods</h1><p class="lede">${MODS.length} mods with curios in the pack, each framed in its own style.</p><div class="mgrid">${ms.map(([m,xs])=>{const F=mf(m),top=byRank(xs).filter(d=>IC[d.id]).slice(0,4);return `<a class="mcard" data-mf="${F[0]}" href="#mod/${enc(m)}"><span class="mbg"></span><span class="mic">${top.map(d=>img(d.id)).join("")}</span><b>${esc(m)}</b><span class="fam">${F[2]}</span><small>${xs.length} curio${minfo(m)?" · official page":""}</small></a>`}).join("")}</div>`;return}
- xs=byRank(xs);document.title=title+" · Linggango Relic Wiki";seedBg(kind+key,xs);
+ else{document.title="Mods · Linggango Relic Wiki";const ms=[...MODS].sort((a,b)=>b[1].length-a[1].length);el("main").innerHTML=`${crumb("Mods")}<h1 class="qb">Mods</h1><p class="lede">${MODS.length} mods with curios in the pack, each framed in its own style.</p><div class="mgrid">${ms.map(([m,xs])=>{const F=mf(m),top=byRank(xs).filter(d=>IC[d.id]).slice(0,4);return `<a class="mcard" data-mf="${F[0]}" href="#mod/${enc(m)}"><span class="mbg"></span><span class="mic">${top.map(d=>img(d.id)).join("")}</span><b>${esc(m)}</b><span class="fam">${F[2]}</span><small>${xs.length} curio${xs.length===1?"":"s"}${minfo(m)?" · official page":""}</small></a>`}).join("")}</div>`;return}
+ const all=xs.length;xs=byRank(xs.filter(d=>pass(d)));document.title=title+" · Linggango Relic Wiki";seedBg(kind+key,xs);
  let shown=60;
- const draw=()=>{el("gl").innerHTML=xs.slice(0,shown).map(gcard).join("");el("bc").innerHTML=`Showing <b>1–${Math.min(shown,xs.length)}</b> of <b>${xs.length}</b> curios`;el("mr").hidden=shown>=xs.length};
- el("main").innerHTML=`${crumb(cr,esc(title))}${hero}<h1>${esc(title)}</h1>${lede?`<p class="lede">${esc(lede)}</p>`:""}${bar}<div class="brw-ct" id="bc"></div><div class="gridc" id="gl"></div><button class="more" id="mr">Show 60 more</button>`;
- el("mr").onclick=()=>{shown+=60;draw()};draw();
+ const draw=()=>{el("gl").innerHTML=xs.slice(0,shown).map(gcard).join("");el("bc").innerHTML=xs.length?`Showing <b>1–${Math.min(shown,xs.length)}</b> of <b>${xs.length}</b> curios${all>xs.length?` · ${all-xs.length} hidden by filters`:""}`:`No curios here match these filters.`;el("mr").hidden=shown>=xs.length};
+ el("main").innerHTML=`${crumb(cr,esc(title))}${hero}<h1>${esc(title)}</h1>${lede?`<p class="lede">${esc(lede)}</p>`:""}${bar}${fbar(xs.length,all)}<div class="brw-ct" id="bc"></div><div class="gridc" id="gl"></div><button class="more" id="mr">Show 60 more</button>`;
+ el("mr").onclick=()=>{shown+=60;draw()};draw();fbind();
 }
 
 function modPage(m){
@@ -200,28 +201,30 @@ function modPage(m){
  const sl={};xs.forEach(d=>d.sl.forEach(s=>sl[s]=(sl[s]||0)+1));const sls=Object.entries(sl).sort((a,b)=>b[1]-a[1]);
  const acts=ORDER.map(a=>[a,xs.filter(d=>d.t===a)]).filter(x=>x[1].length),mx=Math.max(...acts.map(x=>x[1].length));
  const rc=RN.map((n,i)=>xs.filter(d=>d.r===i).length);
+ const fx=xs.filter(d=>pass(d)),fa=ORDER.map(a=>[a,fx.filter(d=>d.t===a)]).filter(x=>x[1].length);
  const links=I?`<a class="mbtn" href="${I[1]}" target="_blank" rel="noopener">CurseForge ↗</a>`:`<a class="mbtn" href="https://www.curseforge.com/minecraft/search?search=${enc(m)}" target="_blank" rel="noopener">Search on CurseForge ↗</a>`;
  el("main").innerHTML=`<div class="mp" data-mf="${F[0]}">${crumb('<a href="#mods">Mods</a>',esc(m))}
  <section class="mhero"><span class="mbg"></span><span class="mwm" aria-hidden="true"></span>
   <div class="mht"><span class="fam">${F[2]}</span><h1>${esc(m)}</h1>${I?`<p class="mby">by ${esc(I[0])}</p><p>${esc(I[2])}</p>`:`<p>${xs.length} curios from this mod are in Linggango.</p>`}<div class="mlinks">${links}</div></div>
   <div class="mshow">${hero.map((d,i)=>`<a class="ms r${d.r}" style="--i:${i}" href="#i${d.ix}" data-t="${d.ix}">${img(d.id)}</a>`).join("")}</div></section>
  <div class="mstat">
-  <div class="mbox"><h3>Curio</h3><b class="big">${xs.length}</b><div class="rmix">${rc.map((n,i)=>n?`<i class="r${i}" style="flex:${n}" title="${RN[i]}: ${n}"></i>`:"").join("")}</div><small>${rc.map((n,i)=>n?`${RN[i]} ${n}`:"").filter(Boolean).join(" · ")}</small></div>
+  <div class="mbox"><h3>Curios</h3><b class="big">${xs.length}</b><div class="rmix">${rc.map((n,i)=>n?`<i class="r${i}" style="flex:${n}" title="${RN[i]}: ${n}"></i>`:"").join("")}</div><small>${rc.map((n,i)=>n?`${RN[i]} ${n}`:"").filter(Boolean).join(" · ")}</small></div>
   <div class="mbox"><h3>Slot</h3><div class="slb">${sls.slice(0,8).map(([s,n])=>`<a href="#slot/${enc(s)}"><span>${esc(s)}</span><i style="width:${n/sls[0][1]*100}%"></i><em>${n}</em></a>`).join("")}</div></div>
   <div class="mbox wide"><h3>Unlocks by Path</h3><div class="abars">${acts.map(([a,ys])=>`<a href="#act/${a}" style="--tc:${ACT[a][2]}" title="${esc(actF(a))}: ${ys.length}"><i style="height:${Math.max(6,ys.length/mx*100)}%"></i><span>${ACT[a][0]}</span><em>${ys.length}</em></a>`).join("")}</div></div>
  </div>
  ${I&&I[3]?`<aside class="mnote"><b>In Linggango</b><p>${esc(I[3])}</p></aside>`:""}
- ${acts.map(([a,ys])=>`<section class="mact" style="--tc:${ACT[a][2]}"><h2>${emblem(a,"xs")}<span>${actL(a)}</span>${esc(ACT[a][1])}<small>${ys.length}</small></h2><div class="gridc">${ys.map(gcard).join("")}</div></section>`).join("")}</div>`;
+ ${fbar(fx.length,xs.length)}${fa.length?"":`<p class="note">No curios from this mod match these filters.</p>`}
+ ${fa.map(([a,ys])=>`<section class="mact" style="--tc:${ACT[a][2]}"><h2>${emblem(a,"xs")}<span>${actL(a)}</span>${esc(ACT[a][1])}<small>${ys.length}</small></h2><div class="gridc">${ys.map(gcard).join("")}</div></section>`).join("")}</div>`;fbind()
 }
 
 function home(xs,asTable){
  let h=`${crumb("The Path")}<h1 class="qb">The Path</h1>
  <p class="lede">Every curio in base Linggango V6.6.5b4, tiered by how hard it really is to get: the Keeper that unlocks it, the vanilla boss it needs (Warden, Wither, Ender Dragon), drop chances, pickaxe tier and trait farming. Inside each path, ★ Must-Have items come first, then the rarest.</p>
   <div class="legend"><span><i class="ct lg"></i>Used to craft another curio</span><span><i class="lgr"></i>Frame colour: rarity, brighter = rarer</span><span><i class="slk lg" style="--si:url(${slotIcon("Ring")})"></i>Curio slot it goes in</span><span><b class="lgn">16</b>Variants merged into one tile</span><span><b class="lgs">★</b>Must-Have: get it first</span></div>
- ${activeBar()}`;
+ ${fbar(xs.length,D.length)}${xs.length?"":`<p class="note">No curios match these filters. Remove one above or clear them all.</p>`}`;
  seedBg("path"+st.a,xs.filter(d=>d.r>=4));
  if(!asTable){
-  for(const a of ORDER){if(st.a!==""&&a>+st.a)continue;const ys=xs.filter(d=>d.t===a);if(a===-1&&!ys.length)continue;const cl=st.cl.includes(a);
+  for(const a of ORDER){if(st.a!==""&&a>+st.a)continue;const ys=xs.filter(d=>d.t===a);if((a===-1||fOn())&&!ys.length)continue;const cl=st.cl.includes(a);
    h+=`<section class="tier${cl?" closed":""}${VBOSS[a]?" vb":""}" style="--tc:${ACT[a][2]};${tex(a)}" id="p${String(a).replace(".","_")}"><button class="tl" data-tier="${a}" aria-expanded="${!cl}"><span class="tlem">${emblem(a)}</span><span class="ta">${actL(a)}</span><small>${esc(ACT[a][1])}</small>${a==-1?"":`<span class="tn">next: ${esc(ACTN[a]||"")}</span>`}${VBOSS[a]?`<small class="vbi">${VBI[VBOSS[a]].hp} HP · vanilla boss</small>`:""}<span class="rs">${RNS.map(i=>{const n=ys.filter(d=>d.r===i).length;return n?`<i class="r${i}" style="flex:${n}" title="${RN[i]}: ${n}"></i>`:""}).join("")}</span><small>${count(ys)} items</small></button><div class="tiles">${ys.length?ys.map((d,i)=>tile(d,i)).join(""):'<span class="empty">No items match the filters.</span>'}</div></section>`}
  }else{
   const COLS=[["n","Curio"],["r","Rarity"],["c","Role"],["t","Tier"],["a","Usable from"],["g","Source"],["m","Mod"],["fx","Effect"]];
@@ -229,7 +232,7 @@ function home(xs,asTable){
   const ys=[...xs].sort((p,q)=>{const k=st.sort;const r=k==="a"?p.a-q.a:k==="t"?p.t-q.t:k==="r"?(p.r-q.r||p.sc-q.sc):k==="c"?CO.indexOf(p.c)-CO.indexOf(q.c):String(p[k]).localeCompare(String(q[k]));return r*st.dir});
   h+=`<div class="tw"><table><thead><tr><th></th>${COLS.map(([k,t])=>`<th><button class="ghost" data-s="${k}">${t}${st.sort===k?(st.dir>0?" ▲":" ▼"):""}</button></th>`).join("")}</tr></thead><tbody>${ys.map(d=>`<tr><td data-t="${d.ix}">${img(d.id)}</td><td><a href="#i${d.ix}" data-t="${d.ix}">${esc(d.n)}</a></td><td class="r${d.r}"><i class="rdot"></i>${RN[d.r]}</td><td>${d.ro.map(k=>ROLE[k]).join(", ")}</td><td class="num">${ACT[d.t][0]}</td><td class="num">${ACT[d.a][0]}</td><td>${d.g}</td><td>${esc(d.m)}</td><td>${esc(d.fx)}</td></tr>`).join("")}</tbody></table></div>`}
  h+=`<p class="note">Data read from the pack files (recipes, loot tables, KubeJS, config, curio tags) and the mod jars, updated 14 Oct 2026; paths and rarity re-rated 17 Oct 2026. Drop chances don't include the pack's difficulty rules. <b>Rarity is this wiki's rating</b> (power, path, gate and scarcity), not the in-game name colour; ★ Must-Have marks the Looting Charms and every curio that adds curio slots. Only mods shipped with the base pack are listed. The Warden, Wither and Ender Dragon paths are this wiki's suggested order 🔍; the pack itself does not gate them.</p>`;
- el("main").innerHTML=h;decorate();
+ el("main").innerHTML=h;decorate();fbind();
  el("main").querySelectorAll("th button").forEach(b=>b.onclick=()=>{const k=b.dataset.s;st.dir=st.sort===k?-st.dir:1;st.sort=k;render()});
 }
 
@@ -277,7 +280,7 @@ function page(d){
  const s0=d.sl[0],sx=s0?byRank(D.filter(x=>x.sl.includes(s0))):[],si=sx.indexOf(d),pv=sx[si-1],nx=sx[si+1];
  const near=sx.filter(x=>x!==d).slice(Math.max(0,si-4),Math.max(0,si-4)+8);
  el("main").innerHTML=`<div class="ip r${d.r}" data-mf="${F[0]}">
- <header class="ip-hero"><div class="ip-htext"><div class="ip-crumb"><a href="#">Wiki</a> / <a href="#mod/${enc(d.m)}">${esc(d.m)}</a> / <a href="#act/${d.t}">${actL(d.t)}</a></div>
+ <header class="ip-hero"><div class="ip-htext"><div class="ip-crumb"><a href="#">Home</a> / <a href="#mod/${enc(d.m)}">${esc(d.m)}</a> / <a href="#act/${d.t}">${actL(d.t)}</a></div>
  <h1 class="ip-title">${isMust(d)?'<span class="mstar">★</span>':""}${esc(d.n)}</h1><p class="ip-lead">${fmt(d.fx)}</p>
  <p class="ip-meta"><span class="ip-fam">${F[2]}</span><span>${rLabel(d)}</span><span>${esc(slot)}</span><span>${loot?"Loot":"Craft"}</span>${d.nw?"<span>added mod</span>":""}</p></div>
  <div class="ip-art"><span class="ip-badge">${RN[d.r]}</span><div class="ip-stage" style="${tex(d.t)}"><span class="orb" aria-hidden="true">${[0,1,2,3,4,5].map(i=>`<i style="--k:${i};--sp:var(--v-${MFSP[F[0]]||"p_glint"})"></i>`).join("")}</span><div class="ip-icon">${ic}</div></div><span class="ip-mini">${ic}</span><span class="ip-path" title="${esc(actL(d.t))}">${emblem(d.t,"xs")}</span></div></header>
@@ -303,10 +306,10 @@ const ACTS=[
 ["V","Zoranth the Forgotten","Frost / Holy (fought in the Nether)","Netherite (Act VI)","Magical","Grave Gloves (Reaper's Grave Dust); Magical Lectern materials: Hard Ice, Explosion Shard, Life Essence.","code"],
 ["VI","The Elvenite Paladin","Blunt / Dark (resists Holy)","Elvenite (Act VII)","—","The Ender Dragon is required before the Paladin (4 Khyros's Tears for Titan Insigna) → enables Hardmode ×2.1 health and damage; Heart of the Beloved (+1 Accessory).","code"],
 ["VII","Vaedric","Holy / Lightning","Voiderite (Act VIII)","Chaotic","Chaotic materials: Force Field, Captured Wind. Infinity Glove: +5 Ring, +1 Charm.","code"],
-["VIII","The Calamities","Bringer Holy/Pierce · Famine Fire/Holy · Chaos Frost/Pierce · Discord Arcane/Blunt","Cataclysm (Act IX)","—","The Cataclysm Keeper is NOT on the ladder (a “free” Act for difficulty). Sigil of Calamity summoning all three bosses at once: untested.","q"],
+["VIII","The Discord (Calamities)","Bringer Holy/Pierce · Famine Fire/Holy · Chaos Frost/Pierce · Discord Arcane/Blunt","Cataclysm (Act IX)","—","The pack config makes The Discord the Calamitous Keeper; Bringer of Doom, Famine and Chaos are side fights. Sigil of Calamity summoning all of them at once: untested.","code"],
 ["IX","Sanghor","Fire / Holy","Blood (Act X)","—","The ladder jumps 69 → 102. Hemalith Catalyst never drops from the Keeper bag (loop bug) → craft it from bloody ingot + blaze powder + quartz. Whether Judged blocks orb healing: untested.","q"],
 ["X","Zoranth Newborn","Dark / Frost","Sun (Act XI)","Miraculous","Miraculous materials: Resonant Feather, Sun Membrane, Void Eye.","q"],
-["XI","Nyxaris","Holy / Lightning","— (end game)","—","Helionite gate (damage floor 50). Act XI quest content not yet readable (locked in the quest book).","q"]];
+["XI","Nyxaris","Holy / Lightning","Act XII (end game)","—","Helionite gate (damage floor 50). Its treasure bag holds the three Act XII curios: The Eclypse, Heart of Creation, Non-Euclidean Cube. Act XI quest content not yet readable (locked in the quest book).","code"]];
 const L2=[["Unpolished","After Arion (Act III)",22,"Fiery → 8 blaze rods (25%); Gravity ≥ 50 → 4 dragon's breath (10%/level)"],["Magical","After Zoranth (Act V)",16,"Hard Ice, Explosion Shard, Life Essence"],["Chaotic","After Vaedric (Act VII)",8,"Force Field, Captured Wind"],["Miraculous","After Zoranth Newborn (Act X)",9,"Resonant Feather, Sun Membrane, Void Eye"]];
 const TF={Iron:6,Gold:8,Emerald:11,Diamond:14,Netherite:18,Elvenite:24,Voiderite:31,Bloody:40,Helionite:50};
 const CHN=["","Unpolished","Magical","Chaotic","Miraculous"];
@@ -329,7 +332,7 @@ function guide(){
 <p class="lede">Ties curios to the Act progression, L2 Hostility, Goety, Linggango Tweaks and the Tech/Magic mods. Each entry carries a confidence label.</p>
 <div class="legend">${cf("ok")}${cf("code")}${cf("q")}</div>
 <div class="toc"><b>CONTENTS</b><ol>${SEC.map(([id,t])=>`<li><a href="#guide" data-go="${id}">${t}</a></li>`).join("")}</ol></div>
-${sec("g1","1. Act axis",`<p class="note">The Keeper defeated at the end of Act N opens the gate for Act N+1. Acts IX–XI are still locked in the quest book, so their data comes from code/config only.</p>${tbl(["Act","Keeper","Weakness","Opens gate","Looting Charm","Curios / notes","Confidence"],ACTS.map(a=>`<tr><td class="num"><b>${a[0]}</b></td><td>${a[1]}</td><td>${a[2]}</td><td>${a[3]}</td><td>${a[4]}</td><td>${a[5]}</td><td>${CF[a[6]][0]}</td></tr>`).join(""))}`)}
+${sec("g1","1. Act axis",`<p class="note">The Keeper defeated at the end of Act N opens the gate for Act N+1. Acts IX–XII are still locked in the quest book, so their data comes from code/config only.</p>${tbl(["Act","Keeper","Weakness","Opens gate","Looting Charm","Curios / notes","Confidence"],ACTS.map(a=>`<tr><td class="num"><b>${a[0]}</b></td><td>${a[1]}</td><td>${a[2]}</td><td>${a[3]}</td><td>${a[4]}</td><td>${a[5]}</td><td>${CF[a[6]][0]}</td></tr>`).join(""))}`)}
 ${sec("g2","2. L2 Hostility — Looting Charms",`<p class="lede"><span class="badge new">IMPORTANT</span>A charm must be <b>worn in a curio slot</b> for its drops to appear (disableHostilityLootCurioRequirement = false). Trait-added drops are still cut by Lean Drops. Chance = chance + trait level × rankBonus, and each item in a stack rolls separately.</p>${tbl(["Charm","Unlocked","Drops","Worth farming"],L2.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td class="num">${r[2]}</td><td>${r[3]}</td></tr>`).join(""))}<p class="note">The original L2 Complements methods still work: Hard Ice = kill Drowned with Powder Snow; Force Field = finish the Wither with an arrow. These materials feed the Study Lectern (parry/dodge milestones are cumulative and never consumed).</p>`)}
 ${sec("g3","3. Goety",tbl(["Item","Recipe / source","Notes"],`<tr><td><b>Scroll of Blessing</b></td><td>Darkest Scroll + Heart of the Earth + nautilus shell + sunflower + feather + ink sac + gold</td><td>+1 Luck stat; each Luck point gives +2% damage, +2.5% attack speed, +2% dodge (dodge capped at 15%). This dodge does not trigger Brutality anklets.</td></tr>
 <tr><td><b>Potion of Transformation</b></td><td>Ritual sacrificing a villager; Unholy Blood, totem, end crystal, enchanted golden apple, echo shard</td><td>Used for Dimensional Will.</td></tr>
@@ -379,7 +382,7 @@ function render(){
  if(["#bang","#ngoai","#table","#unobtainable","#guide"].includes(h)){location.replace("#home");return}
  document.body.classList.toggle("hub",h===""||h==="#");
  if(innerWidth<=760&&(h.startsWith("#i")||h==="#guide")){el("side").classList.add("closed");el("fold").setAttribute("aria-expanded","false")}
- const mn=el("main");mn.classList.remove("enter");void mn.offsetWidth;mn.classList.add("enter");
+ const soft=SOFT;SOFT=false;const mn=el("main");if(!soft){mn.classList.remove("enter");void mn.offsetWidth;mn.classList.add("enter")}
  const m=h.match(/^#(slot|act|mod)\/(.+)$/);
  if(h===""||h==="#")hubHome();
  else if(h.startsWith("#build"))buildPage(h);
@@ -390,9 +393,9 @@ function render(){
  else if(h==="#mods")hubList("mods");
  else if(h.startsWith("#i")&&D[+h.slice(2)]){page(D[+h.slice(2)]);recipeTree(D[+h.slice(2)])}
  else{document.title="Tier list · Linggango Relic Wiki";home(xs,false)}
- if(!h.startsWith("#home")&&!h.startsWith("#build")&&h!=="#table")scrollTo(0,0);
+ if(!soft&&!h.startsWith("#home")&&!h.startsWith("#build")&&h!=="#table")scrollTo(0,0);
 }
-function refresh(){const h=location.hash;if(h==="#home")render();else location.hash="#home"}
+function refresh(){const h=decodeURIComponent(location.hash);if(h==="#home"||/^#(slot|act|mod)\//.test(h)){SOFT=true;render()}else location.hash="#home"}
 addEventListener("hashchange",()=>{hideTip();window.Boss3D&&Boss3D.unmountAll();render();decorate()});
 
 /* ---------- tooltip ---------- */
@@ -428,7 +431,7 @@ addEventListener("scroll",hideTip,{capture:true,passive:true});
 /* ---------- global events ---------- */
 document.addEventListener("click",e=>{
  const p=e.target.closest(".pill");if(p){const k=p.dataset.k,v=p.dataset.v;
-  if(Array.isArray(st[k]))st[k]=st[k].filter(x=>String(x)!==v);else if(k==="nw")st.nw=false;else{st[k]="";el(k==="q"?"q":"f"+k).value=""}refresh();return}
+  if(k==="qt"){st.q=qDrop(v);el("q").value=st.q}else if(Array.isArray(st[k]))st[k]=st[k].filter(x=>String(x)!==v);else if(k==="nw")st.nw=false;else{st[k]="";el(k==="q"?"q":"f"+k).value=""}refresh();return}
  if(e.target.id==="clr2"){resetFilters();return}
  const go=e.target.closest("[data-go]");if(go){e.preventDefault();el(go.dataset.go).scrollIntoView({behavior:RM?"auto":"smooth",block:"start"});return}
  if(e.target.closest("[data-top]")){e.preventDefault();scrollTo({top:0,behavior:RM?"auto":"smooth"});return}
