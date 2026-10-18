@@ -1,7 +1,10 @@
 # Linggango Wiki (base pack): handoff
 
 A copy of tranquanghaofake-dotcom/Linggango-Relic-Wiki, cut down to **base** Linggango V6.6.5b4, with the lag and tearing fixed.
-Upstream has no license: fine for personal use; ask the user before publishing it anywhere.
+Upstream has no license. The user confirmed the owner's OK, and the site is now public.
+- **Live site:** https://ou1ck5cop3.github.io/linggango-unofficial-wiki/ (GitHub Pages, `main` branch, root).
+- **Hosting repo:** https://github.com/Ou1cK5CoP3/linggango-unofficial-wiki, git remote `site`.
+- **To update:** rebuild, commit to `base-pack`, then `git push site base-pack:main`. `.nojekyll` makes Pages serve the files as they are.
 Branch `base-pack`; the original upstream branch `claude/zen-pasteur-qi26dz` is untouched.
 
 ## Workflow
