@@ -137,8 +137,8 @@ function refreshSide(){
 const SLA={"living armour":"living_armour_socket","binding key":"bindingkey","wings":"terra_wings","focus":"an_focus","spellstone":"scroll","bundle":"curio"};
 const SLU={};
 const slotKey=n=>{const k=n.toLowerCase();return SLA[k]||k.replace(/ /g,"_")};
-const slotIcon=n=>{const k=slotKey(n),b=(UI.cslot||{})[k];if(!b)return "";if(!SLU[k])SLU[k]=URL.createObjectURL(new Blob([Uint8Array.from(atob(b),c=>c.charCodeAt(0))],{type:"image/png"}));return SLU[k]};
-const slk=d=>{const u=slotIcon(d.sl[0]||"");return u?`<i class="slk" style="--si:url(${u})" title="${esc(d.sl.join(" / "))} slot"></i>`:`<i class="slk tx" title="${esc(d.sl.join(" / "))} slot">${esc((d.sl[0]||"?").slice(0,2))}</i>`};
+const slotIcon=(n,t)=>{const k=slotKey(n),b=(UI[t?"cslotT":"cslot"]||{})[k],c=t?k+"~":k;if(!b)return "";if(!SLU[c])SLU[c]=URL.createObjectURL(new Blob([Uint8Array.from(atob(b),c=>c.charCodeAt(0))],{type:"image/png"}));return SLU[c]};
+const slk=d=>{const u=slotIcon(d.sl[0]||"",1);return u?`<i class="slk" style="--si:url(${u})" title="${esc(d.sl.join(" / "))} slot"></i>`:`<i class="slk tx" title="${esc(d.sl.join(" / "))} slot">${esc((d.sl[0]||"?").slice(0,2))}</i>`};
 const tile=(d,i=99)=>`<a style="--i:${i}" class="t c${d.c} r${d.r}${d.g==="Loot"?" L":""}${d.inv?" inv":""}" data-mf="${mf(d.m)[0]}" href="#i${d.ix}" data-t="${d.ix}" aria-label="${esc(d.n)}">${AN[d.id]?`<span class="aimg" data-an="${esc(d.id)}">${img(d.id)}</span>`:img(d.id)}${d.k>1?`<span class="kv">${d.k}</span>`:""}${d.uid.length?CT:""}${isMust(d)?'<span class="star" aria-label="Must-Have">★</span>':""}${slk(d)}<span class="sh" style="--dl:${(d.ix*.37%5).toFixed(2)}s"></span></a>`;
 const gcard=(d,i)=>`<a class="gc r${d.r}" style="--i:${Math.min(i,40)}" href="#i${d.ix}" data-t="${d.ix}"><span class="ak">${ACT[d.t][0]}</span><span class="rk">${isMust(d)?"★ Must-Have":RN[d.r]}</span><span class="pic">${img(d.id)}</span><b>${esc(d.n)}</b><small>${esc(d.sl.join(", "))} · ${esc(d.m)}</small></a>`;
 const rbar=xs=>`<span class="bar5">${RNS.map(i=>{const n=xs.filter(d=>d.r===i).length;return n?`<i style="flex:${n};background:${RC[i]}"></i>`:""}).join("")}</span>`;
@@ -368,14 +368,14 @@ function outside(){
 /* ---------- router ---------- */
 let snapQ=Promise.resolve();
 const tierIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("seen");tierIO.unobserve(e.target)}}),{rootMargin:"200px"});
-function decorate(){
- document.querySelectorAll(".tier:not(.seen):not([data-io])").forEach(t=>{t.dataset.io=1;tierIO.observe(t)});
- const hero=document.querySelector(".hero:not([data-done])");
+function decorate(r=document){
+ r.querySelectorAll(".tier:not(.seen):not([data-io])").forEach(t=>{t.dataset.io=1;tierIO.observe(t)});
+ const hero=r.querySelector(".hero:not([data-done])");
  if(hero){hero.dataset.done=1;if(UI.bg){hero.classList.add("real");hero.style.setProperty("--hbg",`url(data:image/jpeg;base64,${UI.bg})`)}const w=hero.querySelector("img.wm");if(w&&UI.logo)w.src="data:image/png;base64,"+UI.logo}
- document.querySelectorAll(".bpt[data-snap]:not([data-done])").forEach(el=>{el.dataset.done=1;const k=el.dataset.snap,big=el.classList.contains("lg")||el.classList.contains("xl");
+ r.querySelectorAll(".bpt[data-snap]:not([data-done])").forEach(el=>{el.dataset.done=1;const k=el.dataset.snap,big=el.classList.contains("lg")||el.classList.contains("xl");
   snapQ=snapQ.then(()=>window.Boss3D&&Boss3D.snapshot(k,big?240:120,big?240:120)).then(u=>{if(u)el.innerHTML=`<img alt="" src="${u}">`}).catch(()=>{})});
- document.querySelectorAll("[data-boss]:not([data-live])").forEach(el=>{el.dataset.live=1;const r=el.getBoundingClientRect();window.Boss3D&&Boss3D.snapshot(el.dataset.boss,Math.round(r.width)||300,Math.round(r.height)||300).then(u=>{if(u&&el.isConnected)el.innerHTML=`<img alt="" src="${u}" style="width:100%;height:100%;object-fit:contain">`}).catch(()=>{})});
- document.querySelectorAll("[data-an]:not([data-done])").forEach(el=>{el.dataset.done=1;const a=AN[el.dataset.an];if(!a)return;el.style.setProperty("--n",a[1]);el.style.setProperty("--ms",(a[1]*a[2])+"ms");el.insertAdjacentHTML("beforeend",`<img class="strip" alt="" src="data:image/png;base64,${a[0]}">`);el.classList.add("anim")});
+ r.querySelectorAll("[data-boss]:not([data-live])").forEach(el=>{el.dataset.live=1;const r=el.getBoundingClientRect();window.Boss3D&&Boss3D.snapshot(el.dataset.boss,Math.round(r.width)||300,Math.round(r.height)||300).then(u=>{if(u&&el.isConnected)el.innerHTML=`<img alt="" src="${u}" style="width:100%;height:100%;object-fit:contain">`}).catch(()=>{})});
+ r.querySelectorAll("[data-an]:not([data-done])").forEach(el=>{el.dataset.done=1;const a=AN[el.dataset.an];if(!a)return;el.style.setProperty("--n",a[1]);el.style.setProperty("--ms",(a[1]*a[2])+"ms");el.insertAdjacentHTML("beforeend",`<img class="strip" alt="" src="data:image/png;base64,${a[0]}">`);el.classList.add("anim")});
 }
 function render(){
  save();const xs=refreshSide();const h=decodeURIComponent(location.hash);
@@ -416,15 +416,15 @@ function showTip(n){const d=D[+n.dataset.t];if(!d)return;tipFor=n;const F=mf(d.m
  <p class="tsrc">${fmt(d.src.slice(0,2).join(" "))}</p><p class="twhere">${esc(actL(d.t))}${d.a!==d.t?` · with luck from ${esc(actL(d.a))}`:""}</p></div>
  <div class="tft"><span class="tmod">${esc(d.m)}</span><span class="trt">${igName(d)} · ${RN[d.r]}</span></div></div>`;
  if(lastAct)lastAct.classList.remove("act");lastAct=n.classList.contains("t")?n:null;if(lastAct)lastAct.classList.add("act");
- const first=!tip.classList.contains("on");place(n);tip.classList.add("on");if(first)tip.classList.add("in");decorate()}
+ const first=!tip.classList.contains("on");place(n);tip.classList.add("on");if(first)tip.classList.add("in");decorate(tip)}
 function place(n){const r=n.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight,vw=innerWidth,vh=innerHeight;
  let x=r.right+10,y=r.top;if(x+w>vw-8)x=r.left-w-10;if(x<8)x=Math.min(vw-w-8,Math.max(8,r.left));
  if(x<r.right&&x+w>r.left){y=r.bottom+8;if(y+h>vh-8)y=r.top-h-8}
  y=Math.max(8,Math.min(y,vh-h-8));tip.classList.toggle("glide",tip.classList.contains("on"));tip.style.setProperty("--tx",x+"px");tip.style.setProperty("--ty",y+"px");tip.dataset.side=x<r.left?"l":"r"}
 let lastAct=null;
 function hideTip(){tipFor=null;tip.classList.remove("on","glide","in");if(lastAct){lastAct.classList.remove("act");lastAct=null}}
-let hovT=null,hovQ=false;
-document.addEventListener("mouseover",e=>{hovT=e.target.closest("[data-t]");if(!hovQ){hovQ=true;requestAnimationFrame(()=>{hovQ=false;if(hovT&&hovT!==tipFor)showTip(hovT);else if(!hovT&&tipFor)hideTip()})}},{passive:true});
+let hovT=null,hovTm=0;
+document.addEventListener("mouseover",e=>{hovT=e.target.closest("[data-t]");clearTimeout(hovTm);hovTm=setTimeout(()=>{if(hovT&&hovT!==tipFor)showTip(hovT);else if(!hovT&&tipFor)hideTip()},hovT?80:0)},{passive:true});
 document.addEventListener("focusin",e=>{const n=e.target.closest("[data-t]");n?showTip(n):hideTip()});
 addEventListener("scroll",hideTip,{capture:true,passive:true});
 

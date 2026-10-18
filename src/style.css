@@ -1088,3 +1088,16 @@ body:not(.hub) #main{background:var(--bg)}
 .t:hover,.t:focus-visible,.t.act{box-shadow:inset 0 0 8px color-mix(in srgb,var(--rc) 35%,transparent)!important}
 .t{transform:translateY(0)}
 .t.act{transform:translateY(-2px)!important}
+/* tiles draw no CSS masks and rest untransformed: each mask is an offscreen pass on every repaint (docs/HANDOFF.md) */
+.t::before,.t.r0::before,.t.r5::before,.t.r6::before{background:none!important;-webkit-mask:none!important;mask:none!important;padding:0!important;border:1.5px solid;border-color:var(--rc) color-mix(in srgb,var(--rc) 55%,#000) color-mix(in srgb,var(--rc) 25%,#000) color-mix(in srgb,var(--rc) 55%,#000)}
+.t.r0::before{border-color:#8a8f99 #5a5e66 #2a2d35 #5a5e66}
+.t.r5::before{border-width:2px;border-color:#ffd36b #ff3d5e #5c0f22 #ff3d5e}
+.t.r6::before{border-width:2px;border-top-color:#fff}
+.t::after{display:none!important}
+.t:hover::after,.t:focus-visible::after{display:block!important}
+.t .slk::after{-webkit-mask:none!important;mask:none!important;background:var(--si) center/12px no-repeat!important}
+.t .ct::after{-webkit-mask:none!important;mask:none!important;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAHUlEQVR42mMUERH5z4ADMEFpRmw0TPI/NnogdAIAe98KSdZUo5EAAAAASUVORK5CYII=) center/7px no-repeat!important}
+.t,.t:hover,.t.act{transform:none!important}
+.t:hover,.t.act{top:-2px}
+.t .sh::before{display:none!important}
+.t:hover .sh::before,.t:focus-visible .sh::before{display:block!important}

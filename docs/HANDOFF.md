@@ -31,6 +31,12 @@ Branch `base-pack`; the original upstream branch `claude/zen-pasteur-qi26dz` is 
   - `showTip` no longer forces a full layout (`void tip.offsetWidth`) to restart the entrance animation. The entrance now plays only when the tooltip first opens.
   - Removed the timer that swept a shimmer over random visible relics every 700 ms, so the page now goes idle.
   - Result: a mouse pass over 12 tiles went from about 12 long frames (50–120 ms) to 1.
+- **Hover lag on The Path** (fourth fix, replaces part of the third). Fast mouse moves over relics still lagged on the live site. The real cost was repaints, not the hover itself: every tile drew its rarity ring and its slot/class badges with CSS masks (2,137 in Path 0–I alone), and each mask is an offscreen pass on every repaint. A tooltip change cost about 500 ms.
+  - Rings are now plain 1.5–2 px borders in the rarity colour. The spin ring and shimmer draw only on the hovered tile.
+  - Slot badges are images. `tools/tint_icons.py` bakes cream-tinted copies of the `cslot` icons into `UI.json` as `cslotT`; rerun it if `cslot` changes. `slotIcon(name,1)` returns the tinted one.
+  - The third fix's resting `transform:translateY(0)` on every tile made each one its own paint layer; it's reversed. Hover lifts with `top:-2px` instead.
+  - Tooltips open after the pointer rests 80 ms on a tile (hover intent), so a fast sweep builds none. `decorate()` now only scans the tooltip, not the whole page.
+  - Result: masks on the whole page 2,137+ → 2, tooltip update about 500 ms → 12 ms.
 - **Tearing:** live 3D bosses were drawn on one fixed full-screen WebGL canvas that redraws a frame behind scroll. They're now static snapshots (`Boss3D.snapshot`), so there's no WebGL loop and no drag-to-rotate.
 - **Phone layout:** path hero stacks below 640 px. The boss card used to be clipped off-screen.
 
