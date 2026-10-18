@@ -18,6 +18,10 @@ Branch `base-pack`; the original upstream branch `claude/zen-pasteur-qi26dz` is 
 - **Recipe order:** a crafted curio is never on an earlier path than a curio it's made from. This moved Hate Sigil and Sin of Wrath VI → VII (Chthonic Cursemark), and Daemonium Whetstone 0 → II (Sharpening Stone).
 - **Text:** hub, lede and footer no longer mention the added mods or Etchings. The empty "Recently added" block was removed.
 - **Lag:** the perf block at the end of `style.css` stops the idle icon loops, the mass pop-in entrances, the Mythic spin border, the Must-Have star spin and the blurred background floaters. It also removes the header `backdrop-filter`. Hover motion is kept. Running animations with every tier on screen went from 1,891 to 4.
+- **Scroll lag on The Path** (second fix): every tile icon had `will-change:transform`, which made 1,190 GPU layers, and drop-shadow `filter`s were on 3,437 elements. The block at the end of `style.css` removes both:
+  - The slot and role badges use a plain backing or outline instead of 4 stacked drop-shadows.
+  - Only Must-Have icons keep their glow.
+  - `.tier` has `content-visibility:auto`, so off-screen paths skip rendering. Result: GPU layers 1,205 → 0 and filters 3,437 → 166.
 - **Tearing:** live 3D bosses were drawn on one fixed full-screen WebGL canvas that redraws a frame behind scroll. They're now static snapshots (`Boss3D.snapshot`), so there's no WebGL loop and no drag-to-rotate.
 - **Phone layout:** path hero stacks below 640 px. The boss card used to be clipped off-screen.
 

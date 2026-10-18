@@ -1076,3 +1076,9 @@ body:not(.hub) #main{background:var(--bg)}
 @media (max-width:640px){.lhero.big{grid-template-columns:1fr;gap:0;padding:0 0 16px}.lhero .stage{height:260px}.lhero.big .bcard{margin:0 16px}}
 .lhero .stage,.lhero .stage:active,.hstage{cursor:default}
 .top{z-index:30!important}
+/* scroll perf: no per-tile GPU layers or filters; off-screen tiers skip rendering */
+.t>img,.t .aimg img{will-change:auto!important}
+.t:not(.r6) img,.t .aimg img{filter:none!important}
+.t .slk{filter:none!important;background:rgba(0,0,0,.72)!important;border-radius:2px}
+.tier{content-visibility:auto;contain-intrinsic-size:auto 424px}
+.t .ct{filter:none!important;box-shadow:0 0 0 1px #f1ead8;border-radius:2px}
