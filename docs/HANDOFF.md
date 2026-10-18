@@ -22,6 +22,12 @@ Branch `base-pack`; the original upstream branch `claude/zen-pasteur-qi26dz` is 
   - The slot and role badges use a plain backing or outline instead of 4 stacked drop-shadows.
   - Only Must-Have icons keep their glow.
   - `.tier` has `content-visibility:auto`, so off-screen paths skip rendering. Result: GPU layers 1,205 → 0 and filters 3,437 → 166.
+- **Hover lag on The Path** (third fix). These were measured in the in-app Chromium (same engine as Opera GX, Chrome and Edge). The fixes are plain CSS and DOM changes, so they help every browser.
+  - Before, hovering one tile restyled every sibling in its row: about 8–16 ms in Path 0-I, which has 632 tiles. The trigger was the hover/active `transform` switching on from `none`. Every tile now rests at `transform:translateY(0)`, and hover lifts it 2 px with no scale. Active-tile cost is down to about 0.02–3 ms.
+  - The hover ring spun by animating a custom property (`--ang`), which repaints on the main thread every frame. It's now static. The blurred hover glow and the box-shadow transition are gone too.
+  - `showTip` no longer forces a full layout (`void tip.offsetWidth`) to restart the entrance animation. The entrance now plays only when the tooltip first opens.
+  - Removed the timer that swept a shimmer over random visible relics every 700 ms, so the page now goes idle.
+  - Result: a mouse pass over 12 tiles went from about 12 long frames (50–120 ms) to 1.
 - **Tearing:** live 3D bosses were drawn on one fixed full-screen WebGL canvas that redraws a frame behind scroll. They're now static snapshots (`Boss3D.snapshot`), so there's no WebGL loop and no drag-to-rotate.
 - **Phone layout:** path hero stacks below 640 px. The boss card used to be clipped off-screen.
 

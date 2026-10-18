@@ -1082,3 +1082,9 @@ body:not(.hub) #main{background:var(--bg)}
 .t .slk{filter:none!important;background:rgba(0,0,0,.72)!important;border-radius:2px}
 .tier{content-visibility:auto;contain-intrinsic-size:auto 424px}
 .t .ct{filter:none!important;box-shadow:0 0 0 1px #f1ead8;border-radius:2px}
+/* hover perf: no property spin or blur glow; a resting transform stops hover restyling every sibling tile */
+.t{transition:transform .12s ease!important}
+.t:hover::after,.t:focus-visible::after{animation:none!important}
+.t:hover,.t:focus-visible,.t.act{box-shadow:inset 0 0 8px color-mix(in srgb,var(--rc) 35%,transparent)!important}
+.t{transform:translateY(0)}
+.t.act{transform:translateY(-2px)!important}

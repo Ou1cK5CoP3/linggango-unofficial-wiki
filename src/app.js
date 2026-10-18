@@ -413,13 +413,13 @@ function showTip(n){const d=D[+n.dataset.t];if(!d)return;tipFor=n;const F=mf(d.m
  <p class="tsrc">${fmt(d.src.slice(0,2).join(" "))}</p><p class="twhere">${esc(actL(d.t))}${d.a!==d.t?` · with luck from ${esc(actL(d.a))}`:""}</p></div>
  <div class="tft"><span class="tmod">${esc(d.m)}</span><span class="trt">${igName(d)} · ${RN[d.r]}</span></div></div>`;
  if(lastAct)lastAct.classList.remove("act");lastAct=n.classList.contains("t")?n:null;if(lastAct)lastAct.classList.add("act");
- tip.classList.remove("in");void tip.offsetWidth;place(n);tip.classList.add("on","in");decorate()}
+ const first=!tip.classList.contains("on");place(n);tip.classList.add("on");if(first)tip.classList.add("in");decorate()}
 function place(n){const r=n.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight,vw=innerWidth,vh=innerHeight;
  let x=r.right+10,y=r.top;if(x+w>vw-8)x=r.left-w-10;if(x<8)x=Math.min(vw-w-8,Math.max(8,r.left));
  if(x<r.right&&x+w>r.left){y=r.bottom+8;if(y+h>vh-8)y=r.top-h-8}
  y=Math.max(8,Math.min(y,vh-h-8));tip.classList.toggle("glide",tip.classList.contains("on"));tip.style.setProperty("--tx",x+"px");tip.style.setProperty("--ty",y+"px");tip.dataset.side=x<r.left?"l":"r"}
 let lastAct=null;
-function hideTip(){tipFor=null;tip.classList.remove("on","glide");if(lastAct){lastAct.classList.remove("act");lastAct=null}}
+function hideTip(){tipFor=null;tip.classList.remove("on","glide","in");if(lastAct){lastAct.classList.remove("act");lastAct=null}}
 let hovT=null,hovQ=false;
 document.addEventListener("mouseover",e=>{hovT=e.target.closest("[data-t]");if(!hovQ){hovQ=true;requestAnimationFrame(()=>{hovQ=false;if(hovT&&hovT!==tipFor)showTip(hovT);else if(!hovT&&tipFor)hideTip()})}},{passive:true});
 document.addEventListener("focusin",e=>{const n=e.target.closest("[data-t]");n?showTip(n):hideTip()});
@@ -439,11 +439,6 @@ document.addEventListener("keydown",e=>{if(location.hash.startsWith("#i")&&!/INP
  addEventListener("scroll",()=>b.classList.toggle("on",scrollY>600),{passive:true})}
 {const s=document.createElement("style");s.textContent=Object.entries(ROLE_C).map(([k,v])=>`.t.c${k}{--cat:${v}}`).join("");document.head.appendChild(s)}
 render();decorate();
-/* random light sweep across visible strong relics (Legendary, Mythic, Must-Have) */
-{const vis=new Set();const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?vis.add(e.target):vis.delete(e.target)));
- const watch=()=>document.querySelectorAll(".t.r4:not([data-sw]),.t.r5:not([data-sw]),.t.r6:not([data-sw])").forEach(t=>{t.dataset.sw=1;io.observe(t)});
- new MutationObserver(watch).observe(el("main"),{childList:true});watch();
- if(!RM)setInterval(()=>{if(document.hidden||!vis.size)return;const a=[...vis];for(let k=0;k<Math.min(3,a.length);k++){const t=a[Math.random()*a.length|0];if(!t.isConnected||t.classList.contains("sweep"))continue;t.classList.add("sweep");setTimeout(()=>t.classList.remove("sweep"),900)}},700)}
 /* recipe: hovering a slot or an ingredient line lights up every cell of that ingredient */
 document.addEventListener("mouseover",e=>{const k=e.target.closest(".mcwin [data-k]");document.querySelectorAll(".mcwin .on").forEach(x=>x.classList.remove("on"));if(!k)return;
  k.closest(".mcwin").querySelectorAll(`[data-k="${CSS.escape(k.dataset.k)}"]`).forEach(x=>x.classList.add("on"))},{passive:true});
