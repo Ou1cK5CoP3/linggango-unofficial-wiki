@@ -5172,7 +5172,10 @@ function statsOf(d){
 // the generic Curio slot takes any accessory; items tagged only "Curio" still fit nowhere else
 function bFits(d,k){return d.sl.includes(k)||(k==="Curio"&&d.sl.length>0)}
 function bAvail(d){return ORDER.indexOf(d.t)<=ORDER.indexOf(BS.p)}
-function bCaps(){const c={...SLOT_BASE};Object.values(BS.s).flat().forEach(id=>{const a=RL[id]?rlSlots(id):slotAdds(BYID[id]);for(const k in a)c[k]+=a[k]});return c}
+// a copy past the first adds its stats/slots only when the scan says the bonus is slot-tied
+function bStk(id){const k=SK.i[id];return !!k&&(k.s==="y"||k.w.includes("s"))}
+function bCounted(){const seen=new Set();return Object.values(BS.s).flat().filter(id=>seen.has(id)?bStk(id):seen.add(id))}
+function bCaps(){const c={...SLOT_BASE};bCounted().forEach(id=>{const a=RL[id]?rlSlots(id):slotAdds(BYID[id]);for(const k in a)c[k]+=a[k]});return c}
 function bParse(h){
  const [,p,c]=decodeURIComponent(h).split("/");BS={p:p!==undefined&&p!==""&&ACT[p]&&ORDER.includes(+p)?+p:ORDER[ORDER.length-1],s:{}};
  (c||"").split("|").filter(Boolean).forEach(part=>{const [k,ids]=part.split("=");if(k in SLOT_BASE)BS.s[k]=(ids||"").split(",").map(bLv).filter(i=>BYID[i]&&bFits(BYID[i],k))})}
@@ -5192,23 +5195,24 @@ function bPreset(role){
  bSave()}
 function bOpts(k,q){
  const eq=new Set(Object.values(BS.s).flat());q=(q||"").toLowerCase();
- return D.filter(d=>bFits(d,k)&&bAvail(d)&&!eq.has(d.id)&&(!q||d.n.toLowerCase().includes(q)||d.fx.toLowerCase().includes(q)||d.m.toLowerCase().includes(q)))
+ return D.filter(d=>bFits(d,k)&&bAvail(d)&&!(eq.has(d.id)&&SK.i[d.id]?.s==="u")&&(!q||d.n.toLowerCase().includes(q)||d.fx.toLowerCase().includes(q)||d.m.toLowerCase().includes(q)))
   .sort((a,b)=>(isMust(b)-isMust(a))||(b.r-a.r)||((+b.sc||0)-(+a.sc||0))).slice(0,150)}
+function bWorn(id){return Object.values(BS.s).flat().filter(x=>x===id).length}
 function bPickHtml(){
  if(!BPICK)return"";const xs=bOpts(BPICK,el("bq")?el("bq").value:"");
- return xs.map(d=>`<div class="bopt r${d.r}${BINSP===d.id?" sel":""}"><button class="bopi" data-insp="${esc(d.id)}" data-t="${d.ix}" title="Show recipe and details">${img(d.id)}<span><b>${esc(d.n)}</b><small>${esc(actL(d.t))} · ${isMust(d)?"★ Must-Have":RN[d.r]} · ${esc(d.m)}</small>${SK.i[d.id]?`<small>${skTag(d.id)}</small>`:""}<small class="bofx">${esc(d.fx)}</small></span></button><button class="chip" data-add="${esc(BPICK)}|${esc(d.id)}" aria-label="Add ${esc(d.n)}">Add</button></div>`).join("")||`<p class="note">Nothing for this slot on this path${el("bq")&&el("bq").value?" matches the search":""}.</p>`}
+ return xs.map(d=>`<div class="bopt r${d.r}${BINSP===d.id?" sel":""}"><button class="bopi" data-insp="${esc(d.id)}" data-t="${d.ix}" title="Show recipe and details">${img(d.id)}<span><b>${esc(d.n)}</b><small>${esc(actL(d.t))} · ${isMust(d)?"★ Must-Have":RN[d.r]} · ${esc(d.m)}${bWorn(d.id)?` · <b>worn ×${bWorn(d.id)}</b>`:""}</small>${SK.i[d.id]?`<small>${skTag(d.id)}</small>`:""}<small class="bofx">${esc(d.fx)}</small></span></button><button class="chip" data-add="${esc(BPICK)}|${esc(d.id)}" aria-label="Add ${esc(d.n)}">Add</button></div>`).join("")||`<p class="note">Nothing for this slot on this path${el("bq")&&el("bq").value?" matches the search":""}.</p>`}
 function bInspHtml(){
  const d=BINSP&&BYID[BINSP];if(!d)return"";const k0=Object.keys(BS.s).find(k=>BS.s[k].includes(d.id)),caps=bCaps();
- const adds=k0?"":Object.keys(SLOT_BASE).filter(k=>bFits(d,k)).map(k=>`<button class="chip" data-add="${esc(k)}|${esc(d.id)}"${(BS.s[k]||[]).length>=caps[k]?` title="${esc(k)} is full"`:""}>Add to ${esc(k)}</button>`).join("");
+ const adds=k0&&SK.i[d.id]?.s==="u"?"":Object.keys(SLOT_BASE).filter(k=>bFits(d,k)).map(k=>`<button class="chip" data-add="${esc(k)}|${esc(d.id)}"${(BS.s[k]||[]).length>=caps[k]?` title="${esc(k)} is full"`:""}>Add to ${esc(k)}</button>`).join("");
  const tree=rtreeHtml(d,true),how=d.gr?"":(d.src||[]).slice(0,3).map(s=>`<li>${fmt(s)}</li>`).join("");
  return `<div class="binsp"><div class="bph"><b class="bih">${img(d.id)}<span>${esc(d.n)}<small>${esc(d.sl.join(", "))} · ${esc(actL(d.t))} · ${esc(d.m)}</small></span></b><button class="ghost" data-insp="">Close</button></div>
 <p class="bifx">${fmt(d.fx)}</p>${SK.i[d.id]?`<p class="bisk">${skTag(d.id)} <a href="#i${d.ix}">why?</a></p>`:""}${d.gr?tipRecipe(d).replace(/,18px\)/,",30px)"):""}${tree?`<h3>Recipe tree</h3><ul class="rtree">${tree}</ul><p class="note">Click an ingredient to open its recipe here.</p>`:how?`<h3>How to get it</h3><ul class="bihow">${how}</ul>`:""}
-<p class="biact">${k0?`<button class="chip" data-rm="${esc(k0)}|${esc(d.id)}">Remove from ${esc(k0)}</button>`:bAvail(d)?adds:`<span class="note">Past your selected Path.</span>`} <a href="#i${d.ix}">Open full page →</a></p></div>`}
+<p class="biact">${k0?`<button class="chip" data-rm="${esc(k0)}|${esc(d.id)}">Remove from ${esc(k0)}</button>`:""}${bAvail(d)?adds:k0?"":`<span class="note">Past your selected Path.</span>`} <a href="#i${d.ix}">Open full page →</a></p></div>`}
 function buildPage(h){
  if(h!==undefined){bParse(h);BPICK=null;BINSP=null}
  document.title="Build planner · Linggango Relic Wiki";
- const caps=bCaps(),eq=Object.values(BS.s).flat(),tot={},lf=skLadder(eq);
- eq.forEach(id=>statsOf(BYID[id]).forEach(s=>tot[s.k]=Math.round(((tot[s.k]||0)+s.v*(lf[id]??1))*100)/100));
+ const caps=bCaps(),eq=Object.values(BS.s).flat(),tot={},lf=skLadder(eq),uq=[...new Set(eq)];
+ bCounted().forEach(id=>statsOf(BYID[id]).forEach(s=>tot[s.k]=Math.round(((tot[s.k]||0)+s.v*(lf[id]??1))*100)/100));
  const late=eq.filter(id=>!bAvail(BYID[id])).length;
  const row=k=>{const have=BS.s[k]||[],cap=caps[k],n=Math.max(cap,have.length);let b="";
   for(let i=0;i<n;i++){const id=have[i],xt=i>=SLOT_BASE[k]&&i<cap?" xtra":"";if(id){const d=BYID[id];b+=`<span class="bx on${xt}${bAvail(d)?"":" late"}${i>=cap?" over":""}${BINSP===id?" sel":""}"><button class="bxi" data-insp="${esc(id)}" data-t="${d.ix}" title="Show recipe and details">${img(id)}<span>${esc(d.n)}</span></button><button class="bxr" data-rm="${esc(k)}|${esc(id)}" aria-label="Remove ${esc(d.n)}" title="Remove">×</button></span>`}
@@ -5224,9 +5228,9 @@ ${late?`<p class="bwarn">${late} curio${late>1?"s are":" is"} past your selected
 <div class="bgrid"><div class="bslots">${Object.keys(SLOT_BASE).map(row).join("")}</div>
 <aside class="bside">${bInspHtml()}${BPICK?`<div class="bpick"><div class="bph"><b>Add to ${esc(BPICK)}</b><button class="ghost" id="bpx">Close</button></div><input id="bq" type="search" placeholder="Search name, effect or mod" autocomplete="off"><div id="bopts" class="bopts">${bPickHtml()}</div></div>`:""}
 <div class="bstats"><h2>Stat totals</h2>${stats.length?`<table>${stats.map(([k,v])=>`<tr><td>${esc(k.replace(/ %$/,""))}</td><td class="num ${v<0?"neg":""}">${v>0?"+":""}${v}${/ %$/.test(k)?"%":""}</td></tr>`).join("")}</table>`:`<p class="note">Add curios to see totals.</p>`}
-<p class="note">Only flat "+N Stat" lines are added up${Object.values(lf).some(v=>v<1)?", and ladder-reduced curios count at their reduced share":""}. Effects, conditions and multipliers are listed below instead.</p></div>
-${eq.some(id=>RL[id])?`<div class="bfx brl"><h2>Relic levels</h2>${eq.filter(id=>RL[id]).map(id=>rlPanel(id,true)).join("")}<p class="note">Slots a relic adds count its lowest roll.</p></div>`:""}
-${eq.length?`<div class="bfx"><h2>Effects</h2><ul>${eq.map(id=>{const d=BYID[id];const k=Object.keys(BS.s).find(k=>BS.s[k].includes(id)),nx=(evo().to[id]||[]).filter(t=>bFits(BYID[t],k));return `<li><a href="#i${d.ix}" data-t="${d.ix}">${esc(d.n)}</a>: ${esc(d.fx)}${lf[id]<1?` <span class="sk sk-${lf[id]?"l":"n"}" title="Outranked by a better ${esc(SK.i[id].l[0])} curio in this build">${esc(SK.i[id].l[0])} ladder: ${lf[id]?pct(lf[id])+" strength":"switched off"}</span>`:""}${nx.map(t=>` <button class="chip" data-evo="${esc(k)}|${esc(id)}|${esc(t)}">Evolve → ${esc(BYID[t].n)}</button>`).join("")}</li>`}).join("")}</ul></div>`:""}</aside></div>`;
+<p class="note">Only flat "+N Stat" lines are added up, and a second copy counts only if its bonus stacks${Object.values(lf).some(v=>v<1)?", and ladder-reduced curios count at their reduced share":""}. Effects, conditions and multipliers are listed below instead.</p></div>
+${eq.some(id=>RL[id])?`<div class="bfx brl"><h2>Relic levels</h2>${uq.filter(id=>RL[id]).map(id=>rlPanel(id,true)).join("")}<p class="note">Slots a relic adds count its lowest roll.</p></div>`:""}
+${eq.length?`<div class="bfx"><h2>Effects</h2><ul>${uq.map(id=>{const d=BYID[id],n=bWorn(id);const k=Object.keys(BS.s).find(k=>BS.s[k].includes(id)),nx=(evo().to[id]||[]).filter(t=>bFits(BYID[t],k));return `<li><a href="#i${d.ix}" data-t="${d.ix}">${esc(d.n)}</a>${n>1?` ×${n}${SK.i[id]?" "+skTag(id):""}`:""}: ${esc(d.fx)}${lf[id]<1?` <span class="sk sk-${lf[id]?"l":"n"}" title="Outranked by a better ${esc(SK.i[id].l[0])} curio in this build">${esc(SK.i[id].l[0])} ladder: ${lf[id]?pct(lf[id])+" strength":"switched off"}</span>`:""}${nx.map(t=>` <button class="chip" data-evo="${esc(k)}|${esc(id)}|${esc(t)}">Evolve → ${esc(BYID[t].n)}</button>`).join("")}</li>`}).join("")}</ul></div>`:""}</aside></div>`;
  el("bp").onchange=e=>{BS.p=+e.target.value;bSave()};
  el("bclr").onclick=()=>{BS.s={};BPICK=null;bSave()};
  el("bcopy").onclick=()=>{const u=location.href;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>{el("bcopy").textContent="Link copied"},()=>prompt("Copy this link:",u))};
@@ -5234,9 +5238,9 @@ ${eq.length?`<div class="bfx"><h2>Effects</h2><ul>${eq.map(id=>{const d=BYID[id]
  el("main").querySelector(".bgrid").onclick=e=>{
   const p=e.target.closest("[data-pick]"),rm=e.target.closest("[data-rm]"),ad=e.target.closest("[data-add]"),ev=e.target.closest("[data-evo]"),ins=e.target.closest("[data-insp]");
   if(ins){BINSP=ins.dataset.insp||null;hideTip();buildPage();const b=el("main").querySelector(".binsp");if(b&&innerWidth<=760)b.scrollIntoView({block:"start"})}
-  else if(ev){const [k,id,to]=ev.dataset.evo.split("|");BS.s[k]=BS.s[k].map(x=>x===id?to:x);hideTip();bSave()}
+  else if(ev){const [k,id,to]=ev.dataset.evo.split("|");BS.s[k][BS.s[k].indexOf(id)]=to;hideTip();bSave()}
   else if(p){BPICK=p.dataset.pick;buildPage()}
-  else if(rm){const [k,id]=rm.dataset.rm.split("|");BS.s[k]=(BS.s[k]||[]).filter(x=>x!==id);hideTip();bSave()}
+  else if(rm){const [k,id]=rm.dataset.rm.split("|");const a=BS.s[k]||[],i=a.lastIndexOf(id);if(i>=0)a.splice(i,1);hideTip();bSave()}
   else if(ad){const [k,id]=ad.dataset.add.split("|");(BS.s[k]=BS.s[k]||[]).push(id);if((BS.s[k].length>=bCaps()[k]))BPICK=null;hideTip();bSave()}};
  el("main").querySelector(".bpre").onclick=e=>{const b=e.target.closest("[data-preset]");if(b){BPICK=null;bPreset(b.dataset.preset)}};
 }

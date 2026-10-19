@@ -138,6 +138,7 @@ Code lives in `src/features.js` and `src/features.css`. `build.py` puts `feature
 - UI:
   - The item page has a "Wearing two" section (verdict, reasons, and the ladder list) and a "Duplicates" row.
   - Tooltips and Builder picker rows show the tag. The inspect panel shows the tag with a "why?" link.
+  - The Builder picker hides an equipped curio only when it is one per player. A second copy adds stats and slots only if `bStk` (verdict `y`, or slot-tied `s`) holds. Copies of a relic share one level/stars state. × and Evolve act on one copy.
   - Builder Effects shows each ladder curio's share (`skLadder`, a port of `AccessoryStacking.factorFor`). Stat totals scale ladder-reduced curios by that share.
 - Confirmed by hand: Daemonium Sewing Kit (fixed UUID, so it doesn't stack despite reports), Crowbar (`isEquipped`), Cosmic Anklet (fixed UUIDs), Summonity Copper Battery (slot UUID), the Relics belts (slot UUID passed into lambdas), Enchanter's Pearl (`super.canEquip` refuses a copy), and Odd Accessories `CurioBaseItem.canEquip`.
 - Not done: Artifacts' ability system (its attribute abilities use fixed IDs in `onEquip`, but item-to-ability mapping isn't read), and an in-game `/attribute` check of a few "doesn't stack" verdicts.
