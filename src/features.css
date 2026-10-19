@@ -128,3 +128,8 @@
 .binsp .trc.out{width:40px;height:40px}.binsp .trc.out img{width:34px;height:34px}
 .binsp .trc.out b{position:absolute;right:2px;bottom:0;color:#fff;text-shadow:1px 1px 0 #3f3f3f}
 .binsp .tra{font-style:normal;color:var(--mute);font-size:18px}.binsp .trs{flex-basis:100%;font-size:11.5px;color:var(--mute)}
+.sk{display:inline-block;font:700 10.5px var(--body);letter-spacing:.02em;padding:1px 6px;border-radius:3px;border:1px solid;white-space:nowrap;margin-right:4px}
+.sk-y{color:#8fd16a;border-color:#8fd16a}.sk-p{color:#d9c25c;border-color:#d9c25c}.sk-n{color:#c9a0a0;border-color:#7a5a5a}.sk-u{color:#b9a3ff;border-color:#7a68c9}.sk-l{color:#e9c25c;border-color:#a3843a}
+.sklad{margin:6px 0;padding-left:22px;display:grid;gap:3px;font-size:13px}.sklad li img{width:18px;height:18px;image-rendering:pixelated;vertical-align:-4px;margin-right:6px}
+.sklad li.me{font-weight:700}.sklad small{color:var(--mute)}
+#tip .tsk{margin:2px 0}.bisk{margin:0;font-size:12px}

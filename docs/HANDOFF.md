@@ -124,6 +124,24 @@ Code lives in `src/features.js` and `src/features.css`. `build.py` puts `feature
   - Adding is now a separate "Add" button on each picker row, and removing is a × on each filled slot.
   - `rtreeHtml(d,insp)` is shared with the item page's Recipe tree section.
 
+## Duplicate stacking (19 Oct 2026)
+- `tools/stacking.py` writes `src/data/SK.json` (`{"f":[2nd,3rd factor],"i":{id:{s,w,l}}}`). It parses the class files of every mod jar directly (no javap), maps each registry name to its item class and field, and reads the evidence:
+  - **Modifiers** (`new AttributeModifier`, Curios `addSlotModifier`) in the item class and its parents. A per-slot UUID (the `getAttributeModifiers` parameter, followed into lambdas and helpers it is handed to) means the bonus stacks. A fixed UUID means a second copy replaces the first. A parent's modifiers count only if the item overrides the data hooks the parent reads; otherwise every relic would inherit a "stacks" from Relics' empty base builder.
+  - **Lookups** near an item reference: `isEquipped`, `findFirstCurio` and the mods' own `hasCurio`-style helpers are on/off. A count or `findCurios().size()` used as a number counts copies; compared with 0, it is on/off. Loops over `findCurios` count as neither.
+  - **`canEquip`** (following `super.canEquip` and its lambdas) that looks up `this`, `stack.getItem()`, or a predicate on it means the curio refuses a second copy. All of Confluence, Odd Accessories and Unique Accessories, most of L2 Hostility, and much of Enigmatic Legacy do this.
+  - Curios adds every worn curio's fortune and looting levels together, so overriding `getFortuneLevel` or `getLootingLevel` counts as stacking.
+- Verdicts: `y` stacks, `p` partly (some bonuses stack, some effects are on/off), `n` doesn't stack, `u` one per player. `w` lists the evidence codes `u s c f o`. 979 of 1327 are tagged. 348 have no evidence either way, mostly MCreator Terramity procedures, Somake Spells, Artifacts abilities, Goety, Covenant, Iron's and Blood Magic, and they show no tag.
+- Ladder (`l: [group, place, exclusive]`): linggango_tweaks `AccessoryStacking` puts 43 Terramity, Confluence and Brutality curios into Power, Edge, Guard, Might, Precision and Fury sets.
+  - Only the best worn curio in a set works in full. The second keeps `second_factor` (0.5), the third `third_factor` (0.25), and the rest switch off. These values come from `config/linggango_tweaks-common.toml`.
+  - "Exclusive" entries switch off whenever anything outranks them.
+  - Only strictly higher ranks outrank, so a duplicate of the same curio doesn't. Places are numbered among wiki items. Forbidden Chalice, Putrid Scent and Recon Scope aren't in the wiki.
+- UI:
+  - The item page has a "Wearing two" section (verdict, reasons, and the ladder list) and a "Duplicates" row.
+  - Tooltips and Builder picker rows show the tag. The inspect panel shows the tag with a "why?" link.
+  - Builder Effects shows each ladder curio's share (`skLadder`, a port of `AccessoryStacking.factorFor`). Stat totals scale ladder-reduced curios by that share.
+- Confirmed by hand: Daemonium Sewing Kit (fixed UUID, so it doesn't stack despite reports), Crowbar (`isEquipped`), Cosmic Anklet (fixed UUIDs), Summonity Copper Battery (slot UUID), the Relics belts (slot UUID passed into lambdas), Enchanter's Pearl (`super.canEquip` refuses a copy), and Odd Accessories `CurioBaseItem.canEquip`.
+- Not done: Artifacts' ability system (its attribute abilities use fixed IDs in `onEquip`, but item-to-ability mapping isn't read), and an in-game `/attribute` check of a few "doesn't stack" verdicts.
+
 ## Verified
 - All three scripts parse, and there are no console errors on the hub, path, item, mods and slot pages.
 - Automated overlap and overflow audit at 1024 px and 375 px: no overlaps, no horizontal page scroll. The hub path strip scrolls sideways by design.

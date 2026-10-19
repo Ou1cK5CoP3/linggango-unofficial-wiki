@@ -46,19 +46,19 @@ function bOpts(k,q){
   .sort((a,b)=>(isMust(b)-isMust(a))||(b.r-a.r)||((+b.sc||0)-(+a.sc||0))).slice(0,150)}
 function bPickHtml(){
  if(!BPICK)return"";const xs=bOpts(BPICK,el("bq")?el("bq").value:"");
- return xs.map(d=>`<div class="bopt r${d.r}${BINSP===d.id?" sel":""}"><button class="bopi" data-insp="${esc(d.id)}" data-t="${d.ix}" title="Show recipe and details">${img(d.id)}<span><b>${esc(d.n)}</b><small>${esc(actL(d.t))} · ${isMust(d)?"★ Must-Have":RN[d.r]} · ${esc(d.m)}</small><small class="bofx">${esc(d.fx)}</small></span></button><button class="chip" data-add="${esc(BPICK)}|${esc(d.id)}" aria-label="Add ${esc(d.n)}">Add</button></div>`).join("")||`<p class="note">Nothing for this slot on this path${el("bq")&&el("bq").value?" matches the search":""}.</p>`}
+ return xs.map(d=>`<div class="bopt r${d.r}${BINSP===d.id?" sel":""}"><button class="bopi" data-insp="${esc(d.id)}" data-t="${d.ix}" title="Show recipe and details">${img(d.id)}<span><b>${esc(d.n)}</b><small>${esc(actL(d.t))} · ${isMust(d)?"★ Must-Have":RN[d.r]} · ${esc(d.m)}</small>${SK.i[d.id]?`<small>${skTag(d.id)}</small>`:""}<small class="bofx">${esc(d.fx)}</small></span></button><button class="chip" data-add="${esc(BPICK)}|${esc(d.id)}" aria-label="Add ${esc(d.n)}">Add</button></div>`).join("")||`<p class="note">Nothing for this slot on this path${el("bq")&&el("bq").value?" matches the search":""}.</p>`}
 function bInspHtml(){
  const d=BINSP&&BYID[BINSP];if(!d)return"";const k0=Object.keys(BS.s).find(k=>BS.s[k].includes(d.id)),caps=bCaps();
  const adds=k0?"":Object.keys(SLOT_BASE).filter(k=>bFits(d,k)).map(k=>`<button class="chip" data-add="${esc(k)}|${esc(d.id)}"${(BS.s[k]||[]).length>=caps[k]?` title="${esc(k)} is full"`:""}>Add to ${esc(k)}</button>`).join("");
  const tree=rtreeHtml(d,true),how=d.gr?"":(d.src||[]).slice(0,3).map(s=>`<li>${fmt(s)}</li>`).join("");
  return `<div class="binsp"><div class="bph"><b class="bih">${img(d.id)}<span>${esc(d.n)}<small>${esc(d.sl.join(", "))} · ${esc(actL(d.t))} · ${esc(d.m)}</small></span></b><button class="ghost" data-insp="">Close</button></div>
-<p class="bifx">${fmt(d.fx)}</p>${d.gr?tipRecipe(d).replace(/,18px\)/,",30px)"):""}${tree?`<h3>Recipe tree</h3><ul class="rtree">${tree}</ul><p class="note">Click an ingredient to open its recipe here.</p>`:how?`<h3>How to get it</h3><ul class="bihow">${how}</ul>`:""}
+<p class="bifx">${fmt(d.fx)}</p>${SK.i[d.id]?`<p class="bisk">${skTag(d.id)} <a href="#i${d.ix}">why?</a></p>`:""}${d.gr?tipRecipe(d).replace(/,18px\)/,",30px)"):""}${tree?`<h3>Recipe tree</h3><ul class="rtree">${tree}</ul><p class="note">Click an ingredient to open its recipe here.</p>`:how?`<h3>How to get it</h3><ul class="bihow">${how}</ul>`:""}
 <p class="biact">${k0?`<button class="chip" data-rm="${esc(k0)}|${esc(d.id)}">Remove from ${esc(k0)}</button>`:bAvail(d)?adds:`<span class="note">Past your selected Path.</span>`} <a href="#i${d.ix}">Open full page →</a></p></div>`}
 function buildPage(h){
  if(h!==undefined){bParse(h);BPICK=null;BINSP=null}
  document.title="Build planner · Linggango Relic Wiki";
- const caps=bCaps(),eq=Object.values(BS.s).flat(),tot={};
- eq.forEach(id=>statsOf(BYID[id]).forEach(s=>tot[s.k]=Math.round(((tot[s.k]||0)+s.v)*100)/100));
+ const caps=bCaps(),eq=Object.values(BS.s).flat(),tot={},lf=skLadder(eq);
+ eq.forEach(id=>statsOf(BYID[id]).forEach(s=>tot[s.k]=Math.round(((tot[s.k]||0)+s.v*(lf[id]??1))*100)/100));
  const late=eq.filter(id=>!bAvail(BYID[id])).length;
  const row=k=>{const have=BS.s[k]||[],cap=caps[k],n=Math.max(cap,have.length);let b="";
   for(let i=0;i<n;i++){const id=have[i];if(id){const d=BYID[id];b+=`<span class="bx on${bAvail(d)?"":" late"}${i>=cap?" over":""}${BINSP===id?" sel":""}"><button class="bxi" data-insp="${esc(id)}" data-t="${d.ix}" title="Show recipe and details">${img(id)}<span>${esc(d.n)}</span></button><button class="bxr" data-rm="${esc(k)}|${esc(id)}" aria-label="Remove ${esc(d.n)}" title="Remove">×</button></span>`}
@@ -74,9 +74,9 @@ ${late?`<p class="bwarn">${late} curio${late>1?"s are":" is"} past your selected
 <div class="bgrid"><div class="bslots">${Object.keys(SLOT_BASE).map(row).join("")}</div>
 <aside class="bside">${bInspHtml()}${BPICK?`<div class="bpick"><div class="bph"><b>Add to ${esc(BPICK)}</b><button class="ghost" id="bpx">Close</button></div><input id="bq" type="search" placeholder="Search name, effect or mod" autocomplete="off"><div id="bopts" class="bopts">${bPickHtml()}</div></div>`:""}
 <div class="bstats"><h2>Stat totals</h2>${stats.length?`<table>${stats.map(([k,v])=>`<tr><td>${esc(k.replace(/ %$/,""))}</td><td class="num ${v<0?"neg":""}">${v>0?"+":""}${v}${/ %$/.test(k)?"%":""}</td></tr>`).join("")}</table>`:`<p class="note">Add curios to see totals.</p>`}
-<p class="note">Only flat "+N Stat" lines are added up. Effects, conditions and multipliers are listed below instead.</p></div>
+<p class="note">Only flat "+N Stat" lines are added up${Object.values(lf).some(v=>v<1)?", and ladder-reduced curios count at their reduced share":""}. Effects, conditions and multipliers are listed below instead.</p></div>
 ${eq.some(id=>RL[id])?`<div class="bfx brl"><h2>Relic levels</h2>${eq.filter(id=>RL[id]).map(id=>rlPanel(id,true)).join("")}<p class="note">Slots a relic adds count its lowest roll.</p></div>`:""}
-${eq.length?`<div class="bfx"><h2>Effects</h2><ul>${eq.map(id=>{const d=BYID[id];const k=Object.keys(BS.s).find(k=>BS.s[k].includes(id)),nx=(evo().to[id]||[]).filter(t=>bFits(BYID[t],k));return `<li><a href="#i${d.ix}" data-t="${d.ix}">${esc(d.n)}</a>: ${esc(d.fx)}${nx.map(t=>` <button class="chip" data-evo="${esc(k)}|${esc(id)}|${esc(t)}">Evolve → ${esc(BYID[t].n)}</button>`).join("")}</li>`}).join("")}</ul></div>`:""}</aside></div>`;
+${eq.length?`<div class="bfx"><h2>Effects</h2><ul>${eq.map(id=>{const d=BYID[id];const k=Object.keys(BS.s).find(k=>BS.s[k].includes(id)),nx=(evo().to[id]||[]).filter(t=>bFits(BYID[t],k));return `<li><a href="#i${d.ix}" data-t="${d.ix}">${esc(d.n)}</a>: ${esc(d.fx)}${lf[id]<1?` <span class="sk sk-${lf[id]?"l":"n"}" title="Outranked by a better ${esc(SK.i[id].l[0])} curio in this build">${esc(SK.i[id].l[0])} ladder: ${lf[id]?pct(lf[id])+" strength":"switched off"}</span>`:""}${nx.map(t=>` <button class="chip" data-evo="${esc(k)}|${esc(id)}|${esc(t)}">Evolve → ${esc(BYID[t].n)}</button>`).join("")}</li>`}).join("")}</ul></div>`:""}</aside></div>`;
  el("bp").onchange=e=>{BS.p=+e.target.value;bSave()};
  el("bclr").onclick=()=>{BS.s={};BPICK=null;bSave()};
  el("bcopy").onclick=()=>{const u=location.href;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>{el("bcopy").textContent="Link copied"},()=>prompt("Copy this link:",u))};
@@ -201,6 +201,25 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-rlx]");if(
 // slots a levelled relic adds: the mod applies Math.round to the value; chosen roll, else the lowest (e.g. Leather Belt "Charms")
 function rlSlots(id){const r=RL[id],s=rlState(id),o={};
  let n=0;r.ab.forEach((x,i)=>{const o0=n;n+=x.st.length;if(x.rq<=s.l)x.st.forEach((t,j)=>{const k=/slots?/i.test(t.f)&&Object.keys(SLOT_BASE).find(k=>k.toLowerCase()===t.n.toLowerCase().replace(/s$/,""));if(k)o[k]=(o[k]||0)+jround(s.q[o0+j]>=0?rlVal(t,rlBQ(t,s.q[o0+j]),s.a[i]):Math.min(rlVal(t,t.lo,s.a[i]),rlVal(t,t.hi,s.a[i])))})});return o}
+
+/* ---------- duplicates: what a second copy does, read from the mods' bytecode (tools/stacking.py) ---------- */
+const SKL={y:"Stacks",p:"Partly stacks",n:"Doesn't stack",u:"One per player"};
+const SKW={u:"The game won't let you equip a second copy.",s:"Its stat bonus is tied to the slot it sits in, so each copy adds it again.",c:"Its effect counts how many copies you wear.",
+ f:"Its stat bonus uses one fixed ID, so a second copy just replaces the first.",o:"Its effect only checks whether one is worn."};
+const pct=v=>Math.round(v*100)+"%";
+function skTag(id){const k=SK.i[id];return k?(k.s?`<span class="sk sk-${k.s}">${SKL[k.s]}</span>`:"")+(k.l?`<span class="sk sk-l">${esc(k.l[0])} ladder #${k.l[1]}</span>`:""):""}
+function skLadderText(l){return `${esc(l[0])} set, place ${l[1]}. Linggango lets only the best ${esc(l[0])} curio you wear work in full; the next best keeps ${pct(SK.f[0])} of its effect (upsides and costs alike), the third ${pct(SK.f[1])}, and any more switch off.${l[2]?` This one switches off completely as soon as a better ${esc(l[0])} curio is worn.`:""} A copy of the same curio doesn't outrank it.`}
+function skSec(d){const k=SK.i[d.id];if(!k)return"";
+ const lad=k.l?D.filter(x=>SK.i[x.id]&&SK.i[x.id].l&&SK.i[x.id].l[0]===k.l[0]).sort((a,b)=>SK.i[a.id].l[1]-SK.i[b.id].l[1]):[];
+ return `${k.s?`<p><b class="sk sk-${k.s}">${SKL[k.s]}</b> ${[...k.w].map(c=>SKW[c]).join(" ")}</p>`:""}${k.l?`<p><b class="sk sk-l">${esc(k.l[0])} ladder</b> ${skLadderText(k.l)}</p>
+ <ol class="sklad">${lad.map(x=>`<li${x===d?' class="me"':""}>${img(x.id)}<a href="#i${x.ix}" data-t="${x.ix}">${esc(x.n)}</a>${SK.i[x.id].l[2]?' <small>switches off when outranked</small>':""}</li>`).join("")}</ol>`:""}
+ <p class="note">Read from the mods' code by a script: it looks at how each curio's bonuses are keyed and how its effects check what you wear. Effects coded in unusual ways can be missed.</p>`}
+// linggango_tweaks AccessoryStacking.factorFor: share of its effect each worn ladder curio keeps
+function skLadder(ids){const out={};
+ ids.forEach(id=>{const l=SK.i[id]&&SK.i[id].l;if(!l)return;let n=0;
+  ids.map(j=>SK.i[j]&&SK.i[j].l).filter(m=>m&&m[0]===l[0]&&m[1]<l[1]).sort((a,b)=>a[1]-b[1]).forEach(m=>{if(!(m[2]&&n))n++});
+  out[id]=!n?1:l[2]?0:n===1?SK.f[0]:n===2?SK.f[1]:0});
+ return out}
 
 /* ---------- evolutions: More Relics "evolves from", Somake Spells spellbook tiers ---------- */
 var EVO=null;
