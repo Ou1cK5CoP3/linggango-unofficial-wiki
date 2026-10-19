@@ -1166,6 +1166,7 @@ body:not(.hub) #main{background:var(--bg)}
 .bph{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .bpick input{width:100%;box-sizing:border-box;margin-bottom:8px}
 .bopts{display:flex;flex-direction:column;gap:4px;max-height:340px;overflow:auto}
+.bside>*{flex:none}.bside>.bpick{flex:1 1 auto;min-height:260px;display:flex;flex-direction:column}.bside .bopts{flex:1 1 auto;min-height:0;max-height:none}
 .bopt{display:flex;gap:8px;align-items:center;padding:4px 6px;border:1px solid transparent;border-radius:6px}
 .bopt:hover,.bopt.sel{border-color:var(--accent);background:var(--tile)}
 .bopi{display:flex;flex:1;gap:8px;align-items:center;min-width:0;padding:2px 0;border:0;background:none;color:var(--fg);cursor:pointer;font:13px var(--body);text-align:left}
@@ -1181,7 +1182,7 @@ body:not(.hub) #main{background:var(--bg)}
 .bstats td.neg{color:#e0565b}
 .bfx ul{margin:0;padding-left:16px;font-size:12px;line-height:1.5;color:var(--mute)}
 .bfx a{font-weight:600}
-@media (max-width:860px){.bgrid{grid-template-columns:1fr}.bside{position:static;max-height:none}.bact{margin-left:0}}
+@media (max-width:860px){.bgrid{grid-template-columns:1fr}.bside{position:static;max-height:none}.bside .bopts{max-height:340px}.bact{margin-left:0}}
 @media (max-width:520px){.bslot{grid-template-columns:1fr;gap:4px}.bsh{padding-top:0}.bx.on{max-width:100%}}
 /* ===== bosses ===== */
 .blist{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-top:14px}
