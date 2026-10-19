@@ -110,7 +110,7 @@ Code lives in `src/features.js` and `src/features.css`. `build.py` puts `feature
   - Moving the level slider keeps your spend and trims it if it no longer fits (`rlFit`).
   - Item pages get a "Relic levels" panel with the slider and per-ability −/+ steppers.
   - The Path filter bar has a global relic-level slider (`st.rl`, saved). Tooltips assume no spend: each ability shows its base value → the most that level could buy for that ability alone.
-  - The Builder shows a panel for each equipped relic. Share links encode the level as `id~level~a.b.c`, and invalid spends are trimmed.
+  - The Builder shows a panel for each equipped relic copy, labelled #1, #2… when doubled. Each copy keeps its own state under `id`, `id#2`, … (`bKeys`, in slot order). Share links encode the level as `id~level~a.b.c`, and invalid spends are trimmed.
   - Slots a relic adds count its lowest roll.
 - **Evolutions:** built from src lines "evolves from X" plus the Somake Spells I/II/III names, giving 12 chains (e.g. Converging Orb → Wonder of U; Slumbering → Whispering Amulet → Made in Heaven). They appear in tooltips, as an "Evolution" section on item pages and as an "Evolve →" button in the Builder.
 - **Note:** Wonder of U maxes at relic level 13, not 15.
