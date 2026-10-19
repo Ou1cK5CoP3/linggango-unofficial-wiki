@@ -84,6 +84,28 @@ Code lives in `src/features.js` and `src/features.css`. `build.py` puts `feature
   - On phones the header nav wraps to two rows. It used to push the page 29 px wider than the screen.
 - **Still slow:** going back to The Path takes a few hundred ms, from rendering 1,327 tiles plus the boss emblem snapshots. This was already the case before.
 
+## Relic levels and evolutions (19 Oct 2026)
+- **Scope:** only Relics and More Relics items level up (49 curios). No other mod in the pack has per-item progression.
+- **Data:** `python -I tools/relic_levels.py [instance]` writes `src/data/RL.json`. It reads:
+  - `config/relics/relics/*.yaml` and `config/morerelics/relics/*.yaml` from the instance;
+  - the `en_us.json` lang files inside both jars, for ability and stat names and formats.
+  - Rerun it after a pack update, then rebuild.
+- **Formulas** (from the Relics mod; x = rolled base, y = `upgradeModifier`, z = ability level):
+  - ADD: x + y·z
+  - MULTIPLY_BASE: x + x·y·z
+  - MULTIPLY_TOTAL: x·(y+1)^z
+- **Leveling assumptions:**
+  - Each relic level gives 1 point. An ability unlocks at `requiredLevel` and costs `requiredPoints` per level.
+  - Auto-spend spreads points round-robin, lowest ability level first.
+- **Display factor:** some stats show ×100 as percents. The factor is matched against the wiki's own text. 12 of 145 stats didn't match and fall back to a rule ("%%" in the format and a value under 10 → ×100). Most of those are pack values that differ from the old wiki; for example, the pack's Wonder of U cooldown is 12→8 s, while the wiki says 16→12 s. The tool prints the list.
+- **UI:**
+  - Item pages get a "Relic levels" panel with a level slider, per-ability −/+ steppers and Auto-spend.
+  - The Path filter bar has a global relic-level slider (`st.rl`, saved); tooltips show stats at that level.
+  - The Builder shows a panel for each equipped relic. Share links encode the level as `id~level~a.b.c`.
+  - Slots a relic adds (e.g. Leather Belt charms) count its lowest roll.
+- **Evolutions:** built from src lines "evolves from X" plus the Somake Spells I/II/III names, giving 12 chains (e.g. Converging Orb → Wonder of U; Slumbering → Whispering Amulet → Made in Heaven). They appear in tooltips, as an "Evolution" section on item pages and as an "Evolve →" button in the Builder.
+- **Note:** Wonder of U maxes at relic level 13, not 15.
+
 ## Verified
 - All three scripts parse, and there are no console errors on the hub, path, item, mods and slot pages.
 - Automated overlap and overflow audit at 1024 px and 375 px: no overlaps, no horizontal page scroll. The hub path strip scrolls sideways by design.

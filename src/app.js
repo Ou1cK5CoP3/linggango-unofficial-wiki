@@ -93,7 +93,7 @@ const BIGSLOTS=SLOTS.filter(s=>s[1].length>=7);
 const MODS=(()=>{const c={};D.forEach(d=>(c[d.m]=c[d.m]||[]).push(d));return Object.entries(c).sort((a,b)=>a[0].localeCompare(b[0]))})();
 
 /* ---------- filter state ---------- */
-const st={c:[],g:[],r:[],x:[],m:"",s:"",a:"",q:"",nw:false,sort:"a",dir:1,cl:[]};
+const st={c:[],g:[],r:[],x:[],m:"",s:"",a:"",q:"",nw:false,sort:"a",dir:1,cl:[],rl:0};
 try{const o=JSON.parse(localStorage.getItem("lgw2")||"{}");for(const k in st)if(k in o)st[k]=o[k]}catch(e){}
 st.c=st.c.filter(k=>k in ROLE);
 const save=()=>{try{localStorage.setItem("lgw2",JSON.stringify(st))}catch(e){}};
@@ -259,9 +259,11 @@ function page(d){
  const must=isMust(d)?`<div class="mh-banner"><span class="mhs">★</span><div><b>Must-Have</b><p>${!/etching|charm_of_looting/.test(d.id)?"It adds curio slots, so you can wear more curios at once: every other relic on this wiki gets better with it. Get it as early as you can.":/etching/.test(d.id)?"An Etching turns one of your Catastrophe Scroll curses into a blessing and is an ingredient for most Celestial Artifacts relics.":"A Looting Charm unlocks L2 Hostility trait drops; without the right tier worn, trait mobs drop nothing extra."} Get it as soon as ${esc(actL(d.t))} opens and keep it in every build. Base power rating: <b>${RN[d.br]}</b>.</p></div></div>`:"";
  const scarce=d.sca?`<div class="mh-banner sca"><span class="mhs">⛏</span><div><b>Scarce Path 0 material</b><p>Daemonium and Iridium need a high-tier pickaxe to mine, but Terramity structures can drop them in chests. That makes this craftable early with luck, so it is rated one rarity higher than other Path 0 curios.</p></div></div>`:"";
  secs.push(["get",loot?"Where it drops":"How to get it",`${must}${scarce}<ol class="how">${d.src.map(x=>`<li>${fmt(x)}</li>`).join("")}</ol>${d.why.length?`<div class="whyb"><b>Why it sits on ${esc(actL(d.t))}</b><ul>${d.why.map(w=>`<li>${fmt(w)}</li>`).join("")}</ul></div>`:""}${lock}${rqLock}<p class="note">${d.a===-1?"Drops by L2 Hostility mob level, not tied to a boss milestone.":d.a!==d.t?`Earliest with luck: ${actL(d.a)}. Realistic: ${actL(d.t)} (${ACT[d.t][1]}).`:`Available from ${actL(d.t)} (${ACT[d.t][1]}).`}</p>`]);
+ {const ev=evoSec(d);if(ev)secs.push(["evo","Evolution",ev])}
  const rel=d.tg.map((t,j)=>[t,d.st[j],d.sr&&d.sr[j]]),relic=rel.filter(r=>r[0]==="relic"),other=rel.filter(r=>r[0]!=="relic");
  let sh="";
- if(relic.length)sh+=`<div class="tw"><table><thead><tr><th>Stat</th><th>On pickup (random)</th><th>Max upgrade</th></tr></thead><tbody>${relic.map(r=>relicRows(r[1])).join("")}</tbody></table></div>`;
+ if(RL[d.id])secs.push(["levels","Relic levels",rlPanel(d.id)]);
+ if(relic.length&&!RL[d.id])sh+=`<div class="tw"><table><thead><tr><th>Stat</th><th>On pickup (random)</th><th>Max upgrade</th></tr></thead><tbody>${relic.map(r=>relicRows(r[1])).join("")}</tbody></table></div>`;
  if(other.length)sh+=`<div class="tw" style="margin-top:8px">${(()=>{const one=new Set(other.map(o=>o[0])).size===1,HD=/^(passive effect|active ability|when worn|when equipped|set bonus|abilities?)\s*:?$/i;const tg=(t,raw)=>`<span class="tg${t==="pack"?" pack":""}" title="${esc(TAGT[t]||"")}${raw?" · raw: "+esc(raw):""}">${TAGN[t]||t}</span>`;return `<table class="stt"><thead><tr><th>Effect</th>${one?"":"<th>Source</th>"}</tr></thead><tbody>${other.map(([t,s,raw])=>HD.test(String(s).trim())?`<tr class="sth"><td colspan="2">${fmt(s)}</td></tr>`:`<tr><td>${fmt(s)}</td>${one?"":`<td>${tg(t,raw)}</td>`}</tr>`).join("")}</tbody></table>${one?`<p class="stsrc">Source: ${tg(other[0][0],"")}</p>`:""}`})()}</div>`;
  if(sh)secs.push(["stats","Stats",sh]);
  if(d.gr){const g=d.gr,grid=g.l===0&&!/shapeless/i.test(g.st),stn=g.st.replace(/\s*\(shapeless\)/i,"");
@@ -423,7 +425,7 @@ function showTip(n){const d=D[+n.dataset.t];if(!d)return;tipFor=n;const F=mf(d.m
  const stats=d.st.map((x,j)=>[d.tg[j],x]).filter(([t,x])=>t!=="relic"&&x.length<110&&!/^(When worn|Passive Effect|Hold Shift)/i.test(x)).slice(0,5);
  let c=TIPC.get(d.ix);if(!c){const w=document.createElement("div");w.innerHTML=`<div class="tbox"><div class="tfr"></div>
  <div class="thd"><span class="tslot">${slotImg(d)}</span><div class="tht"><div class="tnm" style="color:${nc}"${d.ig&&d.ig[1]==="rainbow"?' data-rb="1"':""}>${isMust(d)?"★ ":""}${esc(d.n)}</div><div class="tsub">${esc(d.sl.join(", "))} · ${d.g==="Loot"?"Loot":"Craft"}</div></div></div>
- <div class="tbd"><p class="tfx">${fmt(d.fx)}</p>${stats.length?`<ul class="tst">${stats.map(([t,x])=>`<li>${fmt(x)}</li>`).join("")}</ul>`:""}${d.gk?`<p class="tlock">🔒 Locked until ${GK[d.gk]} falls</p>`:""}${d.rq?`<p class="tlock trq">🔒 ${img(RQRING[d.rq])} Requires the ${rqName(d)}</p>`:""}${isMust(d)?`<p class="tmust">★ Must-Have: get it as soon as ${esc(actL(d.t))} opens.</p>`:""}
+ <div class="tbd"><p class="tfx">${fmt(d.fx)}</p>${RL[d.id]?rlTip(d):""}${evo().from[d.id]?`<p class="tevo">⟲ Evolves from ${esc(BYID[evo().from[d.id]].n)}</p>`:""}${(evo().to[d.id]||[]).map(t=>`<p class="tevo">⟳ Evolves into ${esc(BYID[t].n)}</p>`).join("")}${stats.length?`<ul class="tst">${stats.map(([t,x])=>`<li>${fmt(x)}</li>`).join("")}</ul>`:""}${d.gk?`<p class="tlock">🔒 Locked until ${GK[d.gk]} falls</p>`:""}${d.rq?`<p class="tlock trq">🔒 ${img(RQRING[d.rq])} Requires the ${rqName(d)}</p>`:""}${isMust(d)?`<p class="tmust">★ Must-Have: get it as soon as ${esc(actL(d.t))} opens.</p>`:""}
  ${d.gr?tipRecipe(d):""}${(x=>x.length?`<p class="tsrc">${fmt(x.join(" "))}</p>`:"")((d.gr?d.src.filter(x=>!RCV.test(x)):d.src).slice(0,2))}<p class="twhere">${esc(actL(d.t))}${d.a!==d.t?` · with luck from ${esc(actL(d.a))}`:""}</p></div>
  <div class="tft"><span class="tmod">${esc(d.m)}</span><span class="trt">${igName(d)} · ${RN[d.r]}</span></div></div>`;c=w.firstElementChild;TIPC.set(d.ix,c)}tip.replaceChildren(c);
  if(lastAct)lastAct.classList.remove("act");lastAct=n.classList.contains("t")?n:null;if(lastAct)lastAct.classList.add("act");

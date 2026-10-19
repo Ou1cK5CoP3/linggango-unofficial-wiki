@@ -21,11 +21,14 @@ function statsOf(d){
   out.push({k:k+(m[3]?" %":""),v})}
  return d._stp=out}
 function bAvail(d){return ORDER.indexOf(d.t)<=ORDER.indexOf(BS.p)}
-function bCaps(){const c={...SLOT_BASE};Object.values(BS.s).flat().forEach(id=>{const a=slotAdds(BYID[id]);for(const k in a)c[k]+=a[k]});return c}
+function bCaps(){const c={...SLOT_BASE};Object.values(BS.s).flat().forEach(id=>{const a=RL[id]?rlSlots(id):slotAdds(BYID[id]);for(const k in a)c[k]+=a[k]});return c}
 function bParse(h){
  const [,p,c]=decodeURIComponent(h).split("/");BS={p:p!==undefined&&p!==""&&ACT[p]&&ORDER.includes(+p)?+p:ORDER[ORDER.length-1],s:{}};
- (c||"").split("|").filter(Boolean).forEach(part=>{const [k,ids]=part.split("=");if(k in SLOT_BASE)BS.s[k]=(ids||"").split(",").filter(i=>BYID[i]&&BYID[i].sl.includes(k))})}
-function bHash(){return "#build/"+BS.p+"/"+Object.entries(BS.s).filter(([,v])=>v.length).map(([k,v])=>k+"="+v.join(",")).join("|")}
+ (c||"").split("|").filter(Boolean).forEach(part=>{const [k,ids]=part.split("=");if(k in SLOT_BASE)BS.s[k]=(ids||"").split(",").map(bLv).filter(i=>BYID[i]&&BYID[i].sl.includes(k))})}
+// "id~level~a.b.c": a relic's level and ability points; invalid spends fall back to Auto-spend
+function bLv(x){const [id,l,a]=x.split("~"),r=RL[id];if(r&&l!==undefined){const lv=Math.max(0,Math.min(r.mx,+l||0)),s={l:lv,a:(a||"").split(".").map(Number)};
+ if(s.a.length!==r.ab.length||s.a.some((v,i)=>!(v>=0&&v<=r.ab[i].mx)||(v&&r.ab[i].rq>lv))||rlFree(r,s)<0)s.a=rlAuto(r,lv);RLV[id]=s}return id}
+function bHash(){return "#build/"+BS.p+"/"+Object.entries(BS.s).filter(([,v])=>v.length).map(([k,v])=>k+"="+v.map(id=>RL[id]?`${id}~${rlState(id).l}~${rlState(id).a.join(".")}`:id).join(",")).join("|")}
 function bSave(){history.replaceState(null,"",bHash());buildPage()}
 function bPreset(role){
  BS.s={};const pool=D.filter(d=>bAvail(d)&&!d.inv);
@@ -65,15 +68,17 @@ ${late?`<p class="bwarn">${late} curio${late>1?"s are":" is"} past your selected
 <div class="bgrid"><div class="bslots">${SLOT_MAIN.map(row).join("")}<details class="bmore"${extra.some(k=>(BS.s[k]||[]).length)||extra.includes(BPICK)?" open":""}><summary>More slots (spellbook, scroll, talent…)</summary>${extra.map(row).join("")}</details></div>
 <aside class="bside">${BPICK?`<div class="bpick"><div class="bph"><b>Add to ${esc(BPICK)}</b><button class="ghost" id="bpx">Close</button></div><input id="bq" type="search" placeholder="Search name, effect or mod" autocomplete="off"><div id="bopts" class="bopts">${bPickHtml()}</div></div>`:""}
 <div class="bstats"><h2>Stat totals</h2>${stats.length?`<table>${stats.map(([k,v])=>`<tr><td>${esc(k.replace(/ %$/,""))}</td><td class="num ${v<0?"neg":""}">${v>0?"+":""}${v}${/ %$/.test(k)?"%":""}</td></tr>`).join("")}</table>`:`<p class="note">Add curios to see totals.</p>`}
-<p class="note">Only flat "+N Stat" lines are added up. Effects, conditions, relic levels and multipliers are listed below instead.</p></div>
-${eq.length?`<div class="bfx"><h2>Effects</h2><ul>${eq.map(id=>{const d=BYID[id];return `<li><a href="#i${d.ix}" data-t="${d.ix}">${esc(d.n)}</a>: ${esc(d.fx)}</li>`}).join("")}</ul></div>`:""}</aside></div>`;
+<p class="note">Only flat "+N Stat" lines are added up. Effects, conditions and multipliers are listed below instead.</p></div>
+${eq.some(id=>RL[id])?`<div class="bfx brl"><h2>Relic levels</h2>${eq.filter(id=>RL[id]).map(id=>rlPanel(id,true)).join("")}<p class="note">Slots a relic adds count its lowest roll.</p></div>`:""}
+${eq.length?`<div class="bfx"><h2>Effects</h2><ul>${eq.map(id=>{const d=BYID[id];const k=Object.keys(BS.s).find(k=>BS.s[k].includes(id)),nx=(evo().to[id]||[]).filter(t=>BYID[t].sl.includes(k));return `<li><a href="#i${d.ix}" data-t="${d.ix}">${esc(d.n)}</a>: ${esc(d.fx)}${nx.map(t=>` <button class="chip" data-evo="${esc(k)}|${esc(id)}|${esc(t)}">Evolve → ${esc(BYID[t].n)}</button>`).join("")}</li>`}).join("")}</ul></div>`:""}</aside></div>`;
  el("bp").onchange=e=>{BS.p=+e.target.value;bSave()};
  el("bclr").onclick=()=>{BS.s={};BPICK=null;bSave()};
  el("bcopy").onclick=()=>{const u=location.href;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>{el("bcopy").textContent="Link copied"},()=>prompt("Copy this link:",u))};
  if(el("bq")){el("bq").oninput=()=>{el("bopts").innerHTML=bPickHtml()};el("bpx").onclick=()=>{BPICK=null;buildPage()};el("bq").focus({preventScroll:true})}
  el("main").querySelector(".bgrid").onclick=e=>{
-  const p=e.target.closest("[data-pick]"),rm=e.target.closest("[data-rm]"),ad=e.target.closest("[data-add]");
-  if(p){BPICK=p.dataset.pick;buildPage()}
+  const p=e.target.closest("[data-pick]"),rm=e.target.closest("[data-rm]"),ad=e.target.closest("[data-add]"),ev=e.target.closest("[data-evo]");
+  if(ev){const [k,id,to]=ev.dataset.evo.split("|");BS.s[k]=BS.s[k].map(x=>x===id?to:x);hideTip();bSave()}
+  else if(p){BPICK=p.dataset.pick;buildPage()}
   else if(rm){const [k,id]=rm.dataset.rm.split("|");BS.s[k]=(BS.s[k]||[]).filter(x=>x!==id);hideTip();bSave()}
   else if(ad){const [k,id]=ad.dataset.add.split("|");(BS.s[k]=BS.s[k]||[]).push(id);if((BS.s[k].length>=bCaps()[k]))BPICK=null;hideTip();bSave()}};
  el("main").querySelector(".bpre").onclick=e=>{const b=e.target.closest("[data-preset]");if(b){BPICK=null;bPreset(b.dataset.preset)}};
@@ -127,6 +132,46 @@ function recipeTree(d){
   return `<li><span class="rn">${img(id)}${n>1?`<i>${n}×</i>`:""}${x?`<a href="#i${x.ix}" data-t="${x.ix}">${esc(x.n)}</a><small>${esc(actL(x.t))}</small>`:`<span>${esc(nmI(id.replace(/^#/,"")))}</span>`}</span>${sub.length?`<ul>${sub.map(([i,c])=>node(i,c,depth+1)).join("")}</ul>`:""}</li>`};
  host.insertAdjacentHTML("afterend",`<section class="s ip-sec" id="s-tree"><h2>Recipe tree</h2><ul class="rtree">${node(d.id,1,0)}</ul><p class="note">Curio ingredients open into their own recipes. Counts are per craft.</p></section>`)}
 
+/* ---------- relic levels: per-level stats from the pack's Relics configs (RL, tools/relic_levels.py) ---------- */
+var RLV={},RLMAX=Math.max(...Object.values(RL).map(r=>r.mx));
+// 1 point per relic level, spent round-robin on unlocked abilities (lowest level first)
+function rlAuto(r,l){const a=r.ab.map(()=>0);let p=0;
+ for(let lv=1;lv<=l;lv++){p++;for(;;){let b=-1;r.ab.forEach((x,i)=>{if(x.rq<=lv&&a[i]<x.mx&&x.pt<=p&&(b<0||a[i]<a[b]))b=i});if(b<0)break;p-=r.ab[b].pt;a[b]++}}
+ return a}
+function rlState(id){const r=RL[id];if(!RLV[id]){const l=Math.min(st.rl,r.mx);RLV[id]={l,a:rlAuto(r,l)}}return RLV[id]}
+function rlFree(r,s){return s.l-r.ab.reduce((n,x,i)=>n+s.a[i]*x.pt,0)}
+function rlRaw(t,z){const f=v=>(t.op==="A"?v+t.m*z:t.op==="MB"?v+v*t.m*z:v*Math.pow(t.m+1,z))*t.x;return [f(t.lo),f(t.hi)].sort((p,q)=>p-q)}
+function rlStat(t,z){const a=rlRaw(t,z).map(v=>String(+v.toFixed(Math.abs(v)<1?3:2)));
+ return t.f.replace("%1$s",a[0]===a[1]?a[0]:a[0]+" ~ "+a[1]).replace(/%%/g,"%").replace(/\.$/,"")}
+function rlXp(r,l){let t=0;for(let i=0;i<l;i++)t+=r.xp[0]+r.xp[1]*i;return t}
+function rlTip(d){const r=RL[d.id],l=Math.min(st.rl,r.mx),a=rlAuto(r,l);
+ return `<div class="trl"><b>Relic level ${l} / ${r.mx}</b>${r.ab.map((x,i)=>x.rq>l?`<p class="trlk">🔒 ${esc(x.n)}: unlocks at level ${x.rq}</p>`:`<p><b>${esc(x.n)}</b> <small>${a[i]}/${x.mx}</small>${x.st.map(t=>` · ${esc(t.n)} ${esc(rlStat(t,a[i]))}`).join("")}</p>`).join("")}</div>`}
+function rlBody(id,compact){const r=RL[id],s=rlState(id),free=rlFree(r,s);
+ return `<p class="rls"><b>Level ${s.l} / ${r.mx}</b> · <span class="${free?"rlf":""}">${free} point${free===1?"":"s"} free</span> <button class="ghost" data-rlx="auto">Auto-spend</button></p>
+ ${r.ab.map((x,i)=>{const lock=x.rq>s.l;return `<div class="rla${lock?" lk":""}"><div class="rlah"><b>${esc(x.n)}</b>${lock?`<span>🔒 unlocks at relic level ${x.rq}</span>`:`<span>level ${s.a[i]} / ${x.mx}${x.pt>1?` · ${x.pt} points each`:""}</span><button class="chip" data-rlx="-${i}"${s.a[i]?"":" disabled"} aria-label="Lower ${esc(x.n)}">−</button><button class="chip" data-rlx="+${i}"${s.a[i]<x.mx&&free>=x.pt?"":" disabled"} aria-label="Raise ${esc(x.n)}">+</button>`}</div>${x.st.length?`<ul>${x.st.map(t=>`<li>${esc(t.n)}: <b>${esc(rlStat(t,lock?0:s.a[i]))}</b></li>`).join("")}</ul>`:""}</div>`}).join("")}
+ ${compact?"":`<p class="note">Each relic level gives 1 point to spend on abilities; Auto-spend spreads them evenly. Numbers come from this pack's own config: a new relic rolls a random base inside the range, and ability upgrades scale it. Reaching level ${s.l} takes ${rlXp(r,s.l).toLocaleString()} relic XP.</p>`}`}
+function rlPanel(id,compact){const r=RL[id],s=rlState(id);
+ return `<div class="rlp${compact?" sm":""}" data-rl="${esc(id)}"><label class="rlh">${compact?esc(BYID[id].n):"Relic level"} <input type="range" min="0" max="${r.mx}" value="${s.l}" data-rlv aria-label="Relic level"></label><div class="rlb">${rlBody(id,compact)}</div></div>`}
+function rlDraw(p){p.querySelector(".rlb").innerHTML=rlBody(p.dataset.rl,p.classList.contains("sm"))}
+document.addEventListener("input",e=>{const v=e.target.closest("[data-rlv]");if(!v)return;const p=v.closest("[data-rl]"),r=RL[p.dataset.rl];RLV[p.dataset.rl]={l:+v.value,a:rlAuto(r,+v.value)};rlDraw(p)});
+document.addEventListener("change",e=>{if(e.target.closest("[data-rlv]")&&location.hash.startsWith("#build"))bSave()});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-rlx]");if(!b)return;const p=b.closest("[data-rl]"),id=p.dataset.rl,r=RL[id],s=rlState(id),x=b.dataset.rlx;
+ if(x==="auto")s.a=rlAuto(r,s.l);else s.a[+x.slice(1)]+=x[0]==="+"?1:-1;
+ location.hash.startsWith("#build")?bSave():rlDraw(p)});
+// slots a levelled relic adds, at the lowest roll (e.g. Leather Belt "Charms")
+function rlSlots(id){const r=RL[id],s=rlState(id),o={};
+ r.ab.forEach((x,i)=>{if(x.rq<=s.l)x.st.forEach(t=>{const k=/slots?/i.test(t.f)&&Object.keys(SLOT_BASE).find(k=>k.toLowerCase()===t.n.toLowerCase().replace(/s$/,""));if(k)o[k]=(o[k]||0)+Math.floor(rlRaw(t,s.a[i])[0])})});return o}
+
+/* ---------- evolutions: More Relics "evolves from", Somake Spells spellbook tiers ---------- */
+var EVO=null;
+function evo(){if(EVO)return EVO;EVO={from:{},to:{}};const byN={};D.forEach(d=>byN[d.n.toLowerCase()]=d);
+ D.forEach(d=>{let p=null;for(const s of d.src){const m=s.match(/evolves from ([^.]+)\./i);if(m)p=byN[m[1].trim().toLowerCase()]}
+  if(!p&&d.m==="Somake Spells"){const m=d.n.match(/^(.*) (II|III)$/);if(m)p=byN[(m[2]==="II"?m[1]:m[1]+" II").toLowerCase()]}
+  if(p&&p!==d){EVO.from[d.id]=p.id;(EVO.to[p.id]=EVO.to[p.id]||[]).push(d.id)}});return EVO}
+function evoChain(id){const E=evo();let r=id;while(E.from[r])r=E.from[r];const out=[];const walk=x=>{out.push(x);(E.to[x]||[]).forEach(walk)};walk(r);return out}
+function evoSec(d){const c=evoChain(d.id);if(c.length<2)return "";
+ return `<ol class="evo">${c.map((id,i)=>{const x=BYID[id];return `${i?`<li class="evh">↓ <span>${fmt(x.src[0]||"")}</span></li>`:""}<li class="evs${id===d.id?" cur":""}">${img(id)}${id===d.id?`<b>${esc(x.n)}</b>`:`<a href="#i${x.ix}" data-t="${x.ix}">${esc(x.n)}</a>`}<small>${esc(actL(x.t))}</small></li>`}).join("")}</ol>`}
+
 /* ---------- field search: free words plus mod:x slot:y stat:z … ---------- */
 var SOFT=false,IDXSIG="",FQT=0,FQS=null,FHINT=false,FKEY="mod",QP={raw:null};
 var QK={mod:"m",slot:"s",stat:"st",stats:"st",effect:"fx",fx:"fx",source:"src",src:"src",drop:"src",path:"p",rarity:"r",role:"ro",type:"g",tag:"x",name:"n"};
@@ -167,8 +212,10 @@ function fbar(n,total){
  return `<div class="fbar" role="search"><div class="fbr"><input id="fq" type="search" autocomplete="off" spellcheck="false" placeholder="Search, or filter: mod:terramity slot:ring stat:damage" aria-label="Search and filter curios" value="${esc(st.q)}"><span class="fn">${n===total?`${total} curios`:`${n} of ${total}`}</span></div>
 <div class="fbr fadd"><select id="fk" aria-label="Filter field">${QFIELDS.map(([k,t])=>`<option value="${k}"${k===FKEY?" selected":""}>${t}</option>`).join("")}</select><input id="fv" list="fvl" autocomplete="off" placeholder="Value" aria-label="Filter value"><datalist id="fvl"></datalist><button class="chip" id="fgo">Add filter</button><button class="ghost" id="fhelp" aria-expanded="${FHINT}">How it works</button></div>
 <p class="fhint" id="fhint"${FHINT?"":" hidden"}>Words search names, effects, stats and sources. Add <b>field:value</b> to narrow it down, e.g. <code>mod:terramity slot:ring stat:damage</code>. The same field twice means either one (<code>slot:ring slot:charm</code>); different fields must all match. Put <b>-</b> in front to exclude (<code>-mod:brutality</code>) and quotes around spaces (<code>stat:"attack speed"</code>). Fields: mod, slot, stat, effect, source, path, rarity, role, type, tag, name. Sidebar filters stack with these.</p>
+<div class="fbr frl"><label for="frl">Relic level in tooltips</label><input id="frl" type="range" min="0" max="${RLMAX}" value="${Math.min(st.rl,RLMAX)}"><b id="frlv">${st.rl>=RLMAX?"Max":st.rl}</b><span class="fn">${Object.keys(RL).length} Relics and More Relics curios; each stops at its own max</span></div>
 ${activeBar()}</div>`}
 function fbind(){const q=el("fq");if(!q)return;
+ const rl=el("frl");rl.oninput=()=>{st.rl=+rl.value;el("frlv").textContent=st.rl>=RLMAX?"Max":st.rl;TIPC.clear();save()};
  q.oninput=()=>{clearTimeout(FQT);FQT=setTimeout(()=>{st.q=q.value.trim();el("q").value=st.q;FQS=[q.selectionStart,q.selectionEnd];refresh()},220)};
  const k=el("fk"),v=el("fv"),sug=()=>{el("fvl").innerHTML=fSug(k.value).map(x=>`<option value="${esc(x)}">`).join("")};
  k.onchange=()=>{FKEY=k.value;sug();v.focus()};sug();

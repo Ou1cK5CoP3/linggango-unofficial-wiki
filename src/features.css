@@ -74,3 +74,30 @@
 @media (max-width:520px){.fadd #fv{max-width:none}.fadd select{flex:1 1 120px}}
 .idx li{content-visibility:auto;contain-intrinsic-size:auto 30px}
 @media (max-width:640px){.top .nav{flex-wrap:wrap;gap:6px 14px;min-width:0}.top .nav a{white-space:nowrap}}
+/* ===== relic levels + evolutions ===== */
+.rlp{display:grid;gap:8px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+.rlp.sm{padding:8px 0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:none}
+.rlh{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font:600 13px var(--body)}
+.rlh input{flex:1 1 180px;min-width:120px;accent-color:var(--accent)}
+.rlb{display:grid;gap:8px}
+.rls{margin:0;font-size:13px}.rls .rlf{color:#e0a83a;font-weight:700}
+.rla{padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--tile)}
+.rla.lk{opacity:.6}
+.rlah{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:13px}
+.rlah span{color:var(--mute);margin-right:auto}
+.rlah .chip{min-width:30px;padding:2px 8px}
+.rla ul{margin:6px 0 0;padding-left:18px;font-size:12.5px;line-height:1.5}
+.rlp.sm .rla{padding:6px 8px}
+.fbar .frl{gap:10px}.fbar .frl label{font:600 12px var(--body);color:var(--mute)}
+.fbar #frl{flex:0 1 220px;accent-color:var(--accent)}.fbar #frlv{min-width:30px;font-size:13px}
+#tip .trl{display:grid;gap:2px;font-size:12px;color:#c9c2d6}
+#tip .trl>b{color:#EDDE76;font-weight:600}
+#tip .trl p b{color:#E8E8E8}#tip .trl small{color:#AAAAAA}
+#tip .trlk{color:#8a8396}
+#tip .tevo{color:#7fd6c8;font-size:12px}
+.evo{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.evs{display:flex;gap:10px;align-items:center;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+.evs.cur{border-color:var(--accent)}
+.evs img{width:32px;height:32px;image-rendering:pixelated}
+.evs small{margin-left:auto;color:var(--mute)}
+.evh{padding:0 0 0 22px;color:var(--mute);font-size:12.5px}
