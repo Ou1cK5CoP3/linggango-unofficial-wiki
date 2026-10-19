@@ -3,7 +3,7 @@
 // Player curio slots: merged curios/slots data from the base pack jars (Scroll, Spellstone, Focus are registered in code: assumed 1)
 var SLOT_BASE={Head:1,Necklace:2,Back:1,Body:1,Belt:1,Hands:2,Ring:2,Bracelet:2,Glove:2,Anklet:2,Feet:2,Charm:6,Accessory:6,Heart:1,Spellbook:1,Scroll:1,Spellstone:1,Talent:2,Focus:1,"Hostility Curse":1,Curio:1,Elytra:1,"Binding Key":1,Magnetizer:1,Bundle:1};
 var STAT_ALIAS={"Knockback Res":"Knockback Resistance","Knockback resistance":"Knockback Resistance","Increased reach":"Reach","Increased block reach":"Block Reach","Step Height Addition":"Step Height"};
-var BS={p:12,s:{}},BPICK=null;
+var BS={p:12,s:{}},BPICK=null,BINSP=null;
 
 function slotAdds(d){
  if(d._sa)return d._sa;const o={};
@@ -46,26 +46,33 @@ function bOpts(k,q){
   .sort((a,b)=>(isMust(b)-isMust(a))||(b.r-a.r)||((+b.sc||0)-(+a.sc||0))).slice(0,150)}
 function bPickHtml(){
  if(!BPICK)return"";const xs=bOpts(BPICK,el("bq")?el("bq").value:"");
- return xs.map(d=>`<button class="bopt r${d.r}" data-add="${esc(BPICK)}|${esc(d.id)}" data-t="${d.ix}">${img(d.id)}<span><b>${esc(d.n)}</b><small>${esc(actL(d.t))} · ${isMust(d)?"★ Must-Have":RN[d.r]} · ${esc(d.m)}</small></span></button>`).join("")||`<p class="note">Nothing for this slot on this path${el("bq")&&el("bq").value?" matches the search":""}.</p>`}
+ return xs.map(d=>`<div class="bopt r${d.r}${BINSP===d.id?" sel":""}"><button class="bopi" data-insp="${esc(d.id)}" data-t="${d.ix}" title="Show recipe and details">${img(d.id)}<span><b>${esc(d.n)}</b><small>${esc(actL(d.t))} · ${isMust(d)?"★ Must-Have":RN[d.r]} · ${esc(d.m)}</small><small class="bofx">${esc(d.fx)}</small></span></button><button class="chip" data-add="${esc(BPICK)}|${esc(d.id)}" aria-label="Add ${esc(d.n)}">Add</button></div>`).join("")||`<p class="note">Nothing for this slot on this path${el("bq")&&el("bq").value?" matches the search":""}.</p>`}
+function bInspHtml(){
+ const d=BINSP&&BYID[BINSP];if(!d)return"";const k0=Object.keys(BS.s).find(k=>BS.s[k].includes(d.id)),caps=bCaps();
+ const adds=k0?"":Object.keys(SLOT_BASE).filter(k=>bFits(d,k)).map(k=>`<button class="chip" data-add="${esc(k)}|${esc(d.id)}"${(BS.s[k]||[]).length>=caps[k]?` title="${esc(k)} is full"`:""}>Add to ${esc(k)}</button>`).join("");
+ const tree=rtreeHtml(d,true),how=d.gr?"":(d.src||[]).slice(0,3).map(s=>`<li>${fmt(s)}</li>`).join("");
+ return `<div class="binsp"><div class="bph"><b class="bih">${img(d.id)}<span>${esc(d.n)}<small>${esc(d.sl.join(", "))} · ${esc(actL(d.t))} · ${esc(d.m)}</small></span></b><button class="ghost" data-insp="">Close</button></div>
+<p class="bifx">${fmt(d.fx)}</p>${d.gr?tipRecipe(d).replace(/,18px\)/,",30px)"):""}${tree?`<h3>Recipe tree</h3><ul class="rtree">${tree}</ul><p class="note">Click an ingredient to open its recipe here.</p>`:how?`<h3>How to get it</h3><ul class="bihow">${how}</ul>`:""}
+<p class="biact">${k0?`<button class="chip" data-rm="${esc(k0)}|${esc(d.id)}">Remove from ${esc(k0)}</button>`:bAvail(d)?adds:`<span class="note">Past your selected Path.</span>`} <a href="#i${d.ix}">Open full page →</a></p></div>`}
 function buildPage(h){
- if(h!==undefined){bParse(h);BPICK=null}
+ if(h!==undefined){bParse(h);BPICK=null;BINSP=null}
  document.title="Build planner · Linggango Relic Wiki";
  const caps=bCaps(),eq=Object.values(BS.s).flat(),tot={};
  eq.forEach(id=>statsOf(BYID[id]).forEach(s=>tot[s.k]=Math.round(((tot[s.k]||0)+s.v)*100)/100));
  const late=eq.filter(id=>!bAvail(BYID[id])).length;
  const row=k=>{const have=BS.s[k]||[],cap=caps[k],n=Math.max(cap,have.length);let b="";
-  for(let i=0;i<n;i++){const id=have[i];if(id){const d=BYID[id];b+=`<button class="bx on${bAvail(d)?"":" late"}${i>=cap?" over":""}" data-rm="${esc(k)}|${esc(id)}" data-t="${d.ix}" title="Remove">${img(id)}<span>${esc(d.n)}</span></button>`}
+  for(let i=0;i<n;i++){const id=have[i];if(id){const d=BYID[id];b+=`<span class="bx on${bAvail(d)?"":" late"}${i>=cap?" over":""}${BINSP===id?" sel":""}"><button class="bxi" data-insp="${esc(id)}" data-t="${d.ix}" title="Show recipe and details">${img(id)}<span>${esc(d.n)}</span></button><button class="bxr" data-rm="${esc(k)}|${esc(id)}" aria-label="Remove ${esc(d.n)}" title="Remove">×</button></span>`}
    else b+=`<button class="bx${BPICK===k?" sel":""}" data-pick="${esc(k)}" aria-label="Add ${esc(k)} curio">+</button>`}
   return `<div class="bslot"><div class="bsh"><b>${esc(k)}</b><span class="${have.length>cap?"bad":""}">${have.length}/${cap}</span>${caps[k]>SLOT_BASE[k]?`<em>+${caps[k]-SLOT_BASE[k]}</em>`:""}</div><div class="bsb">${b}</div></div>`};
  const stats=Object.entries(tot).filter(([,v])=>v).sort((a,b)=>a[0].localeCompare(b[0]));
  el("main").innerHTML=`${crumb("Build planner")}<h1>Build planner</h1>
-<p class="lede">Pick the furthest Path you've reached, then fill your curio slots. Slot counts are the base pack's player slots; curios that add slots raise them, and the Curio slot takes any accessory. Click a filled slot to remove it, and hover any curio for its tooltip.</p>
+<p class="lede">Pick the furthest Path you've reached, then fill your curio slots. Slot counts are the base pack's player slots; curios that add slots raise them, and the Curio slot takes any accessory. Hover any curio for its tooltip; click it to see its recipe tree, and use × to take it off.</p>
 <div class="bbar"><label>Progress <select id="bp">${ORDER.map(a=>`<option value="${a}"${a===BS.p?" selected":""}>${esc(actL(a))}${a?" · "+esc(ACT[a][1]):""}</option>`).join("")}</select></label>
 <span class="bpre">Starter build: ${Object.entries(ROLE).map(([k,v])=>`<button class="chip" data-preset="${k}">${v}</button>`).join("")}</span>
 <span class="bact"><button class="chip" id="bcopy">Copy link</button><button class="chip" id="bclr">Clear</button></span></div>
 ${late?`<p class="bwarn">${late} curio${late>1?"s are":" is"} past your selected Path (marked red).</p>`:""}
 <div class="bgrid"><div class="bslots">${Object.keys(SLOT_BASE).map(row).join("")}</div>
-<aside class="bside">${BPICK?`<div class="bpick"><div class="bph"><b>Add to ${esc(BPICK)}</b><button class="ghost" id="bpx">Close</button></div><input id="bq" type="search" placeholder="Search name, effect or mod" autocomplete="off"><div id="bopts" class="bopts">${bPickHtml()}</div></div>`:""}
+<aside class="bside">${bInspHtml()}${BPICK?`<div class="bpick"><div class="bph"><b>Add to ${esc(BPICK)}</b><button class="ghost" id="bpx">Close</button></div><input id="bq" type="search" placeholder="Search name, effect or mod" autocomplete="off"><div id="bopts" class="bopts">${bPickHtml()}</div></div>`:""}
 <div class="bstats"><h2>Stat totals</h2>${stats.length?`<table>${stats.map(([k,v])=>`<tr><td>${esc(k.replace(/ %$/,""))}</td><td class="num ${v<0?"neg":""}">${v>0?"+":""}${v}${/ %$/.test(k)?"%":""}</td></tr>`).join("")}</table>`:`<p class="note">Add curios to see totals.</p>`}
 <p class="note">Only flat "+N Stat" lines are added up. Effects, conditions and multipliers are listed below instead.</p></div>
 ${eq.some(id=>RL[id])?`<div class="bfx brl"><h2>Relic levels</h2>${eq.filter(id=>RL[id]).map(id=>rlPanel(id,true)).join("")}<p class="note">Slots a relic adds count its lowest roll.</p></div>`:""}
@@ -75,8 +82,9 @@ ${eq.length?`<div class="bfx"><h2>Effects</h2><ul>${eq.map(id=>{const d=BYID[id]
  el("bcopy").onclick=()=>{const u=location.href;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>{el("bcopy").textContent="Link copied"},()=>prompt("Copy this link:",u))};
  if(el("bq")){el("bq").oninput=()=>{el("bopts").innerHTML=bPickHtml()};el("bpx").onclick=()=>{BPICK=null;buildPage()};el("bq").focus({preventScroll:true})}
  el("main").querySelector(".bgrid").onclick=e=>{
-  const p=e.target.closest("[data-pick]"),rm=e.target.closest("[data-rm]"),ad=e.target.closest("[data-add]"),ev=e.target.closest("[data-evo]");
-  if(ev){const [k,id,to]=ev.dataset.evo.split("|");BS.s[k]=BS.s[k].map(x=>x===id?to:x);hideTip();bSave()}
+  const p=e.target.closest("[data-pick]"),rm=e.target.closest("[data-rm]"),ad=e.target.closest("[data-add]"),ev=e.target.closest("[data-evo]"),ins=e.target.closest("[data-insp]");
+  if(ins){BINSP=ins.dataset.insp||null;hideTip();buildPage();const b=el("main").querySelector(".binsp");if(b&&innerWidth<=760)b.scrollIntoView({block:"start"})}
+  else if(ev){const [k,id,to]=ev.dataset.evo.split("|");BS.s[k]=BS.s[k].map(x=>x===id?to:x);hideTip();bSave()}
   else if(p){BPICK=p.dataset.pick;buildPage()}
   else if(rm){const [k,id]=rm.dataset.rm.split("|");BS.s[k]=(BS.s[k]||[]).filter(x=>x!==id);hideTip();bSave()}
   else if(ad){const [k,id]=ad.dataset.add.split("|");(BS.s[k]=BS.s[k]||[]).push(id);if((BS.s[k].length>=bCaps()[k]))BPICK=null;hideTip();bSave()}};
@@ -122,14 +130,17 @@ function mechPage(){
  const w=document.createTreeWalker(m,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode()))if(/\bActs?\b/.test(n.nodeValue))n.nodeValue=pathText(n.nodeValue);
 }
 
-function recipeTree(d){
- const host=el("s-recipe");if(!host||!d.gr)return;
- const ingr=x=>{const c={};x.gr.c.forEach(e=>{if(e&&e[0])c[e[0]]=(c[e[0]]||0)+1});return Object.entries(c)};
- if(!ingr(d).some(([i])=>BYID[i]&&BYID[i].gr))return;
+const rIngr=x=>{const c={};x.gr.c.forEach(e=>{if(e&&e[0])c[e[0]]=(c[e[0]]||0)+1});return Object.entries(c)};
+// "" unless some ingredient has its own recipe
+function rtreeHtml(d,insp){
+ if(!d.gr||!rIngr(d).some(([i])=>BYID[i]&&BYID[i].gr))return"";
  const seen=new Set();
- const node=(id,n,depth)=>{const x=BYID[id],sub=x&&x.gr&&depth<6&&!seen.has(id)?(seen.add(id),ingr(x)):[];
-  return `<li><span class="rn">${img(id)}${n>1?`<i>${n}×</i>`:""}${x?`<a href="#i${x.ix}" data-t="${x.ix}">${esc(x.n)}</a><small>${esc(actL(x.t))}</small>`:`<span>${esc(nmI(id.replace(/^#/,"")))}</span>`}</span>${sub.length?`<ul>${sub.map(([i,c])=>node(i,c,depth+1)).join("")}</ul>`:""}</li>`};
- host.insertAdjacentHTML("afterend",`<section class="s ip-sec" id="s-tree"><h2>Recipe tree</h2><ul class="rtree">${node(d.id,1,0)}</ul><p class="note">Curio ingredients open into their own recipes. Counts are per craft.</p></section>`)}
+ const node=(id,n,depth)=>{const x=BYID[id],sub=x&&x.gr&&depth<6&&!seen.has(id)?(seen.add(id),rIngr(x)):[];
+  return `<li><span class="rn">${img(id)}${n>1?`<i>${n}×</i>`:""}${x?(insp?`<button class="lnk" data-insp="${esc(x.id)}" data-t="${x.ix}">${esc(x.n)}</button>`:`<a href="#i${x.ix}" data-t="${x.ix}">${esc(x.n)}</a>`)+`<small>${esc(actL(x.t))}</small>`:`<span>${esc(nmI(id.replace(/^#/,"")))}</span>`}</span>${sub.length?`<ul>${sub.map(([i,c])=>node(i,c,depth+1)).join("")}</ul>`:""}</li>`};
+ return node(d.id,1,0)}
+function recipeTree(d){
+ const host=el("s-recipe"),tr=host&&rtreeHtml(d);if(!tr)return;
+ host.insertAdjacentHTML("afterend",`<section class="s ip-sec" id="s-tree"><h2>Recipe tree</h2><ul class="rtree">${tr}</ul><p class="note">Curio ingredients open into their own recipes. Counts are per craft.</p></section>`)}
 
 /* ---------- relic levels: per-level stats from the pack's Relics configs (RL, tools/relic_levels.py) ---------- */
 var RLV={},RLMAX=Math.max(...Object.values(RL).map(r=>r.mx));

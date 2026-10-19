@@ -18,7 +18,10 @@
 .bx.on{border-style:solid;justify-content:flex-start;max-width:220px;font-size:12px;color:var(--fg)}
 .bx.on img{width:28px;height:28px;image-rendering:pixelated;flex:none}
 .bx.on span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bx.on:hover{border-color:#e0565b}
+.bx.on{padding:0;min-width:150px}.bx.on:hover,.bx.on.sel{border-color:var(--accent)}
+.bxi{display:flex;align-items:center;gap:6px;min-width:0;height:100%;padding:0 4px 0 8px;border:0;background:none;color:inherit;font:inherit;cursor:pointer;text-align:left}
+.bxr{flex:none;align-self:stretch;padding:0 8px;border:0;border-left:1px solid var(--line);background:none;color:var(--mute);font:16px var(--body);cursor:pointer}
+.bxr:hover{color:#e0565b}
 .bx.late,.bx.over{border-color:#e0565b;background:color-mix(in srgb,#e0565b 12%,var(--tile))}
 .bside{display:flex;flex-direction:column;gap:14px;position:sticky;top:76px;max-height:calc(100vh - 92px);overflow:auto}
 .bside h2{font-size:15px;margin:0 0 8px}
@@ -26,8 +29,11 @@
 .bph{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .bpick input{width:100%;box-sizing:border-box;margin-bottom:8px}
 .bopts{display:flex;flex-direction:column;gap:4px;max-height:340px;overflow:auto}
-.bopt{display:flex;gap:8px;align-items:center;text-align:left;padding:6px;border:1px solid transparent;border-radius:6px;background:none;color:var(--fg);cursor:pointer;font:13px var(--body)}
-.bopt:hover{border-color:var(--accent);background:var(--tile)}
+.bopt{display:flex;gap:8px;align-items:center;padding:4px 6px;border:1px solid transparent;border-radius:6px}
+.bopt:hover,.bopt.sel{border-color:var(--accent);background:var(--tile)}
+.bopi{display:flex;flex:1;gap:8px;align-items:center;min-width:0;padding:2px 0;border:0;background:none;color:var(--fg);cursor:pointer;font:13px var(--body);text-align:left}
+.bopt .chip{flex:none}
+.bopt .bofx{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--fg);opacity:.8}
 .bopt img{width:28px;height:28px;image-rendering:pixelated;flex:none}
 .bopt span{display:flex;flex-direction:column;min-width:0}
 .bopt b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -105,3 +111,20 @@
 .rst{letter-spacing:1px;white-space:nowrap}.rst i{font-style:normal;color:var(--line)}.rst i.f{color:var(--loot)}
 .rst i.h{background:linear-gradient(90deg,var(--loot) 50%,var(--line) 50%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .fbar .frq{display:inline-flex;align-items:center;gap:6px}
+.binsp{border:1px solid var(--accent);border-radius:8px;background:var(--panel);padding:12px;display:grid;gap:8px}
+.binsp .bph{margin:0;align-items:flex-start;gap:8px}
+.bih{display:flex;gap:8px;align-items:center;font-weight:600}.bih img{width:32px;height:32px;image-rendering:pixelated;flex:none}
+.bih span{display:flex;flex-direction:column}.bih small{font-weight:400;color:var(--mute);font-size:11px}
+.bifx{margin:0;font-size:13px}
+.binsp h3{margin:4px 0 0;font:600 12px var(--body);color:var(--mute);text-transform:uppercase;letter-spacing:.04em}
+.binsp .rtree{font-size:13px}.binsp .bihow{margin:0;padding-left:18px;font-size:12.5px}
+.biact{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0}.biact a{margin-left:auto;font-size:12.5px}
+.lnk{padding:0;border:0;background:none;color:var(--accent);font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.binsp .trcp{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.binsp .trg{display:grid;gap:2px}
+.binsp .trc{position:relative;display:grid;place-items:center;width:30px;height:30px;background:#8b8b8b;box-shadow:inset 1px 1px 0 #373737,inset -1px -1px 0 #fff;font-style:normal}
+.binsp .trc img,.binsp .trc .ph{width:26px;height:26px;image-rendering:pixelated;font-size:9px;overflow:hidden}
+.binsp .trc>b{font:700 11px var(--body);color:#3c3c3c}
+.binsp .trc.out{width:40px;height:40px}.binsp .trc.out img{width:34px;height:34px}
+.binsp .trc.out b{position:absolute;right:2px;bottom:0;color:#fff;text-shadow:1px 1px 0 #3f3f3f}
+.binsp .tra{font-style:normal;color:var(--mute);font-size:18px}.binsp .trs{flex-basis:100%;font-size:11.5px;color:var(--mute)}

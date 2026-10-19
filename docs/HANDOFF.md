@@ -118,6 +118,11 @@ Code lives in `src/features.js` and `src/features.css`. `build.py` puts `feature
 ## Builder slots (19 Oct 2026)
 - All 25 slot rows show at once; the "More slots" dropdown is gone.
 - The generic Curio slot takes any accessory (`bFits`). Items tagged only "Curio" (the seven Powah Batteries) still fit nowhere else. Share links and evolve buttons follow the same rule; starter presets still use each curio's own slot.
+- Inspect panel (`BINSP`, `bInspHtml`):
+  - Clicking a curio's icon, name or effect opens a panel at the top of the Builder sidebar. This works for picker rows and filled slots. The panel shows the effect, the crafting grid and the recipe tree; loot-only curios show "How to get it" instead.
+  - Clicking an ingredient in the tree inspects it in place. The panel's own buttons add, remove or open the full page.
+  - Adding is now a separate "Add" button on each picker row, and removing is a × on each filled slot.
+  - `rtreeHtml(d,insp)` is shared with the item page's Recipe tree section.
 
 ## Verified
 - All three scripts parse, and there are no console errors on the hub, path, item, mods and slot pages.
