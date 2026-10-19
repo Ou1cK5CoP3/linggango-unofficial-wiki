@@ -37,6 +37,10 @@ Branch `base-pack`; the original upstream branch `claude/zen-pasteur-qi26dz` is 
   - The third fix's resting `transform:translateY(0)` on every tile made each one its own paint layer; it's reversed. Hover lifts with `top:-2px` instead.
   - Tooltips open after the pointer rests 80 ms on a tile (hover intent), so a fast sweep builds none. `decorate()` now only scans the tooltip, not the whole page.
   - Result: masks on the whole page 2,137+ → 2, tooltip update about 500 ms → 12 ms.
+- **Ring-locked badge** (19 Oct 2026). 43 curios whose own text says they need the Ring of the Seven Curses (25) or the Ring of the Seven Virtues (18) get a corner badge: the ring's icon with a lock, red for Curses and gold for Virtues. Tooltips and item pages add a "Requires the Ring of the Seven …" line, and the legend explains the badge.
+  - Detection is `RQRX` in `app.js`, which sets `d.rq`. It deliberately ignores the upstream `l:Seven Curses` tag, because that tag also covers items that only mention curses (L2 Hostility curse slots, Chthonic items).
+  - The badge uses no masks, filters or transforms, so the hover fix above still holds.
+- **Recipe in tooltips** (19 Oct 2026). The 846 curios with a structured recipe (`d.gr`) show a mini crafting grid, an arrow and the result in the tooltip (`tipRecipe`). This replaces the "Craft at … from …" text line. Lines that aren't the recipe, such as "Key requirement: …", stay as text. Curios without `d.gr` keep their text.
 - **Tearing:** live 3D bosses were drawn on one fixed full-screen WebGL canvas that redraws a frame behind scroll. They're now static snapshots (`Boss3D.snapshot`), so there's no WebGL loop and no drag-to-rotate.
 - **Phone layout:** path hero stacks below 640 px. The boss card used to be clipped off-screen.
 

@@ -1101,3 +1101,21 @@ body:not(.hub) #main{background:var(--bg)}
 .t:hover,.t.act{top:-2px}
 .t .sh::before{display:none!important}
 .t:hover .sh::before,.t:focus-visible .sh::before{display:block!important}
+/* ring-lock badge: ring icon with a lock, top-left corner; no masks or filters (hover perf) */
+.rqb{position:absolute;left:1px;top:1px;z-index:3;display:grid;place-items:center;width:16px;height:16px;border-radius:3px;background:#3a0a14;box-shadow:0 0 0 1px #ff3d5e}
+.rqb.rqV{background:#3a2e08;box-shadow:0 0 0 1px #ffd36b}
+.t .rqb img,.rqb img{width:12px!important;height:12px!important;filter:none!important;animation:none!important;transform:none!important;image-rendering:pixelated}
+.rqb::after{content:"🔒";position:absolute;right:-6px;bottom:-5px;font-size:8px;line-height:1}
+.rqb.lg{position:relative;left:auto;top:auto;display:inline-grid;margin-right:10px;vertical-align:middle}
+#tip .trq img{width:16px;height:16px;vertical-align:-3px;image-rendering:pixelated}
+/* tooltip recipe grid */
+#tip .trcp{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:6px 0}
+#tip .trg{display:grid;gap:2px}
+#tip .trc{position:relative;display:grid;place-items:center;width:18px;height:18px;background:#8b8b8b;box-shadow:inset 1px 1px 0 #373737,inset -1px -1px 0 #fff;font-style:normal}
+#tip .trc img,#tip .trc .ph{width:16px;height:16px;image-rendering:pixelated;font-size:7px;overflow:hidden}
+#tip .trc>b{font:700 9px var(--body);color:#3c3c3c}
+#tip .trc.out{width:26px;height:26px}
+#tip .trc.out img{width:22px;height:22px}
+#tip .trc.out b{position:absolute;right:1px;bottom:0;color:#fff;text-shadow:1px 1px 0 #3f3f3f}
+#tip .tra{font-style:normal;color:#aaa;font-size:16px}
+#tip .trs{flex-basis:100%;font-size:11px;color:#9a93a8}

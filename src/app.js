@@ -81,6 +81,11 @@ function seedBg(key,pool){if(key===bgKey)return;bgKey=key;pool=pool.filter(d=>IC
 /* ---------- data prep ---------- */
 D.sort((a,b)=>b.r-a.r||b.sc-a.sc||a.n.localeCompare(b.n));
 const BYID={};D.forEach((d,i)=>{d.ix=i;d.c=d.ro[0];BYID[d.id]=d});
+/* d.rq: the curio's own text says it needs the Ring of the Seven Curses or Virtues */
+const RQRING={Curses:"enigmaticlegacy:cursed_ring",Virtues:"covenant_of_the_seven:virtue_ring"},RQRX=/requires (?:the )?(?:Ring of )?(?:the )?Seven (?:Curses|Virtues)|Seven (?:Curses|Virtues) bearers only|\(Seven (?:Curses|Virtues)(?: path)?\)|Break the Ring of (?:the )?Seven Curses/i;
+D.forEach(d=>{if(d.id===RQRING.Curses||d.id===RQRING.Virtues)return;const m=RQRX.exec([d.fx,...d.st,...d.src].join(" | "));if(m)d.rq=/curses/i.test(m[0])?"Curses":"Virtues"});
+const rqName=d=>"Ring of the Seven "+d.rq;
+const rqb=(d,cls="")=>d.rq?`<i class="rqb rq${d.rq[0]}${cls}" title="Requires the ${rqName(d)}" aria-label="Requires the ${rqName(d)}">${img(RQRING[d.rq])}</i>`:"";
 const TOTAL=count(D);
 const usedBy=id=>D.filter(d=>d.gr&&d.gr.c.some(c=>c&&c[0]===id));
 const SLOTS=(()=>{const c={};D.forEach(d=>d.sl.forEach(s=>(c[s]=c[s]||[]).push(d)));return Object.entries(c).sort((a,b)=>b[1].length-a[1].length)})();
@@ -139,7 +144,7 @@ const SLU={};
 const slotKey=n=>{const k=n.toLowerCase();return SLA[k]||k.replace(/ /g,"_")};
 const slotIcon=(n,t)=>{const k=slotKey(n),b=(UI[t?"cslotT":"cslot"]||{})[k],c=t?k+"~":k;if(!b)return "";if(!SLU[c])SLU[c]=URL.createObjectURL(new Blob([Uint8Array.from(atob(b),c=>c.charCodeAt(0))],{type:"image/png"}));return SLU[c]};
 const slk=d=>{const u=slotIcon(d.sl[0]||"",1);return u?`<i class="slk" style="--si:url(${u})" title="${esc(d.sl.join(" / "))} slot"></i>`:`<i class="slk tx" title="${esc(d.sl.join(" / "))} slot">${esc((d.sl[0]||"?").slice(0,2))}</i>`};
-const tile=(d,i=99)=>`<a style="--i:${i}" class="t c${d.c} r${d.r}${d.g==="Loot"?" L":""}${d.inv?" inv":""}" data-mf="${mf(d.m)[0]}" href="#i${d.ix}" data-t="${d.ix}" aria-label="${esc(d.n)}">${AN[d.id]?`<span class="aimg" data-an="${esc(d.id)}">${img(d.id)}</span>`:img(d.id)}${d.k>1?`<span class="kv">${d.k}</span>`:""}${d.uid.length?CT:""}${isMust(d)?'<span class="star" aria-label="Must-Have">★</span>':""}${slk(d)}<span class="sh" style="--dl:${(d.ix*.37%5).toFixed(2)}s"></span></a>`;
+const tile=(d,i=99)=>`<a style="--i:${i}" class="t c${d.c} r${d.r}${d.g==="Loot"?" L":""}${d.inv?" inv":""}" data-mf="${mf(d.m)[0]}" href="#i${d.ix}" data-t="${d.ix}" aria-label="${esc(d.n)}">${AN[d.id]?`<span class="aimg" data-an="${esc(d.id)}">${img(d.id)}</span>`:img(d.id)}${d.k>1?`<span class="kv">${d.k}</span>`:""}${d.uid.length?CT:""}${isMust(d)?'<span class="star" aria-label="Must-Have">★</span>':""}${rqb(d)}${slk(d)}<span class="sh" style="--dl:${(d.ix*.37%5).toFixed(2)}s"></span></a>`;
 const gcard=(d,i)=>`<a class="gc r${d.r}" style="--i:${Math.min(i,40)}" href="#i${d.ix}" data-t="${d.ix}"><span class="ak">${ACT[d.t][0]}</span><span class="rk">${isMust(d)?"★ Must-Have":RN[d.r]}</span><span class="pic">${img(d.id)}</span><b>${esc(d.n)}</b><small>${esc(d.sl.join(", "))} · ${esc(d.m)}</small></a>`;
 const rbar=xs=>`<span class="bar5">${RNS.map(i=>{const n=xs.filter(d=>d.r===i).length;return n?`<i style="flex:${n};background:${RC[i]}"></i>`:""}).join("")}</span>`;
 const cards=xs=>`<div class="cards">${xs.map(x=>`<a class="card" href="#i${x.ix}" data-t="${x.ix}">${img(x.id)}<span>${esc(x.n)}</span></a>`).join("")}</div>`;
@@ -220,7 +225,7 @@ function modPage(m){
 function home(xs,asTable){
  let h=`${crumb("The Path")}<h1 class="qb">The Path</h1>
  <p class="lede">Every curio in base Linggango V6.6.5b4, tiered by how hard it really is to get: the Keeper that unlocks it, the vanilla boss it needs (Warden, Wither, Ender Dragon), drop chances, pickaxe tier and trait farming. Inside each path, ★ Must-Have items come first, then the rarest.</p>
-  <div class="legend"><span><i class="ct lg"></i>Used to craft another curio</span><span><i class="lgr"></i>Frame colour: rarity, brighter = rarer</span><span><i class="slk lg" style="--si:url(${slotIcon("Ring")})"></i>Curio slot it goes in</span><span><b class="lgn">16</b>Variants merged into one tile</span><span><b class="lgs">★</b>Must-Have: get it first</span></div>
+  <div class="legend"><span><i class="ct lg"></i>Used to craft another curio</span><span><i class="lgr"></i>Frame colour: rarity, brighter = rarer</span><span><i class="slk lg" style="--si:url(${slotIcon("Ring")})"></i>Curio slot it goes in</span><span><b class="lgn">16</b>Variants merged into one tile</span><span><b class="lgs">★</b>Must-Have: get it first</span><span>${rqb({rq:"Curses"}," lg")}Needs the Seven Curses or Virtues ring</span></div>
  ${fbar(xs.length,D.length)}${xs.length?"":`<p class="note">No curios match these filters. Remove one above or clear them all.</p>`}`;
  seedBg("path"+st.a,xs.filter(d=>d.r>=4));
  if(!asTable){
@@ -250,9 +255,10 @@ function page(d){
  document.title=d.n+" · Linggango Relic Wiki";seedBg("item"+d.m,D.filter(x=>x.m===d.m));
  const F=mf(d.m),slot=d.sl.join(", ")||"—",loot=d.g==="Loot",secs=[];
  const lock=d.gk?`<p class="lede"><span class="badge lockb">🔒 KEEPER-GATED</span>Linggango locks this item behind its progression gates: until you defeat <b>${GK[d.gk]}</b> (opens ${actL(d.gk)}) you can't take it out of a crafting station, use it or wear it, even if a chest gives it to you.</p>`:"";
+ const rqLock=d.rq?`<p class="lede"><span class="badge lockb">🔒 RING-LOCKED</span>Only for bearers of the <a href="#i${BYID[RQRING[d.rq]].ix}">${rqName(d)}</a>: you need that ring to craft or use this curio.</p>`:"";
  const must=isMust(d)?`<div class="mh-banner"><span class="mhs">★</span><div><b>Must-Have</b><p>${!/etching|charm_of_looting/.test(d.id)?"It adds curio slots, so you can wear more curios at once: every other relic on this wiki gets better with it. Get it as early as you can.":/etching/.test(d.id)?"An Etching turns one of your Catastrophe Scroll curses into a blessing and is an ingredient for most Celestial Artifacts relics.":"A Looting Charm unlocks L2 Hostility trait drops; without the right tier worn, trait mobs drop nothing extra."} Get it as soon as ${esc(actL(d.t))} opens and keep it in every build. Base power rating: <b>${RN[d.br]}</b>.</p></div></div>`:"";
  const scarce=d.sca?`<div class="mh-banner sca"><span class="mhs">⛏</span><div><b>Scarce Path 0 material</b><p>Daemonium and Iridium need a high-tier pickaxe to mine, but Terramity structures can drop them in chests. That makes this craftable early with luck, so it is rated one rarity higher than other Path 0 curios.</p></div></div>`:"";
- secs.push(["get",loot?"Where it drops":"How to get it",`${must}${scarce}<ol class="how">${d.src.map(x=>`<li>${fmt(x)}</li>`).join("")}</ol>${d.why.length?`<div class="whyb"><b>Why it sits on ${esc(actL(d.t))}</b><ul>${d.why.map(w=>`<li>${fmt(w)}</li>`).join("")}</ul></div>`:""}${lock}<p class="note">${d.a===-1?"Drops by L2 Hostility mob level, not tied to a boss milestone.":d.a!==d.t?`Earliest with luck: ${actL(d.a)}. Realistic: ${actL(d.t)} (${ACT[d.t][1]}).`:`Available from ${actL(d.t)} (${ACT[d.t][1]}).`}</p>`]);
+ secs.push(["get",loot?"Where it drops":"How to get it",`${must}${scarce}<ol class="how">${d.src.map(x=>`<li>${fmt(x)}</li>`).join("")}</ol>${d.why.length?`<div class="whyb"><b>Why it sits on ${esc(actL(d.t))}</b><ul>${d.why.map(w=>`<li>${fmt(w)}</li>`).join("")}</ul></div>`:""}${lock}${rqLock}<p class="note">${d.a===-1?"Drops by L2 Hostility mob level, not tied to a boss milestone.":d.a!==d.t?`Earliest with luck: ${actL(d.a)}. Realistic: ${actL(d.t)} (${ACT[d.t][1]}).`:`Available from ${actL(d.t)} (${ACT[d.t][1]}).`}</p>`]);
  const rel=d.tg.map((t,j)=>[t,d.st[j],d.sr&&d.sr[j]]),relic=rel.filter(r=>r[0]==="relic"),other=rel.filter(r=>r[0]!=="relic");
  let sh="";
  if(relic.length)sh+=`<div class="tw"><table><thead><tr><th>Stat</th><th>On pickup (random)</th><th>Max upgrade</th></tr></thead><tbody>${relic.map(r=>relicRows(r[1])).join("")}</tbody></table></div>`;
@@ -287,7 +293,7 @@ function page(d){
  <div class="ip-body"><div class="ip-main">${secs.map(x=>`<section class="s ip-sec" id="s-${x[0]}"><h2>${x[1]}</h2>${x[2]}</section>`).join("")}
  ${s0?`<section class="sib"><h2>More ${esc(s0)} curios <a style="font-size:13px;font-weight:400" href="#slot/${enc(s0)}">see all ${sx.length} →</a></h2><div class="gridc">${near.map(gcard).join("")}</div><nav class="pnx">${pv?`<a href="#i${pv.ix}"><small>← Previous in ${esc(s0)}</small>${esc(pv.n)}</a>`:"<span></span>"}${nx?`<a href="#i${nx.ix}"><small>Next in ${esc(s0)} →</small>${esc(nx.n)}</a>`:""}</nav></section>`:""}</div>
  <aside class="ip-side"><div class="ip-info"><div class="ip-ih"><span class="ip-slot">${ic}</span><div><b>${esc(d.n)}</b><span>${esc(d.m)}</span></div></div>
- <dl><dt>Slot</dt><dd>${esc(slot)}</dd><dt>In-game rarity</dt><dd>${igName(d)}</dd><dt>Wiki tier</dt><dd>${rLabel(d)}</dd><dt>Path</dt><dd>${actL(d.t)}</dd>${d.a!==d.t?`<dt>With luck</dt><dd>${actL(d.a)}</dd>`:""}${d.gk?`<dt>Wearable</dt><dd>after ${GK[d.gk]}</dd>`:""}<dt>Role</dt><dd>${isMust(d)?"Every build":d.ro.map(k=>ROLE[k]).join(", ")}</dd></dl>
+ <dl><dt>Slot</dt><dd>${esc(slot)}</dd><dt>In-game rarity</dt><dd>${igName(d)}</dd><dt>Wiki tier</dt><dd>${rLabel(d)}</dd><dt>Path</dt><dd>${actL(d.t)}</dd>${d.a!==d.t?`<dt>With luck</dt><dd>${actL(d.a)}</dd>`:""}${d.gk?`<dt>Wearable</dt><dd>after ${GK[d.gk]}</dd>`:""}${d.rq?`<dt>Requires</dt><dd>${rqName(d)}</dd>`:""}<dt>Role</dt><dd>${isMust(d)?"Every build":d.ro.map(k=>ROLE[k]).join(", ")}</dd></dl>
  <div class="ip-id"><code id="ipid">${esc(d.id)}</code><button type="button" id="ipcopy">Copy</button></div></div>
  <nav class="ip-toc"><b>On this page</b><ol>${secs.map(x=>`<li><a href="#i${d.ix}" data-go="s-${x[0]}">${x[1]}</a></li>`).join("")}</ol><a href="#i${d.ix}" class="ip-top" data-top="1">↑ Back to top</a></nav></aside></div></div>`;
  const cb=el("ipcopy");cb.onclick=()=>{try{navigator.clipboard.writeText(d.id).then(()=>{cb.classList.add("ok");cb.textContent="Copied";setTimeout(()=>{cb.classList.remove("ok");cb.textContent="Copy"},1400)})}catch(e){}};
@@ -406,14 +412,19 @@ const VRAR={Common:"COMMON",Uncommon:"UNCOMMON",Rare:"RARE",Epic:"EPIC"};
 const pal=d=>isMust(d)?["#FFE14D","#FFB300","#5A3A00"]:d.ig?(TOP[VRAR[d.ig[0]]]||TOP.CUSTOM):TOP.COMMON;
 const igName=d=>d.ig?`<span class="ign" style="${d.ig[1]==="rainbow"?"":"color:"+d.ig[1]}"${d.ig[1]==="rainbow"?' data-rb="1"':""}>${esc(d.ig[0])}</span>`:'<span class="ign">Unverified</span>';
 const slotImg=(d,cls="")=>IC[d.id]?`<span class="aimg ${cls}"${AN[d.id]?` data-an="${esc(d.id)}"`:""}><img alt="" src="${icu(d.id)}"></span>`:`<span class="ph">${esc(d.n.slice(0,2))}</span>`;
+/* tooltip recipe: mini crafting grid instead of the "Craft at ... from ..." line */
+const RCV=/^(Craft|Combine|Infuse|Perform|Upgrade|Imbue|Forge)\b/;
+const rcName=c=>c[0]?(BYID[c[0]]?BYID[c[0]].n:NM[c[0]]||c[0]):"Any "+(c[1].split(":")[1]||c[1]).replace(/_/g," ");
+const tipRecipe=d=>{const g=d.gr,shaped=g.l===0&&!/shapeless/i.test(g.st),cs=shaped?g.c:g.c.filter(Boolean);
+ return `<div class="trcp"><div class="trg" style="grid-template-columns:repeat(${shaped?g.w:Math.min(cs.length,5)},18px)">${cs.map(c=>`<i class="trc"${c?` title="${esc(rcName(c))}"`:""}>${c?(c[0]?img(c[0]):"<b>#</b>"):""}</i>`).join("")}</div><i class="tra" aria-hidden="true">→</i><i class="trc out">${img(d.id)}${g.n>1?`<b>${g.n}</b>`:""}</i><span class="trs">${esc(g.st.replace(/\s*\(shapeless\)/i,""))}</span></div>`};
 function showTip(n){const d=D[+n.dataset.t];if(!d)return;tipFor=n;const F=mf(d.m),P=pal(d),nc=d.ig&&d.ig[1]!=="rainbow"?d.ig[1]:"#FFFFFF";
  tip.className="to r"+d.r+(tip.classList.contains("on")?" on":"");tip.dataset.mf=F[0];
  tip.style.setProperty("--c1",P[0]);tip.style.setProperty("--c2",P[1]);tip.style.setProperty("--c3",P[2]);
  const stats=d.st.map((x,j)=>[d.tg[j],x]).filter(([t,x])=>t!=="relic"&&x.length<110&&!/^(When worn|Passive Effect|Hold Shift)/i.test(x)).slice(0,5);
  tip.innerHTML=`<div class="tbox"><div class="tfr"></div>
  <div class="thd"><span class="tslot">${slotImg(d)}</span><div class="tht"><div class="tnm" style="color:${nc}"${d.ig&&d.ig[1]==="rainbow"?' data-rb="1"':""}>${isMust(d)?"★ ":""}${esc(d.n)}</div><div class="tsub">${esc(d.sl.join(", "))} · ${d.g==="Loot"?"Loot":"Craft"}</div></div></div>
- <div class="tbd"><p class="tfx">${fmt(d.fx)}</p>${stats.length?`<ul class="tst">${stats.map(([t,x])=>`<li>${fmt(x)}</li>`).join("")}</ul>`:""}${d.gk?`<p class="tlock">🔒 Locked until ${GK[d.gk]} falls</p>`:""}${isMust(d)?`<p class="tmust">★ Must-Have: get it as soon as ${esc(actL(d.t))} opens.</p>`:""}
- <p class="tsrc">${fmt(d.src.slice(0,2).join(" "))}</p><p class="twhere">${esc(actL(d.t))}${d.a!==d.t?` · with luck from ${esc(actL(d.a))}`:""}</p></div>
+ <div class="tbd"><p class="tfx">${fmt(d.fx)}</p>${stats.length?`<ul class="tst">${stats.map(([t,x])=>`<li>${fmt(x)}</li>`).join("")}</ul>`:""}${d.gk?`<p class="tlock">🔒 Locked until ${GK[d.gk]} falls</p>`:""}${d.rq?`<p class="tlock trq">🔒 ${img(RQRING[d.rq])} Requires the ${rqName(d)}</p>`:""}${isMust(d)?`<p class="tmust">★ Must-Have: get it as soon as ${esc(actL(d.t))} opens.</p>`:""}
+ ${d.gr?tipRecipe(d):""}${(x=>x.length?`<p class="tsrc">${fmt(x.join(" "))}</p>`:"")((d.gr?d.src.filter(x=>!RCV.test(x)):d.src).slice(0,2))}<p class="twhere">${esc(actL(d.t))}${d.a!==d.t?` · with luck from ${esc(actL(d.a))}`:""}</p></div>
  <div class="tft"><span class="tmod">${esc(d.m)}</span><span class="trt">${igName(d)} · ${RN[d.r]}</span></div></div>`;
  if(lastAct)lastAct.classList.remove("act");lastAct=n.classList.contains("t")?n:null;if(lastAct)lastAct.classList.add("act");
  const first=!tip.classList.contains("on");place(n);tip.classList.add("on");if(first)tip.classList.add("in");decorate(tip)}
