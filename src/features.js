@@ -25,9 +25,9 @@ function bCaps(){const c={...SLOT_BASE};Object.values(BS.s).flat().forEach(id=>{
 function bParse(h){
  const [,p,c]=decodeURIComponent(h).split("/");BS={p:p!==undefined&&p!==""&&ACT[p]&&ORDER.includes(+p)?+p:ORDER[ORDER.length-1],s:{}};
  (c||"").split("|").filter(Boolean).forEach(part=>{const [k,ids]=part.split("=");if(k in SLOT_BASE)BS.s[k]=(ids||"").split(",").map(bLv).filter(i=>BYID[i]&&BYID[i].sl.includes(k))})}
-// "id~level~a.b.c": a relic's level and ability points; invalid spends are trimmed to fit
-function bLv(x){const [id,l,a]=x.split("~"),r=RL[id];if(r&&l!==undefined){RLV[id]=rlFit(r,Math.max(0,Math.min(r.mx,+l||0)),(a||"").split(".").map(Number))}return id}
-function bHash(){return "#build/"+BS.p+"/"+Object.entries(BS.s).filter(([,v])=>v.length).map(([k,v])=>k+"="+v.map(id=>RL[id]?`${id}~${rlState(id).l}~${rlState(id).a.join(".")}`:id).join(",")).join("|")}
+// "id~level~a.b.c~stars": level, ability points and per-stat stars ("-" any roll, 0-9, a=10); invalid spends are trimmed to fit
+function bLv(x){const [id,l,a,q]=x.split("~"),r=RL[id];if(r&&l!==undefined){RLV[id]=rlFit(r,Math.max(0,Math.min(r.mx,+l||0)),(a||"").split(".").map(Number),[...(q||"")].map(c=>c==="-"?-1:parseInt(c,11)))}return id}
+function bHash(){return "#build/"+BS.p+"/"+Object.entries(BS.s).filter(([,v])=>v.length).map(([k,v])=>k+"="+v.map(id=>RL[id]?`${id}~${rlState(id).l}~${rlState(id).a.join(".")}${rlState(id).q.some(v=>v>=0)?"~"+rlState(id).q.map(v=>v<0?"-":v.toString(11)).join(""):""}`:id).join(",")).join("|")}
 function bSave(){history.replaceState(null,"",bHash());buildPage()}
 function bPreset(role){
  BS.s={};const pool=D.filter(d=>bAvail(d)&&!d.inv);
@@ -138,42 +138,58 @@ function rlAuto(r,l){const a=r.ab.map(()=>0);let p=0;
  for(let lv=1;lv<=l;lv++){p++;for(;;){let b=-1;r.ab.forEach((x,i)=>{if(x.rq<=lv&&a[i]<x.mx&&x.pt<=p&&(b<0||a[i]<a[b]))b=i});if(b<0)break;p-=r.ab[b].pt;a[b]++}}
  return a}
 // keep a manual spend valid for level l: drop locked or over-max points, then refund from the last ability until it fits
-function rlFit(r,l,a){const s={l,a:r.ab.map((x,i)=>x.rq>l?0:Math.max(0,Math.min(x.mx,a?a[i]|0:0)))};
+function rlFit(r,l,a,q){const s={l,a:r.ab.map((x,i)=>x.rq>l?0:Math.max(0,Math.min(x.mx,a?a[i]|0:0))),q:rlStats(r).map((t,i)=>q&&q[i]>=0&&q[i]<=10?rlSnap(t,q[i]|0):-1)};
  for(let i=s.a.length-1;i>=0&&rlFree(r,s)<0;)s.a[i]?s.a[i]--:i--;return s}
-function rlState(id){const r=RL[id];return RLV[id]||(RLV[id]=rlFit(r,Math.min(st.rl,r.mx)))}
+function rlState(id){const r=RL[id];return RLV[id]||(RLV[id]=rlFit(r,Math.min(st.rl,r.mx),null,rlStats(r).map(()=>st.rq)))}
+function rlStats(r){return r.ab.flatMap(x=>x.st)}
 function rlFree(r,s){return s.l-r.ab.reduce((n,x,i)=>n+s.a[i]*x.pt,0)}
 const jround=v=>Math.floor(v+.5);
 // IRelicItem.getAbilityValue: upgrade op, clamp to the config thresholds, round to 5 places
 function rlVal(t,x,z){let v=t.op==="A"?x+t.m*z:t.op==="MB"?x+x*t.m*z:x*Math.pow(t.m+1,z);
  if(t.t[0]!=null)v=Math.max(v,t.t[0]);if(t.t[1]!=null)v=Math.min(v,t.t[1]);return jround(v*1e5)/1e5}
 // the relic's own formatValue, as a stack program pulled from its bytecode; prints like Java's String.valueOf
-function rlFmt(p,v){const k=[];let int=0;
+function rlFmt(p,v){const [r,int]=rlNum(p,v);return int||!Number.isInteger(r)?String(r):r+".0"}
+function rlNum(p,v){const k=[];let int=0;
  for(const o of p){if(typeof o==="number")k.push(o);else if(o==="v")k.push(v);else if(o==="I")int=1;else if(o==="D")int=0;
   else if(o==="R"){const n=k.pop(),f=Math.pow(10,n);k.push(jround(k.pop()*f)/f)}else if(o==="r")k.push(jround(k.pop()));else if(o==="i")k.push(Math.trunc(k.pop()));else if(o==="n")k.push(-k.pop());
   else{const b=k.pop(),a=k.pop();k.push(o==="+"?a+b:o==="-"?a-b:o==="*"?a*b:a/b)}}
- const r=k.pop();return int||!Number.isInteger(r)?String(r):r+".0"}
-function rlStat(t,z){const a=[rlVal(t,t.lo,z),rlVal(t,t.hi,z)].sort((p,q)=>p-q).map(v=>rlFmt(t.p,v));
+ return [k.pop(),int]}
+// star quality 0..10 (half stars), IRelicItem.getStatByQuality / getStatQuality / getAbilityQuality / getRelicQuality
+function rlBase(t,q){return t.lo===t.hi?t.lo:jround((t.lo+(t.hi-t.lo)/10*q)*1e5)/1e5}
+function rlSQ(t,b){const f=v=>rlNum(t.p,v)[0],lo=f(t.lo),hi=f(t.hi);return lo===hi?10:Math.max(0,Math.min(10,jround((f(b)-lo)/((hi-lo)/10))))}
+// stars a stat can really show (formatted values are coarse, e.g. whole slots): quality -> first quality step that reaches it
+function rlQMap(t){if(!t._q){t._q=new Map();for(let q=0;q<=10;q++){const g=rlSQ(t,rlBase(t,q));if(!t._q.has(g))t._q.set(g,q)}}return t._q}
+function rlSnap(t,v){let b=-1;for(const g of rlQMap(t).keys())if(b<0||Math.abs(g-v)<Math.abs(b-v)||(Math.abs(g-v)===Math.abs(b-v)&&g<b))b=g;return b}
+function rlBQ(t,v){return rlBase(t,rlQMap(t).get(rlSnap(t,v)))}
+function rlRelicQ(r,q){if(q.some(v=>v<0))return -1;let o=0,n=r.ab.length,s=0;
+ r.ab.forEach(x=>{const qs=x.st.map((t,j)=>rlSnap(t,q[o+j]));o+=x.st.length;if(x.nq)n--;else s+=qs.length?Math.trunc(qs.reduce((p,c)=>p+c,0)/qs.length):0});
+ return n>0?Math.max(0,Math.min(10,Math.trunc(s/n))):0}
+function rlStars(q){return `<span class="rst" title="${q/2} of 5 stars">${[0,1,2,3,4].map(i=>`<i class="${q>=2*i+2?"f":q>=2*i+1?"h":""}">★</i>`).join("")}</span>`}
+const RLQO=(q,t)=>`${q===-2?`<option value="-2" selected>mixed</option>`:""}<option value="-1"${q===-1?" selected":""}>any roll</option>${(t?[...rlQMap(t).keys()].sort((a,b)=>a-b):[...Array(11).keys()]).map(v=>`<option value="${v}"${v===q?" selected":""}>${v/2} ★</option>`).join("")}`;
+function rlStat(t,z,q){const a=(q>=0?[rlVal(t,rlBQ(t,q),z)]:[rlVal(t,t.lo,z),rlVal(t,t.hi,z)].sort((p,c)=>p-c)).map(v=>rlFmt(t.p,v));if(!a[1])a[1]=a[0];
  return t.f.replace("%1$s",a[0]===a[1]?a[0]:a[0]+" ~ "+a[1]).replace(/%%/g,"%").replace(/\.$/,"")}
 function rlXp(r,l){let t=0;for(let i=0;i<l;i++)t+=r.xp[0]+r.xp[1]*i;return t}
 // tooltip: no spend is assumed, so each ability shows its base and the most this level could buy for it alone
-function rlTip(d){const r=RL[d.id],l=Math.min(st.rl,r.mx);
- return `<div class="trl"><b>Relic level ${l} / ${r.mx}</b> <small>${l} point${l===1?"":"s"} to spend</small>${r.ab.map(x=>{if(x.rq>l)return `<p class="trlk">🔒 ${esc(x.n)}: unlocks at level ${x.rq}</p>`;
-  const z=Math.min(x.mx,Math.floor(l/x.pt));return `<p><b>${esc(x.n)}</b>${x.st.length?` <small>${z?`up to ${z}/${x.mx}`:`0/${x.mx}`}</small>${x.st.map(t=>` · ${esc(t.n)} ${esc(rlStat(t,0))}${z?` → ${esc(rlStat(t,z))}`:""}`).join("")}`:" <small>passive</small>"}</p>`}).join("")}</div>`}
-function rlBody(id,compact){const r=RL[id],s=rlState(id),free=rlFree(r,s);
+function rlTip(d){const r=RL[d.id],l=Math.min(st.rl,r.mx),q=st.rq;
+ return `<div class="trl"><b>Relic level ${l} / ${r.mx}</b> <small>${l} point${l===1?"":"s"} to spend${q>=0?` · every stat rolled near ${q/2} ★`:""}</small>${r.ab.map(x=>{if(x.rq>l)return `<p class="trlk">🔒 ${esc(x.n)}: unlocks at level ${x.rq}</p>`;
+  const z=Math.min(x.mx,Math.floor(l/x.pt));return `<p><b>${esc(x.n)}</b>${x.st.length?` <small>${z?`up to ${z}/${x.mx}`:`0/${x.mx}`}</small>${x.st.map(t=>` · ${esc(t.n)} ${esc(rlStat(t,0,q))}${z?` → ${esc(rlStat(t,z,q))}`:""}`).join("")}`:" <small>passive</small>"}</p>`}).join("")}</div>`}
+function rlBody(id,compact){const r=RL[id],s=rlState(id),free=rlFree(r,s),rq=rlRelicQ(r,s.q);let o=0;
  return `<p class="rls"><b>Level ${s.l} / ${r.mx}</b> · <span class="${free?"rlf":""}">${free} point${free===1?"":"s"} free</span> <button class="ghost" data-rlx="auto">Auto-spend</button>${s.a.some(Boolean)?` <button class="ghost" data-rlx="reset">Reset</button>`:""}</p>
- ${r.ab.map((x,i)=>{const lock=x.rq>s.l;return `<div class="rla${lock?" lk":""}"><div class="rlah"><b>${esc(x.n)}</b>${lock?`<span>🔒 unlocks at relic level ${x.rq}</span>`:!x.mx?`<span>passive, no upgrades</span>`:`<span>level ${s.a[i]} / ${x.mx}${x.pt>1?` · ${x.pt} points each`:""}</span><button class="chip" data-rlx="-${i}"${s.a[i]?"":" disabled"} aria-label="Lower ${esc(x.n)}">−</button><button class="chip" data-rlx="+${i}"${s.a[i]<x.mx&&free>=x.pt?"":" disabled"} aria-label="Raise ${esc(x.n)}">+</button>`}</div>${x.st.length?`<ul>${x.st.map(t=>`<li>${esc(t.n)}: <b>${esc(rlStat(t,lock?0:s.a[i]))}</b></li>`).join("")}</ul>`:""}</div>`}).join("")}
- ${compact?"":`<p class="note">Each relic level gives 1 point; spend them with + and −, or let Auto-spend spread them evenly. Values follow this pack's config and the mod's own rounding: a new relic rolls a random base inside the range, upgrades scale it, and some stats have a hard cap. Reaching level ${s.l} takes ${rlXp(r,s.l).toLocaleString()} relic XP.</p>`}`}
+ ${s.q.length?`<p class="rlq"><label>Roll quality <select data-rlq="all" aria-label="Set every stat's stars">${RLQO(s.q.every(v=>v===s.q[0])?s.q[0]:-2)}</select></label> ${rq>=0?`Relic ${rlStars(rq)} <small>${rq/2} / 5</small>`:`<small>pick stars to see the relic's rating</small>`}</p>`:""}
+ ${r.ab.map((x,i)=>{const lock=x.rq>s.l;return `<div class="rla${lock?" lk":""}"><div class="rlah"><b>${esc(x.n)}</b>${lock?`<span>🔒 unlocks at relic level ${x.rq}</span>`:!x.mx?`<span>passive, no upgrades</span>`:`<span>level ${s.a[i]} / ${x.mx}${x.pt>1?` · ${x.pt} points each`:""}</span><button class="chip" data-rlx="-${i}"${s.a[i]?"":" disabled"} aria-label="Lower ${esc(x.n)}">−</button><button class="chip" data-rlx="+${i}"${s.a[i]<x.mx&&free>=x.pt?"":" disabled"} aria-label="Raise ${esc(x.n)}">+</button>`}</div>${x.st.length?`<ul>${x.st.map(t=>{const j=o++;return `<li>${esc(t.n)}: <b>${esc(rlStat(t,lock?0:s.a[i],s.q[j]))}</b>${t.lo===t.hi?"":` <select class="rlqs" data-rlq="${j}" aria-label="${esc(t.n)} stars">${RLQO(s.q[j],t)}</select>`}</li>`}).join("")}</ul>`:""}</div>`}).join("")}
+ ${compact?"":`<p class="note">Each relic level gives 1 point; spend them with + and −, or let Auto-spend spread them evenly. Values follow this pack's config and the mod's own rounding: a new relic rolls a random base inside the range (its stars: 0 ★ is the worst roll, 5 ★ the best; the relic's rating averages its abilities), upgrades scale it, and some stats have a hard cap. Reaching level ${s.l} takes ${rlXp(r,s.l).toLocaleString()} relic XP.</p>`}`}
 function rlPanel(id,compact){const r=RL[id],s=rlState(id);
  return `<div class="rlp${compact?" sm":""}" data-rl="${esc(id)}"><label class="rlh">${compact?esc(BYID[id].n):"Relic level"} <input type="range" min="0" max="${r.mx}" value="${s.l}" data-rlv aria-label="Relic level"></label><div class="rlb">${rlBody(id,compact)}</div></div>`}
 function rlDraw(p){p.querySelector(".rlb").innerHTML=rlBody(p.dataset.rl,p.classList.contains("sm"))}
-document.addEventListener("input",e=>{const v=e.target.closest("[data-rlv]");if(!v)return;const p=v.closest("[data-rl]"),id=p.dataset.rl;RLV[id]=rlFit(RL[id],+v.value,rlState(id).a);rlDraw(p)});
-document.addEventListener("change",e=>{if(e.target.closest("[data-rlv]")&&location.hash.startsWith("#build"))bSave()});
+document.addEventListener("input",e=>{const v=e.target.closest("[data-rlv]");if(!v)return;const p=v.closest("[data-rl]"),id=p.dataset.rl;RLV[id]=rlFit(RL[id],+v.value,rlState(id).a,rlState(id).q);rlDraw(p)});
+document.addEventListener("change",e=>{const g=e.target.closest("[data-rlq]");if(g){const p=g.closest("[data-rl]"),s=rlState(p.dataset.rl),v=+g.value;if(g.dataset.rlq==="all"){if(v>-2)s.q=rlStats(RL[p.dataset.rl]).map(t=>v<0?-1:rlSnap(t,v))}else s.q[+g.dataset.rlq]=v;location.hash.startsWith("#build")?bSave():rlDraw(p);return}
+ if(e.target.closest("[data-rlv]")&&location.hash.startsWith("#build"))bSave()});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-rlx]");if(!b)return;const p=b.closest("[data-rl]"),id=p.dataset.rl,r=RL[id],s=rlState(id),x=b.dataset.rlx;
  if(x==="auto")s.a=rlAuto(r,s.l);else if(x==="reset")s.a=s.a.map(()=>0);else s.a[+x.slice(1)]+=x[0]==="+"?1:-1;
  location.hash.startsWith("#build")?bSave():rlDraw(p)});
-// slots a levelled relic adds: the mod applies Math.round to the value; lowest roll (e.g. Leather Belt "Charms")
+// slots a levelled relic adds: the mod applies Math.round to the value; chosen roll, else the lowest (e.g. Leather Belt "Charms")
 function rlSlots(id){const r=RL[id],s=rlState(id),o={};
- r.ab.forEach((x,i)=>{if(x.rq<=s.l)x.st.forEach(t=>{const k=/slots?/i.test(t.f)&&Object.keys(SLOT_BASE).find(k=>k.toLowerCase()===t.n.toLowerCase().replace(/s$/,""));if(k)o[k]=(o[k]||0)+jround(Math.min(rlVal(t,t.lo,s.a[i]),rlVal(t,t.hi,s.a[i])))})});return o}
+ let n=0;r.ab.forEach((x,i)=>{const o0=n;n+=x.st.length;if(x.rq<=s.l)x.st.forEach((t,j)=>{const k=/slots?/i.test(t.f)&&Object.keys(SLOT_BASE).find(k=>k.toLowerCase()===t.n.toLowerCase().replace(/s$/,""));if(k)o[k]=(o[k]||0)+jround(s.q[o0+j]>=0?rlVal(t,rlBQ(t,s.q[o0+j]),s.a[i]):Math.min(rlVal(t,t.lo,s.a[i]),rlVal(t,t.hi,s.a[i])))})});return o}
 
 /* ---------- evolutions: More Relics "evolves from", Somake Spells spellbook tiers ---------- */
 var EVO=null;
@@ -225,10 +241,11 @@ function fbar(n,total){
  return `<div class="fbar" role="search"><div class="fbr"><input id="fq" type="search" autocomplete="off" spellcheck="false" placeholder="Search, or filter: mod:terramity slot:ring stat:damage" aria-label="Search and filter curios" value="${esc(st.q)}"><span class="fn">${n===total?`${total} curios`:`${n} of ${total}`}</span></div>
 <div class="fbr fadd"><select id="fk" aria-label="Filter field">${QFIELDS.map(([k,t])=>`<option value="${k}"${k===FKEY?" selected":""}>${t}</option>`).join("")}</select><input id="fv" list="fvl" autocomplete="off" placeholder="Value" aria-label="Filter value"><datalist id="fvl"></datalist><button class="chip" id="fgo">Add filter</button><button class="ghost" id="fhelp" aria-expanded="${FHINT}">How it works</button></div>
 <p class="fhint" id="fhint"${FHINT?"":" hidden"}>Words search names, effects, stats and sources. Add <b>field:value</b> to narrow it down, e.g. <code>mod:terramity slot:ring stat:damage</code>. The same field twice means either one (<code>slot:ring slot:charm</code>); different fields must all match. Put <b>-</b> in front to exclude (<code>-mod:brutality</code>) and quotes around spaces (<code>stat:"attack speed"</code>). Fields: mod, slot, stat, effect, source, path, rarity, role, type, tag, name. Sidebar filters stack with these.</p>
-<div class="fbr frl"><label for="frl">Relic level in tooltips</label><input id="frl" type="range" min="0" max="${RLMAX}" value="${Math.min(st.rl,RLMAX)}"><b id="frlv">${st.rl>=RLMAX?"Max":st.rl}</b><span class="fn">${Object.keys(RL).length} Relics and More Relics curios; each stops at its own max</span></div>
+<div class="fbr frl"><label for="frl">Relic level in tooltips</label><input id="frl" type="range" min="0" max="${RLMAX}" value="${Math.min(st.rl,RLMAX)}"><b id="frlv">${st.rl>=RLMAX?"Max":st.rl}</b><label class="frq">Stars <select id="frq">${RLQO(st.rq)}</select></label><span class="fn">${Object.keys(RL).length} Relics and More Relics curios; each stops at its own max</span></div>
 ${activeBar()}</div>`}
 function fbind(){const q=el("fq");if(!q)return;
  const rl=el("frl");rl.oninput=()=>{st.rl=+rl.value;el("frlv").textContent=st.rl>=RLMAX?"Max":st.rl;TIPC.clear();save()};
+ el("frq").onchange=e=>{st.rq=+e.target.value;TIPC.clear();save()};
  q.oninput=()=>{clearTimeout(FQT);FQT=setTimeout(()=>{st.q=q.value.trim();el("q").value=st.q;FQS=[q.selectionStart,q.selectionEnd];refresh()},220)};
  const k=el("fk"),v=el("fv"),sug=()=>{el("fvl").innerHTML=fSug(k.value).map(x=>`<option value="${esc(x)}">`).join("")};
  k.onchange=()=>{FKEY=k.value;sug();v.focus()};sug();

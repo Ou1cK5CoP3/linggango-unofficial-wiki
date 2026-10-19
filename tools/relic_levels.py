@@ -151,6 +151,8 @@ with tempfile.TemporaryDirectory() as tmp:
                     mx = int(lv["maxLevel"]) // int(a["requiredPoints"])
                 abs_.append({"k": ak, "n": L.get(key + ak, ak.replace("_", " ").title()), "rq": int(a["requiredLevel"]),
                              "pt": int(a["requiredPoints"]), "mx": mx if sts else 0, "st": sts})
+                if int(a["maxLevel"]) == 0:
+                    abs_[-1]["nq"] = 1  # getRelicQuality skips abilities with maxLevel 0
             out[f"{ns}:{item}"] = {"mx": int(lv["maxLevel"]), "xp": [num(lv["initialCost"]), num(lv["step"])], "ab": abs_}
 OUT.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")), encoding="utf-8", newline="")
 print(len(out), "relics ->", OUT)

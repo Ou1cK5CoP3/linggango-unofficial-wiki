@@ -93,7 +93,7 @@ const BIGSLOTS=SLOTS.filter(s=>s[1].length>=7);
 const MODS=(()=>{const c={};D.forEach(d=>(c[d.m]=c[d.m]||[]).push(d));return Object.entries(c).sort((a,b)=>a[0].localeCompare(b[0]))})();
 
 /* ---------- filter state ---------- */
-const st={c:[],g:[],r:[],x:[],m:"",s:"",a:"",q:"",nw:false,sort:"a",dir:1,cl:[],rl:0};
+const st={c:[],g:[],r:[],x:[],m:"",s:"",a:"",q:"",nw:false,sort:"a",dir:1,cl:[],rl:0,rq:-1};
 try{const o=JSON.parse(localStorage.getItem("lgw2")||"{}");for(const k in st)if(k in o)st[k]=o[k]}catch(e){}
 st.c=st.c.filter(k=>k in ROLE);
 const save=()=>{try{localStorage.setItem("lgw2",JSON.stringify(st))}catch(e){}};

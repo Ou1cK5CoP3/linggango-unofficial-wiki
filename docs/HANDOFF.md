@@ -98,6 +98,12 @@ Code lives in `src/features.js` and `src/features.css`. `build.py` puts `feature
   - An ability with no stats can't be upgraded. `maxLevel: -1` means relic max ÷ `requiredPoints`.
   - Slot relics (Drowned, Hunter and Leather Belt) grant `Math.round(value)` slots.
   - Relic XP to reach level L is the sum over i < L of (initialCost + step·i).
+- **Star rating (roll quality):**
+  - Quality is 0–10, shown as 0–5 stars in half steps (`getMaxQuality` = 10).
+  - A stat's quality is `round((f(base) − f(lo)) / ((f(hi) − f(lo)) / 10))`, clamped, where f is its `formatValue`. A fixed stat (lo = hi) is always 10, and for cooldowns (lo > hi) the low value earns 5 ★.
+  - An ability's quality is the average of its stats', truncated. The relic's quality averages its abilities, truncated, and skips abilities whose config `maxLevel` is 0 (`nq` in RL.json). Abilities with no stats still count as 0, so Converging Orb, Depleted Spool, the Slumbering and Whispering Amulets, and Tyrant Mask can't reach 5 ★. That's the mod's own math.
+  - The value for a star choice is `getStatByQuality`: lo + (hi − lo)/10·q. Coarse stats (whole slots) can only show some ratings, so pickers list only reachable ones (`rlQMap`, `rlSnap`). Arrow Quiver slots, for example, only show 0, 1.5, 3.5 and 5 ★.
+  - UI: a per-stat star picker, a "Roll quality" set-all picker, and the relic's star rating. A "Stars" picker next to the relic-level slider on The Path sets tooltips (`st.rq`). Builder share links add `~stars`, one char per stat: `-` any, 0–9, `a` = 10. Slot relics use the chosen roll.
 - **Pack vs public wiki:** this pack's configs differ from the defaults documented on public Relics wikis. For example, Drowned Belt charms are base 2, +0.1 per level, capped at 3, while the guides say 0–2 base and +1 per level. The site follows the pack.
 - **UI:**
   - Points start unspent. Auto-spend (round-robin, lowest ability first) and Reset are buttons.
