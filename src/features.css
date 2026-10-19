@@ -20,8 +20,6 @@
 .bx.on span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bx.on:hover{border-color:#e0565b}
 .bx.late,.bx.over{border-color:#e0565b;background:color-mix(in srgb,#e0565b 12%,var(--tile))}
-.bmore{margin-top:10px}
-.bmore summary{cursor:pointer;font:600 13px var(--body);color:var(--accent);padding:6px 0}
 .bside{display:flex;flex-direction:column;gap:14px;position:sticky;top:76px;max-height:calc(100vh - 92px);overflow:auto}
 .bside h2{font-size:15px;margin:0 0 8px}
 .bpick,.bstats,.bfx{border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:12px}

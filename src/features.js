@@ -2,7 +2,6 @@
 /* ---------- build planner, boss guides, pack mechanics, recipe trees ---------- */
 // Player curio slots: merged curios/slots data from the base pack jars (Scroll, Spellstone, Focus are registered in code: assumed 1)
 var SLOT_BASE={Head:1,Necklace:2,Back:1,Body:1,Belt:1,Hands:2,Ring:2,Bracelet:2,Glove:2,Anklet:2,Feet:2,Charm:6,Accessory:6,Heart:1,Spellbook:1,Scroll:1,Spellstone:1,Talent:2,Focus:1,"Hostility Curse":1,Curio:1,Elytra:1,"Binding Key":1,Magnetizer:1,Bundle:1};
-var SLOT_MAIN=["Head","Necklace","Back","Body","Belt","Hands","Ring","Bracelet","Glove","Anklet","Feet","Charm","Accessory","Heart"];
 var STAT_ALIAS={"Knockback Res":"Knockback Resistance","Knockback resistance":"Knockback Resistance","Increased reach":"Reach","Increased block reach":"Block Reach","Step Height Addition":"Step Height"};
 var BS={p:12,s:{}},BPICK=null;
 
@@ -20,11 +19,13 @@ function statsOf(d){
   if(/^Hearts?$/.test(k)){k="Max Health";v*=2}
   out.push({k:k+(m[3]?" %":""),v})}
  return d._stp=out}
+// the generic Curio slot takes any accessory; items tagged only "Curio" still fit nowhere else
+function bFits(d,k){return d.sl.includes(k)||(k==="Curio"&&d.sl.length>0)}
 function bAvail(d){return ORDER.indexOf(d.t)<=ORDER.indexOf(BS.p)}
 function bCaps(){const c={...SLOT_BASE};Object.values(BS.s).flat().forEach(id=>{const a=RL[id]?rlSlots(id):slotAdds(BYID[id]);for(const k in a)c[k]+=a[k]});return c}
 function bParse(h){
  const [,p,c]=decodeURIComponent(h).split("/");BS={p:p!==undefined&&p!==""&&ACT[p]&&ORDER.includes(+p)?+p:ORDER[ORDER.length-1],s:{}};
- (c||"").split("|").filter(Boolean).forEach(part=>{const [k,ids]=part.split("=");if(k in SLOT_BASE)BS.s[k]=(ids||"").split(",").map(bLv).filter(i=>BYID[i]&&BYID[i].sl.includes(k))})}
+ (c||"").split("|").filter(Boolean).forEach(part=>{const [k,ids]=part.split("=");if(k in SLOT_BASE)BS.s[k]=(ids||"").split(",").map(bLv).filter(i=>BYID[i]&&bFits(BYID[i],k))})}
 // "id~level~a.b.c~stars": level, ability points and per-stat stars ("-" any roll, 0-9, a=10); invalid spends are trimmed to fit
 function bLv(x){const [id,l,a,q]=x.split("~"),r=RL[id];if(r&&l!==undefined){RLV[id]=rlFit(r,Math.max(0,Math.min(r.mx,+l||0)),(a||"").split(".").map(Number),[...(q||"")].map(c=>c==="-"?-1:parseInt(c,11)))}return id}
 function bHash(){return "#build/"+BS.p+"/"+Object.entries(BS.s).filter(([,v])=>v.length).map(([k,v])=>k+"="+v.map(id=>RL[id]?`${id}~${rlState(id).l}~${rlState(id).a.join(".")}${rlState(id).q.some(v=>v>=0)?"~"+rlState(id).q.map(v=>v<0?"-":v.toString(11)).join(""):""}`:id).join(",")).join("|")}
@@ -41,7 +42,7 @@ function bPreset(role){
  bSave()}
 function bOpts(k,q){
  const eq=new Set(Object.values(BS.s).flat());q=(q||"").toLowerCase();
- return D.filter(d=>d.sl.includes(k)&&bAvail(d)&&!eq.has(d.id)&&(!q||d.n.toLowerCase().includes(q)||d.fx.toLowerCase().includes(q)||d.m.toLowerCase().includes(q)))
+ return D.filter(d=>bFits(d,k)&&bAvail(d)&&!eq.has(d.id)&&(!q||d.n.toLowerCase().includes(q)||d.fx.toLowerCase().includes(q)||d.m.toLowerCase().includes(q)))
   .sort((a,b)=>(isMust(b)-isMust(a))||(b.r-a.r)||((+b.sc||0)-(+a.sc||0))).slice(0,150)}
 function bPickHtml(){
  if(!BPICK)return"";const xs=bOpts(BPICK,el("bq")?el("bq").value:"");
@@ -56,20 +57,19 @@ function buildPage(h){
   for(let i=0;i<n;i++){const id=have[i];if(id){const d=BYID[id];b+=`<button class="bx on${bAvail(d)?"":" late"}${i>=cap?" over":""}" data-rm="${esc(k)}|${esc(id)}" data-t="${d.ix}" title="Remove">${img(id)}<span>${esc(d.n)}</span></button>`}
    else b+=`<button class="bx${BPICK===k?" sel":""}" data-pick="${esc(k)}" aria-label="Add ${esc(k)} curio">+</button>`}
   return `<div class="bslot"><div class="bsh"><b>${esc(k)}</b><span class="${have.length>cap?"bad":""}">${have.length}/${cap}</span>${caps[k]>SLOT_BASE[k]?`<em>+${caps[k]-SLOT_BASE[k]}</em>`:""}</div><div class="bsb">${b}</div></div>`};
- const extra=Object.keys(SLOT_BASE).filter(k=>!SLOT_MAIN.includes(k));
  const stats=Object.entries(tot).filter(([,v])=>v).sort((a,b)=>a[0].localeCompare(b[0]));
  el("main").innerHTML=`${crumb("Build planner")}<h1>Build planner</h1>
-<p class="lede">Pick the furthest Path you've reached, then fill your curio slots. Slot counts are the base pack's player slots; curios that add slots raise them. Click a filled slot to remove it, and hover any curio for its tooltip.</p>
+<p class="lede">Pick the furthest Path you've reached, then fill your curio slots. Slot counts are the base pack's player slots; curios that add slots raise them, and the Curio slot takes any accessory. Click a filled slot to remove it, and hover any curio for its tooltip.</p>
 <div class="bbar"><label>Progress <select id="bp">${ORDER.map(a=>`<option value="${a}"${a===BS.p?" selected":""}>${esc(actL(a))}${a?" · "+esc(ACT[a][1]):""}</option>`).join("")}</select></label>
 <span class="bpre">Starter build: ${Object.entries(ROLE).map(([k,v])=>`<button class="chip" data-preset="${k}">${v}</button>`).join("")}</span>
 <span class="bact"><button class="chip" id="bcopy">Copy link</button><button class="chip" id="bclr">Clear</button></span></div>
 ${late?`<p class="bwarn">${late} curio${late>1?"s are":" is"} past your selected Path (marked red).</p>`:""}
-<div class="bgrid"><div class="bslots">${SLOT_MAIN.map(row).join("")}<details class="bmore"${extra.some(k=>(BS.s[k]||[]).length)||extra.includes(BPICK)?" open":""}><summary>More slots (spellbook, scroll, talent…)</summary>${extra.map(row).join("")}</details></div>
+<div class="bgrid"><div class="bslots">${Object.keys(SLOT_BASE).map(row).join("")}</div>
 <aside class="bside">${BPICK?`<div class="bpick"><div class="bph"><b>Add to ${esc(BPICK)}</b><button class="ghost" id="bpx">Close</button></div><input id="bq" type="search" placeholder="Search name, effect or mod" autocomplete="off"><div id="bopts" class="bopts">${bPickHtml()}</div></div>`:""}
 <div class="bstats"><h2>Stat totals</h2>${stats.length?`<table>${stats.map(([k,v])=>`<tr><td>${esc(k.replace(/ %$/,""))}</td><td class="num ${v<0?"neg":""}">${v>0?"+":""}${v}${/ %$/.test(k)?"%":""}</td></tr>`).join("")}</table>`:`<p class="note">Add curios to see totals.</p>`}
 <p class="note">Only flat "+N Stat" lines are added up. Effects, conditions and multipliers are listed below instead.</p></div>
 ${eq.some(id=>RL[id])?`<div class="bfx brl"><h2>Relic levels</h2>${eq.filter(id=>RL[id]).map(id=>rlPanel(id,true)).join("")}<p class="note">Slots a relic adds count its lowest roll.</p></div>`:""}
-${eq.length?`<div class="bfx"><h2>Effects</h2><ul>${eq.map(id=>{const d=BYID[id];const k=Object.keys(BS.s).find(k=>BS.s[k].includes(id)),nx=(evo().to[id]||[]).filter(t=>BYID[t].sl.includes(k));return `<li><a href="#i${d.ix}" data-t="${d.ix}">${esc(d.n)}</a>: ${esc(d.fx)}${nx.map(t=>` <button class="chip" data-evo="${esc(k)}|${esc(id)}|${esc(t)}">Evolve → ${esc(BYID[t].n)}</button>`).join("")}</li>`}).join("")}</ul></div>`:""}</aside></div>`;
+${eq.length?`<div class="bfx"><h2>Effects</h2><ul>${eq.map(id=>{const d=BYID[id];const k=Object.keys(BS.s).find(k=>BS.s[k].includes(id)),nx=(evo().to[id]||[]).filter(t=>bFits(BYID[t],k));return `<li><a href="#i${d.ix}" data-t="${d.ix}">${esc(d.n)}</a>: ${esc(d.fx)}${nx.map(t=>` <button class="chip" data-evo="${esc(k)}|${esc(id)}|${esc(t)}">Evolve → ${esc(BYID[t].n)}</button>`).join("")}</li>`}).join("")}</ul></div>`:""}</aside></div>`;
  el("bp").onchange=e=>{BS.p=+e.target.value;bSave()};
  el("bclr").onclick=()=>{BS.s={};BPICK=null;bSave()};
  el("bcopy").onclick=()=>{const u=location.href;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>{el("bcopy").textContent="Link copied"},()=>prompt("Copy this link:",u))};

@@ -115,6 +115,10 @@ Code lives in `src/features.js` and `src/features.css`. `build.py` puts `feature
 - **Evolutions:** built from src lines "evolves from X" plus the Somake Spells I/II/III names, giving 12 chains (e.g. Converging Orb → Wonder of U; Slumbering → Whispering Amulet → Made in Heaven). They appear in tooltips, as an "Evolution" section on item pages and as an "Evolve →" button in the Builder.
 - **Note:** Wonder of U maxes at relic level 13, not 15.
 
+## Builder slots (19 Oct 2026)
+- All 25 slot rows show at once; the "More slots" dropdown is gone.
+- The generic Curio slot takes any accessory (`bFits`). Items tagged only "Curio" (the seven Powah Batteries) still fit nowhere else. Share links and evolve buttons follow the same rule; starter presets still use each curio's own slot.
+
 ## Verified
 - All three scripts parse, and there are no console errors on the hub, path, item, mods and slot pages.
 - Automated overlap and overflow audit at 1024 px and 375 px: no overlaps, no horizontal page scroll. The hub path strip scrolls sideways by design.
