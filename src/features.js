@@ -25,9 +25,8 @@ function bCaps(){const c={...SLOT_BASE};Object.values(BS.s).flat().forEach(id=>{
 function bParse(h){
  const [,p,c]=decodeURIComponent(h).split("/");BS={p:p!==undefined&&p!==""&&ACT[p]&&ORDER.includes(+p)?+p:ORDER[ORDER.length-1],s:{}};
  (c||"").split("|").filter(Boolean).forEach(part=>{const [k,ids]=part.split("=");if(k in SLOT_BASE)BS.s[k]=(ids||"").split(",").map(bLv).filter(i=>BYID[i]&&BYID[i].sl.includes(k))})}
-// "id~level~a.b.c": a relic's level and ability points; invalid spends fall back to Auto-spend
-function bLv(x){const [id,l,a]=x.split("~"),r=RL[id];if(r&&l!==undefined){const lv=Math.max(0,Math.min(r.mx,+l||0)),s={l:lv,a:(a||"").split(".").map(Number)};
- if(s.a.length!==r.ab.length||s.a.some((v,i)=>!(v>=0&&v<=r.ab[i].mx)||(v&&r.ab[i].rq>lv))||rlFree(r,s)<0)s.a=rlAuto(r,lv);RLV[id]=s}return id}
+// "id~level~a.b.c": a relic's level and ability points; invalid spends are trimmed to fit
+function bLv(x){const [id,l,a]=x.split("~"),r=RL[id];if(r&&l!==undefined){RLV[id]=rlFit(r,Math.max(0,Math.min(r.mx,+l||0)),(a||"").split(".").map(Number))}return id}
 function bHash(){return "#build/"+BS.p+"/"+Object.entries(BS.s).filter(([,v])=>v.length).map(([k,v])=>k+"="+v.map(id=>RL[id]?`${id}~${rlState(id).l}~${rlState(id).a.join(".")}`:id).join(",")).join("|")}
 function bSave(){history.replaceState(null,"",bHash());buildPage()}
 function bPreset(role){
@@ -134,33 +133,47 @@ function recipeTree(d){
 
 /* ---------- relic levels: per-level stats from the pack's Relics configs (RL, tools/relic_levels.py) ---------- */
 var RLV={},RLMAX=Math.max(...Object.values(RL).map(r=>r.mx));
-// 1 point per relic level, spent round-robin on unlocked abilities (lowest level first)
+// 1 point per relic level (IRelicItem.addLevel), spent round-robin on unlocked abilities (lowest level first)
 function rlAuto(r,l){const a=r.ab.map(()=>0);let p=0;
  for(let lv=1;lv<=l;lv++){p++;for(;;){let b=-1;r.ab.forEach((x,i)=>{if(x.rq<=lv&&a[i]<x.mx&&x.pt<=p&&(b<0||a[i]<a[b]))b=i});if(b<0)break;p-=r.ab[b].pt;a[b]++}}
  return a}
-function rlState(id){const r=RL[id];if(!RLV[id]){const l=Math.min(st.rl,r.mx);RLV[id]={l,a:rlAuto(r,l)}}return RLV[id]}
+// keep a manual spend valid for level l: drop locked or over-max points, then refund from the last ability until it fits
+function rlFit(r,l,a){const s={l,a:r.ab.map((x,i)=>x.rq>l?0:Math.max(0,Math.min(x.mx,a?a[i]|0:0)))};
+ for(let i=s.a.length-1;i>=0&&rlFree(r,s)<0;)s.a[i]?s.a[i]--:i--;return s}
+function rlState(id){const r=RL[id];return RLV[id]||(RLV[id]=rlFit(r,Math.min(st.rl,r.mx)))}
 function rlFree(r,s){return s.l-r.ab.reduce((n,x,i)=>n+s.a[i]*x.pt,0)}
-function rlRaw(t,z){const f=v=>(t.op==="A"?v+t.m*z:t.op==="MB"?v+v*t.m*z:v*Math.pow(t.m+1,z))*t.x;return [f(t.lo),f(t.hi)].sort((p,q)=>p-q)}
-function rlStat(t,z){const a=rlRaw(t,z).map(v=>String(+v.toFixed(Math.abs(v)<1?3:2)));
+const jround=v=>Math.floor(v+.5);
+// IRelicItem.getAbilityValue: upgrade op, clamp to the config thresholds, round to 5 places
+function rlVal(t,x,z){let v=t.op==="A"?x+t.m*z:t.op==="MB"?x+x*t.m*z:x*Math.pow(t.m+1,z);
+ if(t.t[0]!=null)v=Math.max(v,t.t[0]);if(t.t[1]!=null)v=Math.min(v,t.t[1]);return jround(v*1e5)/1e5}
+// the relic's own formatValue, as a stack program pulled from its bytecode; prints like Java's String.valueOf
+function rlFmt(p,v){const k=[];let int=0;
+ for(const o of p){if(typeof o==="number")k.push(o);else if(o==="v")k.push(v);else if(o==="I")int=1;else if(o==="D")int=0;
+  else if(o==="R"){const n=k.pop(),f=Math.pow(10,n);k.push(jround(k.pop()*f)/f)}else if(o==="r")k.push(jround(k.pop()));else if(o==="i")k.push(Math.trunc(k.pop()));else if(o==="n")k.push(-k.pop());
+  else{const b=k.pop(),a=k.pop();k.push(o==="+"?a+b:o==="-"?a-b:o==="*"?a*b:a/b)}}
+ const r=k.pop();return int||!Number.isInteger(r)?String(r):r+".0"}
+function rlStat(t,z){const a=[rlVal(t,t.lo,z),rlVal(t,t.hi,z)].sort((p,q)=>p-q).map(v=>rlFmt(t.p,v));
  return t.f.replace("%1$s",a[0]===a[1]?a[0]:a[0]+" ~ "+a[1]).replace(/%%/g,"%").replace(/\.$/,"")}
 function rlXp(r,l){let t=0;for(let i=0;i<l;i++)t+=r.xp[0]+r.xp[1]*i;return t}
-function rlTip(d){const r=RL[d.id],l=Math.min(st.rl,r.mx),a=rlAuto(r,l);
- return `<div class="trl"><b>Relic level ${l} / ${r.mx}</b>${r.ab.map((x,i)=>x.rq>l?`<p class="trlk">🔒 ${esc(x.n)}: unlocks at level ${x.rq}</p>`:`<p><b>${esc(x.n)}</b> <small>${a[i]}/${x.mx}</small>${x.st.map(t=>` · ${esc(t.n)} ${esc(rlStat(t,a[i]))}`).join("")}</p>`).join("")}</div>`}
+// tooltip: no spend is assumed, so each ability shows its base and the most this level could buy for it alone
+function rlTip(d){const r=RL[d.id],l=Math.min(st.rl,r.mx);
+ return `<div class="trl"><b>Relic level ${l} / ${r.mx}</b> <small>${l} point${l===1?"":"s"} to spend</small>${r.ab.map(x=>{if(x.rq>l)return `<p class="trlk">🔒 ${esc(x.n)}: unlocks at level ${x.rq}</p>`;
+  const z=Math.min(x.mx,Math.floor(l/x.pt));return `<p><b>${esc(x.n)}</b>${x.st.length?` <small>${z?`up to ${z}/${x.mx}`:`0/${x.mx}`}</small>${x.st.map(t=>` · ${esc(t.n)} ${esc(rlStat(t,0))}${z?` → ${esc(rlStat(t,z))}`:""}`).join("")}`:" <small>passive</small>"}</p>`}).join("")}</div>`}
 function rlBody(id,compact){const r=RL[id],s=rlState(id),free=rlFree(r,s);
- return `<p class="rls"><b>Level ${s.l} / ${r.mx}</b> · <span class="${free?"rlf":""}">${free} point${free===1?"":"s"} free</span> <button class="ghost" data-rlx="auto">Auto-spend</button></p>
- ${r.ab.map((x,i)=>{const lock=x.rq>s.l;return `<div class="rla${lock?" lk":""}"><div class="rlah"><b>${esc(x.n)}</b>${lock?`<span>🔒 unlocks at relic level ${x.rq}</span>`:`<span>level ${s.a[i]} / ${x.mx}${x.pt>1?` · ${x.pt} points each`:""}</span><button class="chip" data-rlx="-${i}"${s.a[i]?"":" disabled"} aria-label="Lower ${esc(x.n)}">−</button><button class="chip" data-rlx="+${i}"${s.a[i]<x.mx&&free>=x.pt?"":" disabled"} aria-label="Raise ${esc(x.n)}">+</button>`}</div>${x.st.length?`<ul>${x.st.map(t=>`<li>${esc(t.n)}: <b>${esc(rlStat(t,lock?0:s.a[i]))}</b></li>`).join("")}</ul>`:""}</div>`}).join("")}
- ${compact?"":`<p class="note">Each relic level gives 1 point to spend on abilities; Auto-spend spreads them evenly. Numbers come from this pack's own config: a new relic rolls a random base inside the range, and ability upgrades scale it. Reaching level ${s.l} takes ${rlXp(r,s.l).toLocaleString()} relic XP.</p>`}`}
+ return `<p class="rls"><b>Level ${s.l} / ${r.mx}</b> · <span class="${free?"rlf":""}">${free} point${free===1?"":"s"} free</span> <button class="ghost" data-rlx="auto">Auto-spend</button>${s.a.some(Boolean)?` <button class="ghost" data-rlx="reset">Reset</button>`:""}</p>
+ ${r.ab.map((x,i)=>{const lock=x.rq>s.l;return `<div class="rla${lock?" lk":""}"><div class="rlah"><b>${esc(x.n)}</b>${lock?`<span>🔒 unlocks at relic level ${x.rq}</span>`:!x.mx?`<span>passive, no upgrades</span>`:`<span>level ${s.a[i]} / ${x.mx}${x.pt>1?` · ${x.pt} points each`:""}</span><button class="chip" data-rlx="-${i}"${s.a[i]?"":" disabled"} aria-label="Lower ${esc(x.n)}">−</button><button class="chip" data-rlx="+${i}"${s.a[i]<x.mx&&free>=x.pt?"":" disabled"} aria-label="Raise ${esc(x.n)}">+</button>`}</div>${x.st.length?`<ul>${x.st.map(t=>`<li>${esc(t.n)}: <b>${esc(rlStat(t,lock?0:s.a[i]))}</b></li>`).join("")}</ul>`:""}</div>`}).join("")}
+ ${compact?"":`<p class="note">Each relic level gives 1 point; spend them with + and −, or let Auto-spend spread them evenly. Values follow this pack's config and the mod's own rounding: a new relic rolls a random base inside the range, upgrades scale it, and some stats have a hard cap. Reaching level ${s.l} takes ${rlXp(r,s.l).toLocaleString()} relic XP.</p>`}`}
 function rlPanel(id,compact){const r=RL[id],s=rlState(id);
  return `<div class="rlp${compact?" sm":""}" data-rl="${esc(id)}"><label class="rlh">${compact?esc(BYID[id].n):"Relic level"} <input type="range" min="0" max="${r.mx}" value="${s.l}" data-rlv aria-label="Relic level"></label><div class="rlb">${rlBody(id,compact)}</div></div>`}
 function rlDraw(p){p.querySelector(".rlb").innerHTML=rlBody(p.dataset.rl,p.classList.contains("sm"))}
-document.addEventListener("input",e=>{const v=e.target.closest("[data-rlv]");if(!v)return;const p=v.closest("[data-rl]"),r=RL[p.dataset.rl];RLV[p.dataset.rl]={l:+v.value,a:rlAuto(r,+v.value)};rlDraw(p)});
+document.addEventListener("input",e=>{const v=e.target.closest("[data-rlv]");if(!v)return;const p=v.closest("[data-rl]"),id=p.dataset.rl;RLV[id]=rlFit(RL[id],+v.value,rlState(id).a);rlDraw(p)});
 document.addEventListener("change",e=>{if(e.target.closest("[data-rlv]")&&location.hash.startsWith("#build"))bSave()});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-rlx]");if(!b)return;const p=b.closest("[data-rl]"),id=p.dataset.rl,r=RL[id],s=rlState(id),x=b.dataset.rlx;
- if(x==="auto")s.a=rlAuto(r,s.l);else s.a[+x.slice(1)]+=x[0]==="+"?1:-1;
+ if(x==="auto")s.a=rlAuto(r,s.l);else if(x==="reset")s.a=s.a.map(()=>0);else s.a[+x.slice(1)]+=x[0]==="+"?1:-1;
  location.hash.startsWith("#build")?bSave():rlDraw(p)});
-// slots a levelled relic adds, at the lowest roll (e.g. Leather Belt "Charms")
+// slots a levelled relic adds: the mod applies Math.round to the value; lowest roll (e.g. Leather Belt "Charms")
 function rlSlots(id){const r=RL[id],s=rlState(id),o={};
- r.ab.forEach((x,i)=>{if(x.rq<=s.l)x.st.forEach(t=>{const k=/slots?/i.test(t.f)&&Object.keys(SLOT_BASE).find(k=>k.toLowerCase()===t.n.toLowerCase().replace(/s$/,""));if(k)o[k]=(o[k]||0)+Math.floor(rlRaw(t,s.a[i])[0])})});return o}
+ r.ab.forEach((x,i)=>{if(x.rq<=s.l)x.st.forEach(t=>{const k=/slots?/i.test(t.f)&&Object.keys(SLOT_BASE).find(k=>k.toLowerCase()===t.n.toLowerCase().replace(/s$/,""));if(k)o[k]=(o[k]||0)+jround(Math.min(rlVal(t,t.lo,s.a[i]),rlVal(t,t.hi,s.a[i])))})});return o}
 
 /* ---------- evolutions: More Relics "evolves from", Somake Spells spellbook tiers ---------- */
 var EVO=null;

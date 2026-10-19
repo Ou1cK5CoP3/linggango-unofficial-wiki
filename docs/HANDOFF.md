@@ -86,23 +86,26 @@ Code lives in `src/features.js` and `src/features.css`. `build.py` puts `feature
 
 ## Relic levels and evolutions (19 Oct 2026)
 - **Scope:** only Relics and More Relics items level up (49 curios). No other mod in the pack has per-item progression.
-- **Data:** `python -I tools/relic_levels.py [instance]` writes `src/data/RL.json`. It reads:
-  - `config/relics/relics/*.yaml` and `config/morerelics/relics/*.yaml` from the instance;
-  - the `en_us.json` lang files inside both jars, for ability and stat names and formats.
-  - Rerun it after a pack update, then rebuild.
-- **Formulas** (from the Relics mod; x = rolled base, y = `upgradeModifier`, z = ability level):
-  - ADD: x + y·z
-  - MULTIPLY_BASE: x + x·y·z
-  - MULTIPLY_TOTAL: x·(y+1)^z
-- **Leveling assumptions:**
-  - Each relic level gives 1 point. An ability unlocks at `requiredLevel` and costs `requiredPoints` per level.
-  - Auto-spend spreads points round-robin, lowest ability level first.
-- **Display factor:** some stats show ×100 as percents. The factor is matched against the wiki's own text. 12 of 145 stats didn't match and fall back to a rule ("%%" in the format and a value under 10 → ×100). Most of those are pack values that differ from the old wiki; for example, the pack's Wonder of U cooldown is 12→8 s, while the wiki says 16→12 s. The tool prints the list.
+- **Data:** `python -I tools/relic_levels.py [instance]` writes `src/data/RL.json`. It needs a JDK (`javap`) and reads:
+  - `config/relics/relics/*.yaml` and `config/morerelics/relics/*.yaml` from the instance, for ranges, modifiers, thresholds and costs;
+  - the `en_us.json` lang files inside both jars, for ability and stat names and formats;
+  - each relic class's `formatValue` lambda, read from the jar bytecode and turned into a small stack program (`p`) that the site runs in `rlFmt`.
+  - Rerun it after a pack update, then rebuild. It prints any lambda it can't translate; right now there are none.
+- **Game rules, checked in the bytecode (`IRelicItem`):**
+  - Value = ADD x + y·z, MULTIPLY_BASE x + x·y·z, MULTIPLY_TOTAL x·(y+1)^z, where x is the rolled base, y is `upgradeModifier` and z is the ability level. The result is clamped to `min/maxThresholdValue` and rounded to 5 places.
+  - Display uses `formatValue`. Doubles print like Java (`7.0`), and Java's `Math.round` rounds half up.
+  - `addLevel` gives 1 point per relic level. An ability unlocks at `requiredLevel` and costs `requiredPoints` per level.
+  - An ability with no stats can't be upgraded. `maxLevel: -1` means relic max ÷ `requiredPoints`.
+  - Slot relics (Drowned, Hunter and Leather Belt) grant `Math.round(value)` slots.
+  - Relic XP to reach level L is the sum over i < L of (initialCost + step·i).
+- **Pack vs public wiki:** this pack's configs differ from the defaults documented on public Relics wikis. For example, Drowned Belt charms are base 2, +0.1 per level, capped at 3, while the guides say 0–2 base and +1 per level. The site follows the pack.
 - **UI:**
-  - Item pages get a "Relic levels" panel with a level slider, per-ability −/+ steppers and Auto-spend.
-  - The Path filter bar has a global relic-level slider (`st.rl`, saved); tooltips show stats at that level.
-  - The Builder shows a panel for each equipped relic. Share links encode the level as `id~level~a.b.c`.
-  - Slots a relic adds (e.g. Leather Belt charms) count its lowest roll.
+  - Points start unspent. Auto-spend (round-robin, lowest ability first) and Reset are buttons.
+  - Moving the level slider keeps your spend and trims it if it no longer fits (`rlFit`).
+  - Item pages get a "Relic levels" panel with the slider and per-ability −/+ steppers.
+  - The Path filter bar has a global relic-level slider (`st.rl`, saved). Tooltips assume no spend: each ability shows its base value → the most that level could buy for that ability alone.
+  - The Builder shows a panel for each equipped relic. Share links encode the level as `id~level~a.b.c`, and invalid spends are trimmed.
+  - Slots a relic adds count its lowest roll.
 - **Evolutions:** built from src lines "evolves from X" plus the Somake Spells I/II/III names, giving 12 chains (e.g. Converging Orb → Wonder of U; Slumbering → Whispering Amulet → Made in Heaven). They appear in tooltips, as an "Evolution" section on item pages and as an "Evolve →" button in the Builder.
 - **Note:** Wonder of U maxes at relic level 13, not 15.
 
