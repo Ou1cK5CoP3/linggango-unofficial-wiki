@@ -22,6 +22,8 @@
 .bxi{display:flex;align-items:center;gap:6px;min-width:0;height:100%;padding:0 4px 0 8px;border:0;background:none;color:inherit;font:inherit;cursor:pointer;text-align:left}
 .bxr{flex:none;align-self:stretch;padding:0 8px;border:0;border-left:1px solid var(--line);background:none;color:var(--mute);font:16px var(--body);cursor:pointer}
 .bxr:hover{color:#e0565b}
+.bx.xtra{border-color:#6fbf4f;color:#6fbf4f;background:color-mix(in srgb,#6fbf4f 10%,var(--tile))}
+.bx.xtra:hover,.bx.xtra.sel{border-style:solid;border-color:var(--accent);color:var(--accent)}
 .bx.late,.bx.over{border-color:#e0565b;background:color-mix(in srgb,#e0565b 12%,var(--tile))}
 .bside{display:flex;flex-direction:column;gap:14px;position:sticky;top:76px;max-height:calc(100vh - 92px);overflow:auto}
 .bside h2{font-size:15px;margin:0 0 8px}

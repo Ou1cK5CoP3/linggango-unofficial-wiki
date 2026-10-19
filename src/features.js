@@ -61,8 +61,8 @@ function buildPage(h){
  eq.forEach(id=>statsOf(BYID[id]).forEach(s=>tot[s.k]=Math.round(((tot[s.k]||0)+s.v*(lf[id]??1))*100)/100));
  const late=eq.filter(id=>!bAvail(BYID[id])).length;
  const row=k=>{const have=BS.s[k]||[],cap=caps[k],n=Math.max(cap,have.length);let b="";
-  for(let i=0;i<n;i++){const id=have[i];if(id){const d=BYID[id];b+=`<span class="bx on${bAvail(d)?"":" late"}${i>=cap?" over":""}${BINSP===id?" sel":""}"><button class="bxi" data-insp="${esc(id)}" data-t="${d.ix}" title="Show recipe and details">${img(id)}<span>${esc(d.n)}</span></button><button class="bxr" data-rm="${esc(k)}|${esc(id)}" aria-label="Remove ${esc(d.n)}" title="Remove">×</button></span>`}
-   else b+=`<button class="bx${BPICK===k?" sel":""}" data-pick="${esc(k)}" aria-label="Add ${esc(k)} curio">+</button>`}
+  for(let i=0;i<n;i++){const id=have[i],xt=i>=SLOT_BASE[k]&&i<cap?" xtra":"";if(id){const d=BYID[id];b+=`<span class="bx on${xt}${bAvail(d)?"":" late"}${i>=cap?" over":""}${BINSP===id?" sel":""}"><button class="bxi" data-insp="${esc(id)}" data-t="${d.ix}" title="Show recipe and details">${img(id)}<span>${esc(d.n)}</span></button><button class="bxr" data-rm="${esc(k)}|${esc(id)}" aria-label="Remove ${esc(d.n)}" title="Remove">×</button></span>`}
+   else b+=`<button class="bx${xt}${BPICK===k?" sel":""}" data-pick="${esc(k)}" aria-label="Add ${esc(k)} curio"${xt?' title="Bonus slot from an equipped curio"':""}>+</button>`}
   return `<div class="bslot"><div class="bsh"><b>${esc(k)}</b><span class="${have.length>cap?"bad":""}">${have.length}/${cap}</span>${caps[k]>SLOT_BASE[k]?`<em>+${caps[k]-SLOT_BASE[k]}</em>`:""}</div><div class="bsb">${b}</div></div>`};
  const stats=Object.entries(tot).filter(([,v])=>v).sort((a,b)=>a[0].localeCompare(b[0]));
  el("main").innerHTML=`${crumb("Build planner")}<h1>Build planner</h1>
