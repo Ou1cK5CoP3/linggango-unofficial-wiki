@@ -27,7 +27,7 @@
 .bx.late,.bx.over{border-color:#e0565b;background:color-mix(in srgb,#e0565b 12%,var(--tile))}
 .bside{display:flex;flex-direction:column;gap:14px;position:sticky;top:76px;max-height:calc(100vh - 92px);overflow:auto}
 .bside h2{font-size:15px;margin:0 0 8px}
-.bpick,.bstats,.bfx{border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:12px}
+.bpick,.bpane{border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:12px}
 .bph{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .bpick input{width:100%;box-sizing:border-box;margin-bottom:8px}
 .bopts{display:flex;flex-direction:column;gap:4px;max-height:340px;overflow:auto}
@@ -44,12 +44,22 @@
 .bopt span{display:flex;flex-direction:column;min-width:0}
 .bopt b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bopt small{color:var(--mute);font-size:11px}
-.bstats table{width:100%;border-collapse:collapse;font-size:13px}
-.bstats td{padding:3px 0;border-bottom:1px solid var(--line)}
-.bstats td.num{text-align:right;font-weight:700;color:#3fae5f}
-.bstats td.neg{color:#e0565b}
-.bfx ul{margin:0;padding-left:16px;font-size:12px;line-height:1.5;color:var(--mute)}
-.bfx a{font-weight:600}
+.bpane table{width:100%;border-collapse:collapse;font-size:13px}
+.bpane td{padding:3px 0;border-bottom:1px solid var(--line)}
+.bpane td.num{text-align:right;font-weight:700;color:#3fae5f}
+.bpane td.neg{color:#e0565b}
+.bpgx>ul{margin:0;padding-left:16px;font-size:12px;line-height:1.5;color:var(--mute)}
+.bpgx>ul a{font-weight:600}
+.bpane{display:grid;gap:10px}.bpane:focus{outline:none}
+.bpnav{display:flex;align-items:center;gap:8px}
+.bpar{font-size:18px;line-height:1;padding:4px 12px}.bpar:disabled{opacity:.4;cursor:default}
+.bpt{flex:1;min-width:0;display:grid;text-align:center}
+.bpt small{font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.04em}
+.bpt b{font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bptabs{display:flex;flex-wrap:wrap;justify-content:center;gap:4px}
+.bptabs .chip{display:grid;place-items:center;min-width:30px;height:30px;padding:2px 6px}
+.bptabs img,.bptabs .ph{width:22px;height:22px;image-rendering:pixelated;overflow:hidden;font-size:8px}
+.bpgx .rlp.sm{padding-top:0;border-bottom:0}
 @media (max-width:860px){.bgrid{grid-template-columns:1fr}.bside{position:static;max-height:none}.bside .bopts{max-height:340px}.bact{margin-left:0}}
 @media (max-width:520px){.bslot{grid-template-columns:1fr;gap:4px}.bsh{padding-top:0}.bx.on{max-width:100%}}
 /* ===== bosses ===== */

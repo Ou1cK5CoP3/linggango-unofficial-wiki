@@ -1162,7 +1162,7 @@ body:not(.hub) #main{background:var(--bg)}
 .bx.late,.bx.over{border-color:#e0565b;background:color-mix(in srgb,#e0565b 12%,var(--tile))}
 .bside{display:flex;flex-direction:column;gap:14px;position:sticky;top:76px;max-height:calc(100vh - 92px);overflow:auto}
 .bside h2{font-size:15px;margin:0 0 8px}
-.bpick,.bstats,.bfx{border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:12px}
+.bpick,.bpane{border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:12px}
 .bph{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .bpick input{width:100%;box-sizing:border-box;margin-bottom:8px}
 .bopts{display:flex;flex-direction:column;gap:4px;max-height:340px;overflow:auto}
@@ -1179,12 +1179,22 @@ body:not(.hub) #main{background:var(--bg)}
 .bopt span{display:flex;flex-direction:column;min-width:0}
 .bopt b{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bopt small{color:var(--mute);font-size:11px}
-.bstats table{width:100%;border-collapse:collapse;font-size:13px}
-.bstats td{padding:3px 0;border-bottom:1px solid var(--line)}
-.bstats td.num{text-align:right;font-weight:700;color:#3fae5f}
-.bstats td.neg{color:#e0565b}
-.bfx ul{margin:0;padding-left:16px;font-size:12px;line-height:1.5;color:var(--mute)}
-.bfx a{font-weight:600}
+.bpane table{width:100%;border-collapse:collapse;font-size:13px}
+.bpane td{padding:3px 0;border-bottom:1px solid var(--line)}
+.bpane td.num{text-align:right;font-weight:700;color:#3fae5f}
+.bpane td.neg{color:#e0565b}
+.bpgx>ul{margin:0;padding-left:16px;font-size:12px;line-height:1.5;color:var(--mute)}
+.bpgx>ul a{font-weight:600}
+.bpane{display:grid;gap:10px}.bpane:focus{outline:none}
+.bpnav{display:flex;align-items:center;gap:8px}
+.bpar{font-size:18px;line-height:1;padding:4px 12px}.bpar:disabled{opacity:.4;cursor:default}
+.bpt{flex:1;min-width:0;display:grid;text-align:center}
+.bpt small{font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.04em}
+.bpt b{font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bptabs{display:flex;flex-wrap:wrap;justify-content:center;gap:4px}
+.bptabs .chip{display:grid;place-items:center;min-width:30px;height:30px;padding:2px 6px}
+.bptabs img,.bptabs .ph{width:22px;height:22px;image-rendering:pixelated;overflow:hidden;font-size:8px}
+.bpgx .rlp.sm{padding-top:0;border-bottom:0}
 @media (max-width:860px){.bgrid{grid-template-columns:1fr}.bside{position:static;max-height:none}.bside .bopts{max-height:340px}.bact{margin-left:0}}
 @media (max-width:520px){.bslot{grid-template-columns:1fr;gap:4px}.bsh{padding-top:0}.bx.on{max-width:100%}}
 /* ===== bosses ===== */
@@ -5216,6 +5226,20 @@ function bInspHtml(){
  return `<div class="binsp"><div class="bph"><b class="bih">${img(d.id)}<span>${esc(d.n)}<small>${esc(d.sl.join(", "))} · ${esc(actL(d.t))} · ${esc(d.m)}</small></span></b><button class="ghost" data-insp="">Close</button></div>
 <p class="bifx">${fmt(d.fx)}</p>${SK.i[d.id]?`<p class="bisk">${skTag(d.id)} <a href="#i${d.ix}">why?</a></p>`:""}${d.gr?tipRecipe(d).replace(/,18px\)/,",30px)"):""}${tree?`<h3>Recipe tree</h3><ul class="rtree">${tree}</ul><p class="note">Click an ingredient to open its recipe here.</p>`:how?`<h3>How to get it</h3><ul class="bihow">${how}</ul>`:""}
 <p class="biact">${k0?`<button class="chip" data-rm="${esc(k0)}|${esc(d.id)}">Remove from ${esc(k0)}</button>`:""}${bAvail(d)?adds:k0?"":`<span class="note">Past your selected Path.</span>`} <a href="#i${d.ix}">Open full page →</a></p></div>`}
+// side box: one page at a time (stats, each relic copy, effects), switched by arrows, tabs or ←/→
+var BPANE="stats";
+function bPaneHtml(pages){let c=pages.findIndex(p=>p[0]===BPANE);if(c<0)c=0;BPANE=pages[c][0];const n=pages.length;
+ return `<div class="bpane" tabindex="-1"><div class="bpnav"><button class="chip bpar" data-pgs="-1" aria-label="Previous panel"${n>1?"":" disabled"}>‹</button><div class="bpt" aria-live="polite"><small></small><b></b></div><button class="chip bpar" data-pgs="1" aria-label="Next panel"${n>1?"":" disabled"}>›</button></div>
+${n>1?`<div class="bptabs">${pages.map((p,i)=>`<button class="chip" data-pgi="${i}" title="${esc(p[2])}" aria-label="${esc(p[2])}">${p[4]?img(p[4]):esc(p[2])}</button>`).join("")}</div>`:""}
+${pages.map((p,i)=>`<section class="bpgx" data-k="${esc(p[0])}" data-h="${esc(p[1])}" data-t="${esc(p[2])}"${i===c?"":" hidden"}>${p[3]}</section>`).join("")}</div>`}
+function bPaneGo(i){const box=el("main").querySelector(".bpane"),g=[...box.querySelectorAll(".bpgx")],n=g.length;i=(i+n)%n;
+ g.forEach((x,j)=>x.hidden=j!==i);box.querySelectorAll("[data-pgi]").forEach((b,j)=>b.setAttribute("aria-pressed",j===i));
+ BPANE=g[i].dataset.k;box.querySelector(".bpt small").textContent=`${g[i].dataset.h} · ${i+1} / ${n}`;box.querySelector(".bpt b").textContent=g[i].dataset.t;
+ const sd=box.closest(".bside");if(sd&&sd.scrollTop>box.offsetTop)sd.scrollTop=box.offsetTop}
+function bPaneWire(){const box=el("main").querySelector(".bpane"),cur=()=>[...box.querySelectorAll(".bpgx")].findIndex(x=>!x.hidden);
+ box.addEventListener("click",e=>{const s=e.target.closest("[data-pgs]"),t=e.target.closest("[data-pgi]");if(s)bPaneGo(cur()+ +s.dataset.pgs);else if(t)bPaneGo(+t.dataset.pgi)});
+ box.addEventListener("keydown",e=>{if((e.key==="ArrowLeft"||e.key==="ArrowRight")&&!e.target.closest("input,select,textarea")){e.preventDefault();bPaneGo(cur()+(e.key==="ArrowLeft"?-1:1))}});
+ bPaneGo(cur())}
 function buildPage(h){
  if(h!==undefined){bParse(h);BPICK=null;BINSP=null}
  document.title="Build planner · Linggango Relic Wiki";
@@ -5227,6 +5251,10 @@ function buildPage(h){
    else b+=`<button class="bx${xt}${BPICK===k?" sel":""}" data-pick="${esc(k)}" aria-label="Add ${esc(k)} curio"${xt?' title="Bonus slot from an equipped curio"':""}>+</button>`}
   return `<div class="bslot"><div class="bsh"><b>${esc(k)}</b><span class="${have.length>cap?"bad":""}">${have.length}/${cap}</span>${caps[k]>SLOT_BASE[k]?`<em>+${caps[k]-SLOT_BASE[k]}</em>`:""}</div><div class="bsb">${b}</div></div>`};
  const stats=Object.entries(tot).filter(([,v])=>v).sort((a,b)=>a[0].localeCompare(b[0]));
+ const pages=[["stats","Build","Stat totals",`${stats.length?`<table>${stats.map(([k,v])=>`<tr><td>${esc(k.replace(/ %$/,""))}</td><td class="num ${v<0?"neg":""}">${v>0?"+":""}${v}${/ %$/.test(k)?"%":""}</td></tr>`).join("")}</table>`:`<p class="note">Add curios to see totals.</p>`}
+<p class="note">Only flat "+N Stat" lines are added up, and a second copy counts only if its bonus stacks${Object.values(lf).some(v=>v<1)?", and ladder-reduced curios count at their reduced share":""}. Effects, conditions and multipliers are on the Effects page instead.</p>`]];
+ bKeys().filter(k=>RL[rlId(k)]).forEach(k=>{const id=rlId(k),c=k.split("#")[1]||(bWorn(id)>1?1:0);pages.push(["rl:"+k,"Relic levels",BYID[id].n+(c?" #"+c:""),rlPanel(k,true)+`<p class="note">Slots a relic adds count its lowest roll.</p>`,id])});
+ if(eq.length)pages.push(["fx","Build","Effects",`<ul>${uq.map(id=>{const d=BYID[id],n=bWorn(id);const k=Object.keys(BS.s).find(k=>BS.s[k].includes(id)),nx=(evo().to[id]||[]).filter(t=>bFits(BYID[t],k));return `<li><a href="#i${d.ix}" data-t="${d.ix}">${esc(d.n)}</a>${n>1?` ×${n}${SK.i[id]?" "+skTag(id):""}`:""}: ${esc(d.fx)}${lf[id]<1?` <span class="sk sk-${lf[id]?"l":"n"}" title="Outranked by a better ${esc(SK.i[id].l[0])} curio in this build">${esc(SK.i[id].l[0])} ladder: ${lf[id]?pct(lf[id])+" strength":"switched off"}</span>`:""}${nx.map(t=>` <button class="chip" data-evo="${esc(k)}|${esc(id)}|${esc(t)}">Evolve → ${esc(BYID[t].n)}</button>`).join("")}</li>`}).join("")}</ul>`]);
  el("main").innerHTML=`${crumb("Build planner")}<h1>Build planner</h1>
 <p class="lede">Pick the furthest Path you've reached, then fill your curio slots. Slot counts are the base pack's player slots; curios that add slots raise them, and the Curio slot takes any accessory. Hover any curio for its tooltip; click it to see its recipe tree, and use × to take it off.</p>
 <div class="bbar"><label>Progress <select id="bp">${ORDER.map(a=>`<option value="${a}"${a===BS.p?" selected":""}>${esc(actL(a))}${a?" · "+esc(ACT[a][1]):""}</option>`).join("")}</select></label>
@@ -5235,10 +5263,7 @@ function buildPage(h){
 ${late?`<p class="bwarn">${late} curio${late>1?"s are":" is"} past your selected Path (marked red).</p>`:""}
 <div class="bgrid"><div class="bslots">${Object.keys(SLOT_BASE).map(row).join("")}</div>
 <aside class="bside">${bInspHtml()}${BPICK?`<div class="bpick"><div class="bph"><b>Add to ${esc(BPICK)}</b><button class="ghost" id="bpx">Close</button></div><input id="bq" type="search" placeholder="Search name, effect or mod" autocomplete="off"><div id="bopts" class="bopts">${bPickHtml()}</div></div>`:""}
-<div class="bstats"><h2>Stat totals</h2>${stats.length?`<table>${stats.map(([k,v])=>`<tr><td>${esc(k.replace(/ %$/,""))}</td><td class="num ${v<0?"neg":""}">${v>0?"+":""}${v}${/ %$/.test(k)?"%":""}</td></tr>`).join("")}</table>`:`<p class="note">Add curios to see totals.</p>`}
-<p class="note">Only flat "+N Stat" lines are added up, and a second copy counts only if its bonus stacks${Object.values(lf).some(v=>v<1)?", and ladder-reduced curios count at their reduced share":""}. Effects, conditions and multipliers are listed below instead.</p></div>
-${eq.some(id=>RL[id])?`<div class="bfx brl"><h2>Relic levels</h2>${bKeys().filter(k=>RL[rlId(k)]).map(k=>rlPanel(k,true)).join("")}<p class="note">Slots a relic adds count its lowest roll.</p></div>`:""}
-${eq.length?`<div class="bfx"><h2>Effects</h2><ul>${uq.map(id=>{const d=BYID[id],n=bWorn(id);const k=Object.keys(BS.s).find(k=>BS.s[k].includes(id)),nx=(evo().to[id]||[]).filter(t=>bFits(BYID[t],k));return `<li><a href="#i${d.ix}" data-t="${d.ix}">${esc(d.n)}</a>${n>1?` ×${n}${SK.i[id]?" "+skTag(id):""}`:""}: ${esc(d.fx)}${lf[id]<1?` <span class="sk sk-${lf[id]?"l":"n"}" title="Outranked by a better ${esc(SK.i[id].l[0])} curio in this build">${esc(SK.i[id].l[0])} ladder: ${lf[id]?pct(lf[id])+" strength":"switched off"}</span>`:""}${nx.map(t=>` <button class="chip" data-evo="${esc(k)}|${esc(id)}|${esc(t)}">Evolve → ${esc(BYID[t].n)}</button>`).join("")}</li>`}).join("")}</ul></div>`:""}</aside></div>`;
+${bPaneHtml(pages)}</aside></div>`;
  el("bp").onchange=e=>{BS.p=+e.target.value;bSave()};
  el("bclr").onclick=()=>{BS.s={};BPICK=null;bSave()};
  el("bcopy").onclick=()=>{const u=location.href;(navigator.clipboard?navigator.clipboard.writeText(u):Promise.reject()).then(()=>{el("bcopy").textContent="Link copied"},()=>prompt("Copy this link:",u))};
@@ -5250,6 +5275,7 @@ ${eq.length?`<div class="bfx"><h2>Effects</h2><ul>${uq.map(id=>{const d=BYID[id]
   else if(p){BPICK=p.dataset.pick;buildPage()}
   else if(rm){const [k,id]=rm.dataset.rm.split("|");const a=BS.s[k]||[],i=a.lastIndexOf(id);if(i>=0)a.splice(i,1);hideTip();bSave()}
   else if(ad){const [k,id]=ad.dataset.add.split("|");(BS.s[k]=BS.s[k]||[]).push(id);if((BS.s[k].length>=bCaps()[k]))BPICK=null;hideTip();bSave()}};
+ bPaneWire();
  el("main").querySelector(".bpre").onclick=e=>{const b=e.target.closest("[data-preset]");if(b){BPICK=null;bPreset(b.dataset.preset)}};
 }
 
@@ -5351,8 +5377,8 @@ function rlBody(id,compact){const r=RL[rlId(id)],s=rlState(id),free=rlFree(r,s),
  ${s.q.length?`<p class="rlq"><label>Roll quality <select data-rlq="all" aria-label="Set every stat's stars">${RLQO(s.q.every(v=>v===s.q[0])?s.q[0]:-2)}</select></label> ${rq>=0?`Relic ${rlStars(rq)} <small>${rq/2} / 5</small>`:`<small>pick stars to see the relic's rating</small>`}</p>`:""}
  ${r.ab.map((x,i)=>{const lock=x.rq>s.l;return `<div class="rla${lock?" lk":""}"><div class="rlah"><b>${esc(x.n)}</b>${lock?`<span>🔒 unlocks at relic level ${x.rq}</span>`:!x.mx?`<span>passive, no upgrades</span>`:`<span>level ${s.a[i]} / ${x.mx}${x.pt>1?` · ${x.pt} points each`:""}</span><button class="chip" data-rlx="-${i}"${s.a[i]?"":" disabled"} aria-label="Lower ${esc(x.n)}">−</button><button class="chip" data-rlx="+${i}"${s.a[i]<x.mx&&free>=x.pt?"":" disabled"} aria-label="Raise ${esc(x.n)}">+</button>`}</div>${x.st.length?`<ul>${x.st.map(t=>{const j=o++;return `<li>${esc(t.n)}: <b>${esc(rlStat(t,lock?0:s.a[i],s.q[j]))}</b>${t.lo===t.hi?"":` <select class="rlqs" data-rlq="${j}" aria-label="${esc(t.n)} stars">${RLQO(s.q[j],t)}</select>`}</li>`}).join("")}</ul>`:""}</div>`}).join("")}
  ${compact?"":`<p class="note">Each relic level gives 1 point; spend them with + and −, or let Auto-spend spread them evenly. Values follow this pack's config and the mod's own rounding: a new relic rolls a random base inside the range (its stars: 0 ★ is the worst roll, 5 ★ the best; the relic's rating averages its abilities), upgrades scale it, and some stats have a hard cap. Reaching level ${s.l} takes ${rlXp(r,s.l).toLocaleString()} relic XP.</p>`}`}
-function rlPanel(id,compact){const r=RL[rlId(id)],s=rlState(id),c=id.split("#")[1]||(bWorn(rlId(id))>1?1:0);
- return `<div class="rlp${compact?" sm":""}" data-rl="${esc(id)}"><label class="rlh">${compact?esc(BYID[rlId(id)].n)+(c?" #"+c:""):"Relic level"} <input type="range" min="0" max="${r.mx}" value="${s.l}" data-rlv aria-label="Relic level"></label><div class="rlb">${rlBody(id,compact)}</div></div>`}
+function rlPanel(id,compact){const r=RL[rlId(id)],s=rlState(id);
+ return `<div class="rlp${compact?" sm":""}" data-rl="${esc(id)}"><label class="rlh">Relic level <input type="range" min="0" max="${r.mx}" value="${s.l}" data-rlv aria-label="Relic level"></label><div class="rlb">${rlBody(id,compact)}</div></div>`}
 function rlDraw(p){p.querySelector(".rlb").innerHTML=rlBody(p.dataset.rl,p.classList.contains("sm"))}
 document.addEventListener("input",e=>{const v=e.target.closest("[data-rlv]");if(!v)return;const p=v.closest("[data-rl]"),id=p.dataset.rl;RLV[id]=rlFit(RL[rlId(id)],+v.value,rlState(id).a,rlState(id).q);rlDraw(p)});
 document.addEventListener("change",e=>{const g=e.target.closest("[data-rlq]");if(g){const p=g.closest("[data-rl]"),s=rlState(p.dataset.rl),v=+g.value;if(g.dataset.rlq==="all"){if(v>-2)s.q=rlStats(RL[rlId(p.dataset.rl)]).map(t=>v<0?-1:rlSnap(t,v))}else s.q[+g.dataset.rlq]=v;location.hash.startsWith("#build")?bSave():rlDraw(p);return}
