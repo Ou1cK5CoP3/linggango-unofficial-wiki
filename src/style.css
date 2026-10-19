@@ -1097,8 +1097,8 @@ body:not(.hub) #main{background:var(--bg)}
 .t:hover::after,.t:focus-visible::after{display:block!important}
 .t .slk::after{-webkit-mask:none!important;mask:none!important;background:var(--si) center/12px no-repeat!important}
 .t .ct::after{-webkit-mask:none!important;mask:none!important;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAHUlEQVR42mMUERH5z4ADMEFpRmw0TPI/NnogdAIAe98KSdZUo5EAAAAASUVORK5CYII=) center/7px no-repeat!important}
-.t,.t:hover,.t.act{transform:none!important}
-.t:hover,.t.act{top:-2px}
+.t,.t:hover,.t.act{transform:none!important;transition:none!important}
+.t:hover,.t.act{top:auto!important;z-index:auto!important}
 .t .sh::before{display:none!important}
 .t:hover .sh::before,.t:focus-visible .sh::before{display:block!important}
 /* ring-lock badge: ring icon with a lock, top-left corner; no masks or filters (hover perf) */
@@ -1119,3 +1119,11 @@ body:not(.hub) #main{background:var(--bg)}
 #tip .trc.out b{position:absolute;right:1px;bottom:0;color:#fff;text-shadow:1px 1px 0 #3f3f3f}
 #tip .tra{font-style:normal;color:#aaa;font-size:16px}
 #tip .trs{flex-basis:100%;font-size:11px;color:#9a93a8}
+/* hover perf: tooltip is a plain box that snaps into place; hovered tile runs no loops (docs/HANDOFF.md) */
+#tip.to .tfr{-webkit-mask:none!important;mask:none!important;background:none!important;border-color:var(--c1) var(--c2) color-mix(in srgb,var(--c2) 25%,transparent)}
+#tip.to .tfr::before,#tip.to .tfr::after{display:none}
+#tip.to .tbox{box-shadow:0 0 0 1px #000,0 4px 0 rgba(0,0,0,.4)}
+#tip,#tip.on,#tip.glide{transform:translate3d(var(--tx,0),var(--ty,0),0)!important;transition:opacity .08s linear!important}
+#tip *:not(.strip){animation:none!important;filter:none!important}
+.t:hover::after,.t:focus-visible::after,.t:hover .sh::before,.t:focus-visible .sh::before{display:none!important}
+.t:hover img:not(.strip),.t.act img:not(.strip){animation:none!important}

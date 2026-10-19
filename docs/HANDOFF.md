@@ -37,6 +37,13 @@ Branch `base-pack`; the original upstream branch `claude/zen-pasteur-qi26dz` is 
   - The third fix's resting `transform:translateY(0)` on every tile made each one its own paint layer; it's reversed. Hover lifts with `top:-2px` instead.
   - Tooltips open after the pointer rests 80 ms on a tile (hover intent), so a fast sweep builds none. `decorate()` now only scans the tooltip, not the whole page.
   - Result: masks on the whole page 2,137+ → 2, tooltip update about 500 ms → 12 ms.
+- **Hover lag, fifth fix** (19 Oct 2026). The aim was hover feedback on the next frame.
+  - **No 80 ms wait.** `mouseover` queues one `requestAnimationFrame`, which shows the tooltip for whatever tile is under the pointer at that moment. That gives at most one tooltip update per frame, and a fast sweep never queues stale work.
+  - **Tooltips are built once per curio**, cached in `TIPC` and swapped in with `replaceChildren`.
+  - **Tooltip effects removed:** no mask on the frame (now a plain border), no clip-path corners, no blurred shadow, no filters, no looping or entrance animations, and no 180 ms slide (it snaps to position).
+  - **Hovered tile has no lift.** Changing a tile's `top`, `transform` or `z-index` cost 4–8 ms each, because tiles are positioned elements and the browser re-sorts the stacking order of every sibling (632 in Path 0–I). Hover is now outline plus inner glow, about 0.6 ms. The spin ring, bob and shimmer on the hovered tile are gone too.
+  - **Result:** a cached tooltip swap went from 13–18 ms to about 7 ms; what's left is the tooltip's own text layout. A real-mouse sweep over 6 tiles right after load went from 5 long frames (52–96 ms) to none.
+  - **Measuring pitfall:** a test rule that loses to an existing `!important` makes an expensive property look cheap. Check the computed value before trusting a number.
 - **Ring-locked badge** (19 Oct 2026). 43 curios whose own text says they need the Ring of the Seven Curses (25) or the Ring of the Seven Virtues (18) get a corner badge: the ring's icon with a lock, red for Curses and gold for Virtues. Tooltips and item pages add a "Requires the Ring of the Seven …" line, and the legend explains the badge.
   - Detection is `RQRX` in `app.js`, which sets `d.rq`. It deliberately ignores the upstream `l:Seven Curses` tag, because that tag also covers items that only mention curses (L2 Hostility curse slots, Chthonic items).
   - The badge uses no masks, filters or transforms, so the hover fix above still holds.

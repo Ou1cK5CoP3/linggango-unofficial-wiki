@@ -1102,8 +1102,8 @@ body:not(.hub) #main{background:var(--bg)}
 .t:hover::after,.t:focus-visible::after{display:block!important}
 .t .slk::after{-webkit-mask:none!important;mask:none!important;background:var(--si) center/12px no-repeat!important}
 .t .ct::after{-webkit-mask:none!important;mask:none!important;background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAHUlEQVR42mMUERH5z4ADMEFpRmw0TPI/NnogdAIAe98KSdZUo5EAAAAASUVORK5CYII=) center/7px no-repeat!important}
-.t,.t:hover,.t.act{transform:none!important}
-.t:hover,.t.act{top:-2px}
+.t,.t:hover,.t.act{transform:none!important;transition:none!important}
+.t:hover,.t.act{top:auto!important;z-index:auto!important}
 .t .sh::before{display:none!important}
 .t:hover .sh::before,.t:focus-visible .sh::before{display:block!important}
 /* ring-lock badge: ring icon with a lock, top-left corner; no masks or filters (hover perf) */
@@ -1124,6 +1124,14 @@ body:not(.hub) #main{background:var(--bg)}
 #tip .trc.out b{position:absolute;right:1px;bottom:0;color:#fff;text-shadow:1px 1px 0 #3f3f3f}
 #tip .tra{font-style:normal;color:#aaa;font-size:16px}
 #tip .trs{flex-basis:100%;font-size:11px;color:#9a93a8}
+/* hover perf: tooltip is a plain box that snaps into place; hovered tile runs no loops (docs/HANDOFF.md) */
+#tip.to .tfr{-webkit-mask:none!important;mask:none!important;background:none!important;border-color:var(--c1) var(--c2) color-mix(in srgb,var(--c2) 25%,transparent)}
+#tip.to .tfr::before,#tip.to .tfr::after{display:none}
+#tip.to .tbox{box-shadow:0 0 0 1px #000,0 4px 0 rgba(0,0,0,.4)}
+#tip,#tip.on,#tip.glide{transform:translate3d(var(--tx,0),var(--ty,0),0)!important;transition:opacity .08s linear!important}
+#tip *:not(.strip){animation:none!important;filter:none!important}
+.t:hover::after,.t:focus-visible::after,.t:hover .sh::before,.t:focus-visible .sh::before{display:none!important}
+.t:hover img:not(.strip),.t.act img:not(.strip){animation:none!important}
 
 /* ===== build planner ===== */
 .bbar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:14px 0;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
@@ -5665,7 +5673,7 @@ addEventListener("hashchange",()=>{hideTip();window.Boss3D&&Boss3D.unmountAll();
 
 /* ---------- tooltip ---------- */
 const tip=document.createElement("div");tip.id="tip";tip.setAttribute("role","tooltip");document.body.appendChild(tip);
-let tipFor=null;
+let tipFor=null;const TIPC=new Map();
 const TOP={COMMON:["#969696","#575757","#3C3C3C"],UNCOMMON:["#9CA028","#6A6D18","#4B4D0E"],RARE:["#335FA0","#193A6D","#0A1D38"],EPIC:["#A02283","#691356","#3C0730"],LEGENDARY:["#A0803C","#815F19","#372808"],CHAOS:["#9F373A","#81191B","#370809"],CUSTOM:["#E8B84A","#B5832A","#6B4A12"]};
 const VRAR={Common:"COMMON",Uncommon:"UNCOMMON",Rare:"RARE",Epic:"EPIC"};
 const pal=d=>isMust(d)?["#FFE14D","#FFB300","#5A3A00"]:d.ig?(TOP[VRAR[d.ig[0]]]||TOP.CUSTOM):TOP.COMMON;
@@ -5680,11 +5688,11 @@ function showTip(n){const d=D[+n.dataset.t];if(!d)return;tipFor=n;const F=mf(d.m
  tip.className="to r"+d.r+(tip.classList.contains("on")?" on":"");tip.dataset.mf=F[0];
  tip.style.setProperty("--c1",P[0]);tip.style.setProperty("--c2",P[1]);tip.style.setProperty("--c3",P[2]);
  const stats=d.st.map((x,j)=>[d.tg[j],x]).filter(([t,x])=>t!=="relic"&&x.length<110&&!/^(When worn|Passive Effect|Hold Shift)/i.test(x)).slice(0,5);
- tip.innerHTML=`<div class="tbox"><div class="tfr"></div>
+ let c=TIPC.get(d.ix);if(!c){const w=document.createElement("div");w.innerHTML=`<div class="tbox"><div class="tfr"></div>
  <div class="thd"><span class="tslot">${slotImg(d)}</span><div class="tht"><div class="tnm" style="color:${nc}"${d.ig&&d.ig[1]==="rainbow"?' data-rb="1"':""}>${isMust(d)?"★ ":""}${esc(d.n)}</div><div class="tsub">${esc(d.sl.join(", "))} · ${d.g==="Loot"?"Loot":"Craft"}</div></div></div>
  <div class="tbd"><p class="tfx">${fmt(d.fx)}</p>${stats.length?`<ul class="tst">${stats.map(([t,x])=>`<li>${fmt(x)}</li>`).join("")}</ul>`:""}${d.gk?`<p class="tlock">🔒 Locked until ${GK[d.gk]} falls</p>`:""}${d.rq?`<p class="tlock trq">🔒 ${img(RQRING[d.rq])} Requires the ${rqName(d)}</p>`:""}${isMust(d)?`<p class="tmust">★ Must-Have: get it as soon as ${esc(actL(d.t))} opens.</p>`:""}
  ${d.gr?tipRecipe(d):""}${(x=>x.length?`<p class="tsrc">${fmt(x.join(" "))}</p>`:"")((d.gr?d.src.filter(x=>!RCV.test(x)):d.src).slice(0,2))}<p class="twhere">${esc(actL(d.t))}${d.a!==d.t?` · with luck from ${esc(actL(d.a))}`:""}</p></div>
- <div class="tft"><span class="tmod">${esc(d.m)}</span><span class="trt">${igName(d)} · ${RN[d.r]}</span></div></div>`;
+ <div class="tft"><span class="tmod">${esc(d.m)}</span><span class="trt">${igName(d)} · ${RN[d.r]}</span></div></div>`;c=w.firstElementChild;TIPC.set(d.ix,c)}tip.replaceChildren(c);
  if(lastAct)lastAct.classList.remove("act");lastAct=n.classList.contains("t")?n:null;if(lastAct)lastAct.classList.add("act");
  const first=!tip.classList.contains("on");place(n);tip.classList.add("on");if(first)tip.classList.add("in");decorate(tip)}
 function place(n){const r=n.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight,vw=innerWidth,vh=innerHeight;
@@ -5693,8 +5701,9 @@ function place(n){const r=n.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offs
  y=Math.max(8,Math.min(y,vh-h-8));tip.classList.toggle("glide",tip.classList.contains("on"));tip.style.setProperty("--tx",x+"px");tip.style.setProperty("--ty",y+"px");tip.dataset.side=x<r.left?"l":"r"}
 let lastAct=null;
 function hideTip(){tipFor=null;tip.classList.remove("on","glide","in");if(lastAct){lastAct.classList.remove("act");lastAct=null}}
-let hovT=null,hovTm=0;
-document.addEventListener("mouseover",e=>{hovT=e.target.closest("[data-t]");clearTimeout(hovTm);hovTm=setTimeout(()=>{if(hovT&&hovT!==tipFor)showTip(hovT);else if(!hovT&&tipFor)hideTip()},hovT?80:0)},{passive:true});
+/* at most one tooltip update per frame, always for the tile under the pointer now */
+let hovT=null,hovQ=0;
+document.addEventListener("mouseover",e=>{hovT=e.target.closest("[data-t]");if(!hovQ)hovQ=requestAnimationFrame(()=>{hovQ=0;if(hovT&&hovT!==tipFor)showTip(hovT);else if(!hovT&&tipFor)hideTip()})},{passive:true});
 document.addEventListener("focusin",e=>{const n=e.target.closest("[data-t]");n?showTip(n):hideTip()});
 addEventListener("scroll",hideTip,{capture:true,passive:true});
 
